@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import LoginForm
+from .forms import LoginForm, EstudianteForm
 from .utils import login_required
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import status
-from .models import Usuarios
+from rest_framework import status, viewsets
+from .models import Usuarios, Estudiantes
+from .serializers import EstudiantesSerializer
 
-# Vista tradicional (para templates HTML)
+# Vista tradicional
 
 
 def login_view(request):
@@ -22,7 +23,7 @@ def login_view(request):
         form = LoginForm()
         return render(request, 'login.html', {'form': form})
 
-# Endpoint API para React (POST)
+# Endpoint
 
 
 @api_view(['POST'])
@@ -32,7 +33,7 @@ def login_api(request):
 
     try:
         usuario = Usuarios.objects.get(correo=correo, contrasena=contrasena)
-        # Opcional: mantener sesión
+        # Mantener sesión
         request.session['usuario_id'] = usuario.idusuario
         return Response({
             'status': 'success',
@@ -45,8 +46,6 @@ def login_api(request):
             'status': 'error',
             'message': 'Credenciales inválidas'
         }, status=status.HTTP_401_UNAUTHORIZED)
-
-# Resto de tus vistas...
 
 
 def inicio(request):
@@ -64,3 +63,52 @@ def logout_view(request):
 @login_required
 def vista_protegida(request):
     return render(request, 'inicio.html')
+
+# endpoind para tabla estudiantes
+
+
+class EstudiantesViewSet(viewsets.ModelViewSet):
+    queryset = Estudiantes.objects.all()
+    serializer_class = EstudiantesSerializer
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.estatus = False
+        instance.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+def lista_estudiantes(request):
+    estudiantes = Estudiantes.objects.all()
+    return render(request, 'estudiantes/lista_estudiantes.html', {'estudiantes': estudiantes})
+
+
+def alta_estudiante(request):
+    if request.method == 'POST':
+        form = EstudianteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_estudiantes')
+    else:
+        form = EstudianteForm()
+
+    return render(request, 'estudiantes/alta_estudiante.html', {'form': form})
+
+
+def editar_estudiante(request, pk):
+    estudiante = get_object_or_404(Estudiantes, pk=pk)
+    if request.method == 'POST':
+        form = EstudianteForm(request.POST, instance=estudiante)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_estudiantes')
+    else:
+        form = EstudianteForm(instance=estudiante)
+    return render(request, 'estudiantes/editar_estudiante.html', {'form': form, 'estudiante': estudiante})
+
+
+def baja_estudiante(request, pk):
+    estudiante = get_object_or_404(Estudiantes, pk=pk)
+    estudiante.estatus = False
+    estudiante.save()
+    return redirect('lista_estudiantes')

@@ -16,10 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from api import views
+from rest_framework.routers import DefaultRouter
+from api import views  # Asegúrate que 'api' sea el nombre correcto de tu app
+
+router = DefaultRouter()
+router.register(r'api/estudiantes', views.EstudiantesViewSet,
+                basename='estudiantes')
+
 urlpatterns = [
-    path('login/', views.login_view, name='login'),
-    path('api/login/', views.login_api, name='login_api'),
-    path('inicio/', views.inicio, name='inicio'),
-    path('vista-protegida/', views.vista_protegida, name='vista_protegida'),
+    path('admin/', admin.site.urls),
+    path('', include('api.urls')),  # Incluye todas las URLs de tu app
+    path('api/', include(router.urls)),  # URLs para DRF
 ]

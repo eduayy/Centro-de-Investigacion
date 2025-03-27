@@ -1,6 +1,8 @@
 # forms.py
+from .models import Estudiantes
+from .models import Estudiantes, Carreras, Investigadores
 from django import forms
-from .models import Usuarios
+from .models import Usuarios, Estudiantes, TipoEstudiante
 
 
 class LoginForm(forms.Form):
@@ -29,3 +31,27 @@ class LoginForm(forms.Form):
                 raise forms.ValidationError("Usuario no existe")
 
         return cleaned_data
+
+   # api/forms.py
+
+
+# En forms.py
+
+# En forms.py
+# En forms.py
+
+
+class EstudianteForm(forms.ModelForm):
+    class Meta:
+        model = Estudiantes
+        fields = '__all__'
+        widgets = {
+            'idcarreras': forms.Select(attrs={'class': 'form-control'}),
+            'idinvestigadores': forms.Select(attrs={'class': 'form-control'}),
+            'fechaingreso': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'fechafincontrato': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+        }
+        labels = {
+            'idcarreras': 'Carrera Universitaria',
+            'idinvestigadores': 'Investigador Asignado',
+        }
