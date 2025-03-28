@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./login.css";
 
@@ -9,6 +9,14 @@ const Login = () => {
   });
   const [error, setError] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Verify if the user is already logged in
+  useEffect(() => {
+    const userId = localStorage.getItem("usuario_id");
+    if (userId) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   const handleInputChange = (e) => {
     setFormData({
@@ -25,19 +33,22 @@ const Login = () => {
         formData
       );
 
+      // Save userId, name and permissions in localStorage
       if (response.data.status === "success") {
         localStorage.setItem("usuario_id", response.data.usuario_id);
+        localStorage.setItem("nombre", response.data.nombre);
+        localStorage.setItem("permisos", response.data.permisos);
         setIsLoggedIn(true);
         setError("");
       }
     } catch (err) {
-      setError("Credenciales incorrectas");
       setIsLoggedIn(false);
+      setError("Invalid credentials");
     }
   };
 
   if (isLoggedIn) {
-    return (window.location.href = "/");
+    return (window.location.href = "/"); // If user is already loggedin, redirect to home page
   }
 
   return (
