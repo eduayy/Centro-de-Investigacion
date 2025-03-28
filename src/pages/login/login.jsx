@@ -20,8 +20,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8000/api/login/', formData);
-      
+      const response = await axios.post('http://localhost:8000/login-api/', formData);
       if(response.data.status === 'success') {
         localStorage.setItem('usuario_id', response.data.usuario_id);
         setIsLoggedIn(true);

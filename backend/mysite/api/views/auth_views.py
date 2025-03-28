@@ -49,7 +49,8 @@ def login_api(request):
     contrasena = request.data.get('contrasena')
 
     try:
-        usuario = Usuarios.objects.get(correo=correo, contrasena=contrasena)
+        usuario = Usuarios.objects.filter(
+            correo=correo, contrasena=contrasena).first()
         request.session['usuario_id'] = usuario.idusuario
         request.session['rol'] = usuario.idpermiso.rol
         return Response({
