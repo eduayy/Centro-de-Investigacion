@@ -136,45 +136,54 @@ class Especialidades(models.Model):
 
 
 class Estudiantes(models.Model):
-    # Notar que es IntegerField, no AutoField
     idestudiantes = models.IntegerField(primary_key=True)
     nombreestudiante = models.CharField(max_length=50)
     apellidoestudiante = models.CharField(max_length=50)
     emailestudiante = models.CharField(max_length=50)
     telefonoestudiante = models.CharField(max_length=20)
-    # Corregí el nombre según tu tabla (fechalingreso en BD)
     fechaingreso = models.DateField()
-    # Corregí el nombre según tu tabla (fechalincontrato en BD)
     fechafincontrato = models.DateField()
     estatus = models.BooleanField(default=True)
 
-    # Claves foráneas - Nombres exactos como en tu BD
+    # Claves foráneas
     idtipoestudiante = models.ForeignKey(
         'TipoEstudiante',
         on_delete=models.CASCADE,
-        db_column='idtipoestudiante'  # Nombre exacto de columna en BD
+        db_column='idtipoestudiante'
     )
-
     idcarreras = models.ForeignKey(
         'Carreras',
         on_delete=models.CASCADE,
-        db_column='idcarreras'  # Nombre exacto de columna en BD
+        db_column='idcarreras'
     )
-
     idinvestigadores = models.ForeignKey(
         'Investigadores',
         on_delete=models.CASCADE,
-        db_column='idinvestigadores'  # Nombre exacto de columna en BD
+        db_column='idinvestigadores'
     )
 
     objects = SafeGetManager()
 
     class Meta:
-        managed = False  # Mantener False ya que la tabla ya existe
-        db_table = 'estudiantes'  # Nombre exacto de la tabla en BD
+        managed = False
+        db_table = 'estudiantes'
 
     def __str__(self):
-        return f"{self.nombreestudiante} {self.apellidoestudiante} (ID: {self.idestudiantes})"
+        return f"{self.nombreestudiante} {self.apellidoestudiante}"
+
+    def dar_de_baja(self):
+        """Método para baja lógica que funciona con managed=False"""
+        from django.db import connection
+        try:
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    "UPDATE estudiantes SET estatus = %s WHERE idestudiantes = %s",
+                    [False, self.idestudiantes]
+                )
+            return True
+        except Exception as e:
+            print(f"Error al dar de baja: {str(e)}")
+            return False
 
 
 class Eventos(models.Model):
@@ -277,13 +286,21 @@ class NivelSni(models.Model):
 class Permisos(models.Model):
     idpermiso = models.AutoField(primary_key=True)
     descripcion = models.CharField(max_length=20)
-    rol = models.IntegerField()
+    rol = models.IntegerField(choices=[
+        (1, 'Administrador'),
+        (2, 'Investigador'),
+        (3, 'Estudiante'),
+        (4, 'Usuario General')
+    ])
 
     objects = SafeGetManager()
 
     class Meta:
         managed = False
         db_table = 'permisos'
+
+    def __str__(self):
+        return self.get_rol_display()
 
 
 class Proyectos(models.Model):

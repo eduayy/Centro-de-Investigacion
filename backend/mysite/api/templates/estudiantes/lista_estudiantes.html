@@ -1,31 +1,85 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Lista de Estudiantes</title>
-</head>
-<body>
-    <h1>Estudiantes</h1>
-    <a href="{% url 'alta_estudiante' %}">Nuevo Estudiante</a>
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Email</th>
-            <th>Acciones</th>
-        </tr>
-        {% for estudiante in estudiantes %}
-        <tr>
-            <td>{{ estudiante.idestudiantes }}</td>
-            <td>{{ estudiante.nombreestudiante }}</td>
-            <td>{{ estudiante.apellidoestudiante }}</td>
-            <td>{{ estudiante.emailestudiante }}</td>
-            <td>
-                <a href="{% url 'editar_estudiante' estudiante.idestudiantes %}">Editar</a> |
-                <a href="{% url 'baja_estudiante' estudiante.idestudiantes %}">Dar de baja</a>
-            </td>
-        </tr>
-        {% endfor %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ titulo }}</h2>
+    
+    <!-- Debug de permisos (puedes ocultarlo con CSS o eliminarlo después) -->
+    <div class="alert alert-info mb-3" style="display: none;">
+        <h5>Información de Usuario (Debug)</h5>
+        <p>Usuario: {{ user.username }}</p>
+        <p>Es staff: {{ user.is_staff }}</p>
+        <p>Es superusuario: {{ user.is_superuser }}</p>
+        <p>Grupos: {{ user.groups.all|join:", " }}</p>
+        <p>Permisos: {{ user.get_all_permissions }}</p>
+        <p>Variable puede_crear_estudiante: {{ puede_crear_estudiante }}</p>
+    </div>
+    
+    <!-- Botón de Alta - Versión mejorada con múltiples condiciones -->
+    {% if user.is_authenticated and user.is_staff or user.is_superuser or puede_crear_estudiante %}
+    <a href="{% url 'alta_estudiante' %}" class="btn btn-primary mb-3">
+        <i class="fas fa-plus"></i> Nuevo Estudiante
+    </a>
+    {% endif %}
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Fecha Ingreso</th>
+                {% if user.is_staff or user.is_superuser or puede_editar or puede_eliminar %}
+                <th>Acciones</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for estudiante in estudiantes %}
+            <tr>
+                <td>{{ estudiante.idestudiantes }}</td>
+                <td>{{ estudiante.nombreestudiante }} {{ estudiante.apellidoestudiante }}</td>
+                <td>{{ estudiante.emailestudiante }}</td>
+                <td>{{ estudiante.telefonoestudiante }}</td>
+                <td>{{ estudiante.fechaingreso|date:"d/m/Y" }}</td>
+                
+                {% if user.is_staff or user.is_superuser or puede_editar or puede_eliminar %}
+                <td>
+                    {% if user.is_staff or user.is_superuser or puede_editar %}
+                    <a href="{% url 'editar_estudiante' estudiante.idestudiantes %}" class="btn btn-sm btn-warning">
+                        <i class="fas fa-edit"></i> Editar
+                    </a>
+                    {% endif %}
+                    
+                    {% if user.is_superuser or puede_eliminar %}
+                    <form method="post" action="{% url 'baja_estudiante' estudiante.idestudiantes %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Está seguro que desea eliminar este estudiante?')">
+                            <i class="fas fa-trash-alt"></i> Baja
+                        </button>
+                    </form>
+                    {% endif %}
+                </td>
+                {% endif %}
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center">No hay estudiantes registrados</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
-</body>
-</html>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Opcional: Mostrar información de debug al hacer Ctrl+Shift+D
+document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.shiftKey && e.key === 'D') {
+        document.querySelector('.alert-info').style.display = 'block';
+    }
+});
+</script>
+{% endblock %}
