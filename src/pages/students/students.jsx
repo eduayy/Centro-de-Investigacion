@@ -1,50 +1,27 @@
-import "./students.css";
-import Sidebar from "../sidebar/sidebar.jsx";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "./students.css";
+import Sidebar from "../sidebar/sidebar.jsx";
 
 const Students = () => {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // With this code we can get the user permissions 
-  // verify if the user is already logged in and permissions
-  const isLoggedIn = localStorage.getItem("usuario_id");
-  const permissions = localStorage.getItem("permisos");
-  const role = localStorage.getItem("role");
-
-  /* 
-    ROLE PERMISSIONS:
-    1. Admin
-    2. Researcher
-    3. Student
-    4. Guest
-
-    Role permissions are defined in table 'permisos' in 'investigadores_database'
-    */
-
-  // Verify wich permissions the role has
-  const addNew = role === "1" || role === "2";
-  const canDelete = role === "1" || role === "2";
-  const editStudents = role === "1" || role === "2";
-  const onlyView = role === "3" || role === "2" || role === "4";
-  const fullAccess = role === "1";
-
-  // Use axios to get student data from the API with useeffect
   useEffect(() => {
     const fetchStudents = async () => {
-      // get connection to backend api
       try {
-        const response = await axios.get("http://localhost:8000/api/students/");
+        const response = await axios.get("http://localhost:8000/estudiantes/");
+        console.log("Datos recibidos:", response.data); // Verifica aquí los datos
         setStudents(response.data);
-        setError("");
       } catch (error) {
-        setError("Error obtaining students.", error.toString());
+        console.error("Error completo:", error.response); // Muestra más detalles
+        setError(`Error al cargar estudiantes: ${error.message}`);
       } finally {
         setLoading(false);
       }
     };
+
     fetchStudents();
   }, []);
 
@@ -55,39 +32,20 @@ const Students = () => {
         <h2>Lista de Estudiantes</h2>
         {loading ? (
           <p>Cargando...</p>
+        ) : error ? (
+          <p className="error-message">{error}</p>
+        ) : students.length === 0 ? (
+          <p>No hay estudiantes registrados</p>
         ) : (
           <ul>
             {students.map((student) => (
               <li key={student.id}>
-                {student.name}
-                {canDelete && (
-                  <button
-                    onClick={() =>
-                      console.log(`Eliminar estudiante ${student.id}`)
-                    }
-                  >
-                    Eliminar
-                  </button>
-                )}
-                {editStudents && (
-                  <button
-                    onClick={() =>
-                      console.log(`Editar estudiante ${student.id}`)
-                    }
-                  >
-                    Editar
-                  </button>
-                )}
+                {student.nombre} {student.apellido}{" "}
+                {/* Ajusta los campos según tu modelo */}
               </li>
             ))}
           </ul>
         )}
-        {addNew && (
-          <button onClick={() => console.log("Añadir estudiante")}>
-            Añadir Estudiante
-          </button>
-        )}
-        {!fullAccess && <p>Limited access.</p>}
       </div>
     </div>
   );

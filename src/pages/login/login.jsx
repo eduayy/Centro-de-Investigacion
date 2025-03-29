@@ -2,6 +2,23 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./login.css";
 
+/*
+Credentials for testing purposes:
+User as a guest:              |   User as a researcher:
+Name: Juan Peréz              |   Name: María Torres
+Email: juan.perez@example.com |   Email: maria.torres@example.com
+Password: 123456              |   Password: mypass2025
+Permissions: 1                |   Permissions: 3
+*/
+
+/*
+Herarchy of permissions:
+1: Admin
+2: Researcher
+3: Student
+4: Guest
+*/
+
 const Login = () => {
   const [formData, setFormData] = useState({
     correo: "",
@@ -12,8 +29,8 @@ const Login = () => {
 
   // Verify if the user is already logged in
   useEffect(() => {
-    const userId = localStorage.getItem("usuario_id");
-    if (userId) {
+    const idusuario = localStorage.getItem("idusuario");
+    if (idusuario) {
       setIsLoggedIn(true);
     }
   }, []);
@@ -29,21 +46,23 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/login/",
+        "http://localhost:8000/login-api/",
         formData
       );
-
-      // Save userId, name and permissions in localStorage
       if (response.data.status === "success") {
-        localStorage.setItem("usuario_id", response.data.usuario_id);
-        localStorage.setItem("nombre", response.data.nombre);
-        localStorage.setItem("permisos", response.data.permisos);
+        // Get fields of user that are relevant for the app
+        localStorage.setItem("idusuario", response.data.idusuario);
+        localStorage.setItem("idpermiso", response.data.idpermiso);
+        localStorage.setItem(
+          "idpermiso",
+          JSON.stringify(response.data.idpermiso)
+        );
         setIsLoggedIn(true);
         setError("");
       }
     } catch (err) {
+      setError("Incorrect credentials");
       setIsLoggedIn(false);
-      setError("Invalid credentials");
     }
   };
 

@@ -1,23 +1,6 @@
 import { Link } from "react-router-dom";
 import "./sidebar.css";
 
-/*
-Credentials for testing purposes:
-User as a guest:              |   User as a researcher:
-Name: Juan Peréz              |   Name: María Torres
-Email: juan.perez@example.com |   Email: maria.torres@example.com
-Password: 123456              |   Password: mypass2025
-Permissions: 1                |   Permissions: 3
-*/
-
-/*
-Herarchy of permissions:
-1: Admin
-2: Researcher
-3: Student
-4: Guest
-*/
-
 // Menu items for sidebar
 const menuList = [
   { name: "Inicio", path: "/" },
@@ -38,7 +21,7 @@ const menuList = [
 
 const Sidebar = () => {
   // verify if the user is already logged in and permissions
-  const isLoggedIn = localStorage.getItem("usuario_id");
+  const isLoggedIn = localStorage.getItem("idusuario");
 
   return (
     <aside className="sidebar">
@@ -69,8 +52,8 @@ const Sidebar = () => {
                 onClick={(e) => {
                   // Delete permissions and user_id from localStorage
                   e.preventDefault();
-                  localStorage.removeItem("usuario_id");
-                  localStorage.removeItem("permisos");
+                  localStorage.removeItem("idusuario");
+                  localStorage.removeItem("idpermiso");
                   window.location.href = "/";
                 }}
                 className="logout-link"
