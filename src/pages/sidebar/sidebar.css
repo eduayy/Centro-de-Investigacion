@@ -8,6 +8,7 @@ body {
 
 .sidebar {
   width: 255px;
+  min-height: 100vh;
   background-color: #001932;
 }
 
@@ -19,7 +20,6 @@ body {
 
 .sidebar li {
   width: 90%;
-  margin: 10px 10px;
   cursor: pointer;
 }
 
