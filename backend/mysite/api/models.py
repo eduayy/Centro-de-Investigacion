@@ -1,3 +1,4 @@
+from django.db import connection
 from django.db import models
 
 # Create your models here.
@@ -17,7 +18,11 @@ class Area(models.Model):
     nombrearea = models.CharField(max_length=50)
     descripcionarea = models.CharField(max_length=100)
     estatus = models.BooleanField(default=True)
-    idunidades = models.ForeignKey('Unidades', on_delete=models.CASCADE)
+    idunidades = models.ForeignKey(
+        'Unidades',
+        on_delete=models.CASCADE,
+        db_column='idunidades'  # Esto indica a Django usar exactamente este nombre de columna
+    )
 
     objects = SafeGetManager()
 
@@ -59,10 +64,16 @@ class Carreras(models.Model):
 
 class DetArt(models.Model):
     iddetart = models.AutoField(primary_key=True)
-    idarticulo = models.ForeignKey('Articulos', on_delete=models.CASCADE)
-    idinvestigadores = models.ForeignKey(
-        'Investigadores', on_delete=models.CASCADE)
-
+    idarticulo = models.ForeignKey(
+        'Articulos',
+        on_delete=models.CASCADE,
+        db_column='idarticulo'  # Recomiendo añadir esto también para consistencia
+    )
+    idinvestigador = models.ForeignKey(
+        'Investigadores',  # Referencia al modelo Investigador entre comillas
+        on_delete=models.CASCADE,
+        db_column='idinvestigadores'  # Nombre real en la BD
+    )
     objects = SafeGetManager()
 
     class Meta:
@@ -73,23 +84,37 @@ class DetArt(models.Model):
 class DetEventos(models.Model):
     iddeteventos = models.AutoField(primary_key=True)
     idinvestigadores = models.ForeignKey(
-        'Investigadores', on_delete=models.CASCADE)
-    idevento = models.ForeignKey('Eventos', on_delete=models.CASCADE)
+        'Investigadores',
+        on_delete=models.CASCADE,
+        db_column='idinvestigadores'  # Nombre exacto de la columna en BD
+    )
+    idevento = models.ForeignKey(
+        'Eventos',
+        on_delete=models.CASCADE,
+        db_column='idevento'  # También recomendado para consistencia
+    )
 
     objects = SafeGetManager()
 
     class Meta:
         managed = False
         db_table = 'deteventos'
+        verbose_name = 'Detalle de Evento'
+        verbose_name_plural = 'Detalles de Eventos'
 
 
 class DetHerramienta(models.Model):
     iddetherramienta = models.AutoField(primary_key=True)
-    idproyecto = models.ForeignKey('Proyectos', on_delete=models.CASCADE)
+    idproyecto = models.ForeignKey(
+        'Proyectos',
+        on_delete=models.CASCADE,
+        db_column='idproyecto'  # Especifica explícitamente el nombre de columna
+    )
     idherramientas = models.ForeignKey(
-        'Herramientas', on_delete=models.CASCADE)
-
-    objects = SafeGetManager()
+        'Herramientas',
+        on_delete=models.CASCADE,
+        db_column='idherramientas'  # Especifica explícitamente el nombre de columna
+    )
 
     class Meta:
         managed = False
@@ -98,9 +123,16 @@ class DetHerramienta(models.Model):
 
 class DetLineas(models.Model):
     iddetlineas = models.AutoField(primary_key=True)
-    idlineas = models.ForeignKey('Lineas', on_delete=models.CASCADE)
+    idlineas = models.ForeignKey(
+        'Lineas',
+        on_delete=models.CASCADE,
+        db_column='idlineas'  # Especificamos el nombre real en BD
+    )
     idinvestigadores = models.ForeignKey(
-        'Investigadores', on_delete=models.CASCADE)
+        'Investigadores',
+        on_delete=models.CASCADE,
+        db_column='idinvestigadores'  # Nombre exacto en BD
+    )
 
     objects = SafeGetManager()
 
@@ -113,8 +145,15 @@ class DetProy(models.Model):
     iddetproy = models.AutoField(primary_key=True)
     rol = models.CharField(max_length=20)
     idinvestigadores = models.ForeignKey(
-        'Investigadores', on_delete=models.CASCADE)
-    idproyecto = models.ForeignKey('Proyectos', on_delete=models.CASCADE)
+        'Investigadores',
+        on_delete=models.CASCADE,
+        db_column='idinvestigadores'  # Nombre exacto en la BD
+    )
+    idproyecto = models.ForeignKey(
+        'Proyectos',
+        on_delete=models.CASCADE,
+        db_column='idproyecto'  # También especificado para consistencia
+    )
 
     objects = SafeGetManager()
 
@@ -187,23 +226,32 @@ class Estudiantes(models.Model):
 
 
 class Eventos(models.Model):
-    idevento = models.AutoField(primary_key=True)
-    nombreevento = models.CharField(max_length=100)
-    lugarevento = models.CharField(max_length=100)
-    fechaevento = models.DateField()
-    duracionevento = models.CharField(max_length=50, blank=True, null=True)
-    empresainvitante = models.CharField(max_length=100, blank=True, null=True)
-    idtipoevento = models.ForeignKey('TipoEvento', on_delete=models.CASCADE)
+    idevento = models.AutoField(primary_key=True, db_column='idevento')
+    nombreevento = models.CharField(max_length=100, db_column='nombreevento')
+    lugarevento = models.CharField(max_length=100, db_column='lugarevento')
+    fechaevento = models.DateField(db_column='fechaevento')
+    duracionevento = models.CharField(
+        max_length=50, blank=True, null=True, db_column='duracionevento')
+    empresainvitante = models.CharField(
+        max_length=100, blank=True, null=True, db_column='empresainvitante')
 
-    objects = SafeGetManager()
+    idtipoevento = models.ForeignKey(
+        'TipoEvento',
+        on_delete=models.CASCADE,
+        db_column='idtipoevento'
+    )
 
     class Meta:
         managed = False
         db_table = 'eventos'
 
+    def __str__(self):
+        return self.nombreevento
+
 
 class Herramientas(models.Model):
-    idherramientas = models.AutoField(primary_key=True)
+    idherramientas = models.AutoField(
+        primary_key=True, db_column='idinvestigadores')
     nombreherramienta = models.CharField(max_length=255)
     tipoherramienta = models.CharField(max_length=50)
 
@@ -217,45 +265,35 @@ class Herramientas(models.Model):
 class Investigadores(models.Model):
     idinvestigadores = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=100)
-    email = models.CharField(max_length=50)
-    puesto = models.CharField(max_length=50)
-
-    # Campo corregido para nivel educativo
+    email = models.EmailField(unique=True)
+    puesto = models.CharField(max_length=50, default="Investigador")
     idniveledu = models.ForeignKey(
-        'NivelEdu',
-        on_delete=models.CASCADE,
-        db_column='idniveledu'  # Nombre exacto de la columna en BD
-    )
-
-    # Campo corregido para área
+        'NivelEdu', on_delete=models.CASCADE, db_column='idniveledu')
     idarea = models.ForeignKey(
-        'Area',
-        on_delete=models.CASCADE,
-        db_column='idarea'  # Nombre exacto de la columna en BD
-    )
-
-    objects = SafeGetManager()
+        'Area', on_delete=models.CASCADE, db_column='idarea')
 
     class Meta:
         managed = False
         db_table = 'investigadores'
 
     def __str__(self):
-        return f"{self.nombre} - {self.puesto} ({self.email})"
+        return f"{self.nombre} {self.apellido}"
 
 
 class Lineas(models.Model):
-    idlineas = models.AutoField(primary_key=True)
+    # Especifica explícitamente el nombre de columna
+    idlineas = models.AutoField(primary_key=True, db_column='idlineas')
     nombre = models.CharField(max_length=50)
     descripcion = models.CharField(max_length=100, blank=True, null=True)
     fechaapertura = models.DateField()
     estatus = models.BooleanField(default=True)
 
-    objects = SafeGetManager()
-
     class Meta:
         managed = False
         db_table = 'lineas'
+
+    def __str__(self):
+        return self.nombre
 
 
 class NivelEdu(models.Model):
@@ -263,13 +301,21 @@ class NivelEdu(models.Model):
     descripcion = models.CharField(max_length=100)
     estatus = models.BooleanField(default=True)
     idespecialidades = models.ForeignKey(
-        'Especialidades', on_delete=models.CASCADE)
+        'Especialidades',
+        on_delete=models.CASCADE,
+        db_column='idespecialidades'  # Asegúrate que coincida con tu BD
+    )
 
     objects = SafeGetManager()
 
     class Meta:
         managed = False
         db_table = 'niveledu'
+        verbose_name = 'Nivel Educativo'
+        verbose_name_plural = 'Niveles Educativos'
+
+    def __str__(self):
+        return self.descripcion
 
 
 class NivelSni(models.Model):
@@ -321,9 +367,16 @@ class Sni(models.Model):
     idsni = models.AutoField(primary_key=True)
     fechaingreso = models.DateField()
     fecharenovacion = models.DateField()
-    idnivelsni = models.ForeignKey('NivelSni', on_delete=models.CASCADE)
+    idnivelsni = models.ForeignKey(
+        'NivelSni',
+        on_delete=models.CASCADE,
+        db_column='idnivelsni'  # Especificamos el nombre real en BD
+    )
     idinvestigadores = models.ForeignKey(
-        'Investigadores', on_delete=models.CASCADE)
+        'Investigadores',
+        on_delete=models.CASCADE,
+        db_column='idinvestigadores'  # Nombre exacto en BD
+    )
 
     objects = SafeGetManager()
 

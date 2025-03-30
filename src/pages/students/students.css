@@ -1,0 +1,125 @@
+/* Estilos globales */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.students-page {
+  display: flex;
+  height: 100vh;
+  background-color: #fff;
+}
+
+.students-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.students-content h2 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Lista de estudiantes */
+.students-content ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.students-content li {
+  background-color: #fff;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.students-content li button {
+  background-color: #ff6347;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.students-content li button:hover {
+  background-color: #e5533d;
+}
+
+.students-content button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.students-content button:hover {
+  background-color: #45a049;
+}
+
+.students-content p {
+  font-size: 18px;
+  color: #888;
+}
+
+.students-content .error-message {
+  color: red;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #001932;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.sidebar nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar nav ul li {
+  margin: 15px 0;
+}
+
+.sidebar nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 11px;
+  transition: color 0.3s;
+}
+
+.sidebar nav ul li a:hover {
+  color: #ecf0f1;
+}
+
+.sidebar .logout-link {
+  margin-top: auto;
+  text-align: center;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+}

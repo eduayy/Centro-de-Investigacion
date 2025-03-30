@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Listado de Unidades</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .container { max-width: 1200px; }
+        .table-responsive { overflow-x: auto; }
+        .btn-action { margin-right: 5px; }
+        .empty-row td { text-align: center; color: #6c757d; padding: 20px 0; }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+    <h2 class="mb-4">{{ titulo }}</h2>
+    
+    <a href="{% url 'alta_unidad' %}" class="btn btn-success mb-3">
+        <i class="fas fa-plus-circle"></i> Nueva Unidad
+    </a>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for unidad in unidades %}
+                <tr>
+                    <td>{{ unidad.idunidades|default:"-" }}</td>
+                    <td>{{ unidad.nombre|default:"-" }}</td>
+                    <td>
+                        {% if unidad.idunidades %}
+                        <a href="{% url 'editar_unidad' unidad.idunidades %}" 
+                           class="btn btn-sm btn-warning btn-action"
+                           title="Editar">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <form method="post" 
+                              action="{% url 'baja_unidad' unidad.idunidades %}" 
+                              style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" 
+                                    class="btn btn-sm btn-danger" 
+                                    onclick="return confirm('¿Eliminar esta unidad permanentemente?')"
+                                    title="Eliminar">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
+                        {% else %}
+                        <span class="text-muted">No disponible</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr class="empty-row">
+                    <td colspan="3">No hay unidades registradas</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
