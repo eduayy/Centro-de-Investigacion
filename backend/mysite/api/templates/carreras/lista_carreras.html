@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Listado de Carreras</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .container { max-width: 1200px; }
+        .table-responsive { overflow-x: auto; }
+        .btn-action { margin-right: 5px; }
+        .empty-row td { text-align: center; color: #6c757d; padding: 20px 0; }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+    <h2 class="mb-4">{{ titulo }}</h2>
+    
+    <a href="{% url 'alta_carrera' %}" class="btn btn-success mb-3">
+        <i class="fas fa-plus-circle"></i> Nueva Carrera
+    </a>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Carrera</th>
+                    <th>Universidad</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for carrera in carreras %}
+                <tr>
+                    <td>{{ carrera.idcarreras|default:"-" }}</td>
+                    <td>{{ carrera.nombrecarrera|default:"-" }}</td>
+                    <td>{{ carrera.nombreuniversidad|default:"-" }}</td>
+                    <td>
+                        {% if carrera.idcarreras %}
+                        <a href="{% url 'editar_carrera' carrera.idcarreras %}" 
+                           class="btn btn-sm btn-warning btn-action"
+                           title="Editar">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <form method="post" 
+                              action="{% url 'baja_carrera' carrera.idcarreras %}" 
+                              style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" 
+                                    class="btn btn-sm btn-danger" 
+                                    onclick="return confirm('¿Eliminar esta carrera permanentemente?')"
+                                    title="Eliminar">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
+                        {% else %}
+                        <span class="text-muted">No disponible</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr class="empty-row">
+                    <td colspan="4">No hay carreras registradas</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

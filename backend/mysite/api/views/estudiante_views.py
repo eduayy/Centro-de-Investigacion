@@ -1,24 +1,25 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from ..models import Estudiantes, Usuarios
+from ..models import Estudiantes
 from ..forms import EstudianteForm
-from .auth_views import permiso_requerido
 
 
 def lista_estudiantes(request):
+    if 'usuario_id' not in request.session:
+        return redirect('login')
     estudiantes = Estudiantes.objects.filter(estatus=True)
-    usuario = Usuarios.objects.get(idusuario=request.session['usuario_id'])
     return render(request, 'estudiantes/lista_estudiantes.html', {
         'estudiantes': estudiantes,
         'titulo': 'Listado de Estudiantes Activos',
         'puede_crear_estudiante': True,
-        'puede_editar': usuario.idpermiso.rol in [1, 2],
-        'puede_eliminar': usuario.idpermiso.rol in [1, 2]
+        'puede_editar': True,
+        'puede_eliminar': True
     })
 
 
-@permiso_requerido(1, 2)
 def alta_estudiante(request):
+    if 'usuario_id' not in request.session:
+        return redirect('login')
     if request.method == 'POST':
         form = EstudianteForm(request.POST)
         if form.is_valid():
@@ -27,15 +28,15 @@ def alta_estudiante(request):
             return redirect('lista_estudiantes')
     else:
         form = EstudianteForm()
-
     return render(request, 'estudiantes/alta_estudiante.html', {
         'form': form,
         'titulo': 'Registrar Nuevo Estudiante'
     })
 
 
-@permiso_requerido(1, 2)
 def editar_estudiante(request, pk):
+    if 'usuario_id' not in request.session:
+        return redirect('login')
     estudiante = get_object_or_404(Estudiantes, pk=pk)
     if request.method == 'POST':
         form = EstudianteForm(request.POST, instance=estudiante)
@@ -45,7 +46,6 @@ def editar_estudiante(request, pk):
             return redirect('lista_estudiantes')
     else:
         form = EstudianteForm(instance=estudiante)
-
     return render(request, 'estudiantes/editar_estudiante.html', {
         'form': form,
         'estudiante': estudiante,
@@ -53,8 +53,9 @@ def editar_estudiante(request, pk):
     })
 
 
-@permiso_requerido(1, 2)
 def baja_estudiante(request, pk):
+    if 'usuario_id' not in request.session:
+        return redirect('login')
     if request.method == 'POST':
         estudiante = get_object_or_404(Estudiantes, pk=pk)
         if estudiante.dar_de_baja():

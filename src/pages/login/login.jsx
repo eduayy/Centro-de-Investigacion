@@ -2,22 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./login.css";
 
-/*
-Credentials for testing purposes:
-User as a guest:              |   User as a researcher:
-Name: Juan Peréz              |   Name: María Torres
-Email: juan.perez@example.com |   Email: maria.torres@example.com
-Password: 123456              |   Password: mypass2025
-Permissions: 1                |   Permissions: 3
-*/
 
-/*
-Herarchy of permissions:
-1: Admin
-2: Researcher
-3: Student
-4: Guest
-*/
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -27,7 +12,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Verify if the user is already logged in
+  // Verifica si el usuario ya inició sesión
   useEffect(() => {
     const idusuario = localStorage.getItem("idusuario");
     if (idusuario) {
@@ -50,24 +35,20 @@ const Login = () => {
         formData
       );
       if (response.data.status === "success") {
-        // Get fields of user that are relevant for the app
-        localStorage.setItem("idusuario", response.data.idusuario);
-        localStorage.setItem("idpermiso", response.data.idpermiso);
-        localStorage.setItem(
-          "idpermiso",
-          JSON.stringify(response.data.idpermiso)
-        );
+        localStorage.setItem("idusuario", response.data.usuario_id);
+        // Se almacenan otros datos si son necesarios
         setIsLoggedIn(true);
         setError("");
+        window.location.href = "/"; // Redirige a la página principal
       }
     } catch (err) {
-      setError("Incorrect credentials");
+      setError("Credenciales incorrectas");
       setIsLoggedIn(false);
     }
   };
 
   if (isLoggedIn) {
-    return (window.location.href = "/"); // If user is already loggedin, redirect to home page
+    return null;
   }
 
   return (
@@ -85,7 +66,6 @@ const Login = () => {
             className="login-input"
           />
         </div>
-
         <div className="form-group">
           <label>Contraseña:</label>
           <input
@@ -97,9 +77,7 @@ const Login = () => {
             className="login-input"
           />
         </div>
-
         {error && <p className="error-message">{error}</p>}
-
         <button type="submit" className="login-button">
           Ingresar
         </button>

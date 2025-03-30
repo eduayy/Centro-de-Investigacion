@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Eventos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+<div class="container mt-4">
+    <h2>{{ titulo }}</h2>
+    
+    <a href="{% url 'alta_evento' %}" class="btn btn-success mb-3">
+        <i class="fas fa-plus"></i> Nuevo Evento
+    </a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Lugar</th>
+                <th>Fecha</th>
+                <th>Tipo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for evento in eventos %}
+            <tr>
+                <td>{{ evento.idevento }}</td>
+                <td>{{ evento.nombreevento }}</td>
+                <td>{{ evento.lugarevento }}</td>
+                <td>{{ evento.fechaevento|date:"d/m/Y" }}</td>
+                <td>{{ evento.idtipoevento }}</td>
+                <td>
+                    <a href="{% url 'editar_evento' evento.idevento %}" class="btn btn-sm btn-warning">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <form method="post" action="{% url 'baja_evento' evento.idevento %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar este evento?')">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center">No hay eventos registrados</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

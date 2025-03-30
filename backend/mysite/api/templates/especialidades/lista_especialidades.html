@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Especialidades</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-4">
+    <h2>{{ titulo }}</h2>
+    
+    <a href="{% url 'alta_especialidad' %}" class="btn btn-success mb-3">
+        <i class="fas fa-plus"></i> Nueva Especialidad
+    </a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Descripción</th>
+                <th>Estatus</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for esp in especialidades %}
+            <tr>
+                <td>{{ esp.idespecialidades }}</td>
+                <td>{{ esp.descripcion }}</td>
+                <td>{% if esp.estatus %}Activo{% else %}Inactivo{% endif %}</td>
+                <td>
+                    <a href="{% url 'editar_especialidad' esp.idespecialidades %}" class="btn btn-sm btn-warning">
+                        <i class="fas fa-edit"></i> Editar
+                    </a>
+                    <form method="post" action="{% url 'baja_especialidad' esp.idespecialidades %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Eliminar esta especialidad?')">
+                            <i class="fas fa-trash-alt"></i> Eliminar
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">No hay especialidades registradas</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

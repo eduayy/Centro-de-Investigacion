@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editar Proyecto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .form-container { max-width: 800px; margin: 30px auto; padding: 20px; border: 1px solid #ddd; border-radius: 5px; }
+        .form-group { margin-bottom: 1.5rem; }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h2 class="mb-4">{{ titulo }}</h2>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="id_nombreproyecto">Nombre del Proyecto:</label>
+            {{ form.nombreproyecto }}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_descripcionproyecto">Descripción:</label>
+            {{ form.descripcionproyecto }}
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label for="id_fechainicio">Fecha Inicio:</label>
+                {{ form.fechainicio }}
+            </div>
+            
+            <div class="col-md-6 form-group">
+                <label for="id_fechatermino">Fecha Término:</label>
+                {{ form.fechatermino }}
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-warning">
+                <i class="fas fa-sync-alt"></i> Actualizar
+            </button>
+            <a href="{% url 'lista_proyectos' %}" class="btn btn-secondary">
+                <i class="fas fa-times"></i> Cancelar
+            </a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
