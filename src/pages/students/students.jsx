@@ -3,16 +3,20 @@ import axios from "axios";
 import "./students.css";
 import Sidebar from "../sidebar/sidebar.jsx";
 
+const API_BASE_URL = "http://localhost:8000/";
+
 const Students = () => {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [editingStudent, setEditingStudent] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
+
+  // Opciones para los selects
   const [options, setOptions] = useState({
     tiposEstudiante: [],
     carreras: [],
-    investigadores: []
+    investigadores: [],
   });
 
   // Estado inicial para nuevo estudiante
@@ -26,40 +30,47 @@ const Students = () => {
     estatus: true,
     idtipoestudiante: "",
     idcarreras: "",
-    idinvestigadores: ""
+    idinvestigadores: "",
   };
 
   const [newStudent, setNewStudent] = useState(initialStudentState);
 
-  // Obtener datos iniciales
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
-        const [estudiantesRes, tiposRes, carrerasRes, investigadoresRes] = await Promise.all([
-          axios.get("http://localhost:8000/api/estudiantes-api/", { withCredentials: true }),
-          axios.get("http://localhost:8000/api/tipo-estudiante-api/", { withCredentials: true }),
-          axios.get("http://localhost:8000/api/carreras-api/", { withCredentials: true }),
-          axios.get("http://localhost:8000/api/investigadores-api/", { withCredentials: true })
-        ]);
-
-        // Generar próximo ID (máximo existente + 1)
-        const maxId = estudiantesRes.data.reduce((max, student) => 
-          Math.max(max, student.idestudiantes), 0);
-        
-        setNewStudent(prev => ({
-          ...prev,
-          idestudiantes: maxId + 1
-        }));
+        const [estudiantesRes, tiposRes, carrerasRes, investigadoresRes] =
+          await Promise.all([
+            axios
+              .get(`${API_BASE_URL}api/estudiantes-api/`, {
+                withCredentials: true,
+              })
+              .catch((e) => ({ data: [] })), 
+            axios
+              .get(`${API_BASE_URL}api/tipo-estudiante-api/`, {
+                withCredentials: true,
+              })
+              .catch((e) => ({ data: [] })),
+            axios
+              .get(`${API_BASE_URL}api/carreras-api/`, {
+                withCredentials: true,
+              })
+              .catch((e) => ({ data: [] })),
+            axios
+              .get(`${API_BASE_URL}api/investigadores-api/`, {
+                withCredentials: true,
+              })
+              .catch((e) => ({ data: [] })),
+          ]);
 
         setOptions({
-          tiposEstudiante: tiposRes.data,
-          carreras: carrerasRes.data,
-          investigadores: investigadoresRes.data
+          tiposEstudiante: tiposRes?.data || [], 
+          carreras: carrerasRes?.data || [],
+          investigadores: investigadoresRes?.data || [],
         });
 
-        setStudents(estudiantesRes.data);
+        setStudents(estudiantesRes?.data || []);
       } catch (error) {
-        console.error("Error al cargar datos:", error);
+        console.error("Error completo:", error);
         setError(`Error al cargar datos: ${error.message}`);
       } finally {
         setLoading(false);
@@ -74,21 +85,19 @@ const Students = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/estudiantes-api/",
+        `${API_BASE_URL}api/estudiantes-api/`,
         newStudent,
         { withCredentials: true }
       );
-      
+
       setStudents([...students, response.data]);
-      setNewStudent({
-        ...initialStudentState,
-        // Generar nuevo ID para el próximo registro
-        idestudiantes: newStudent.idestudiantes + 1
-      });
+      setNewStudent(initialStudentState);
       setShowAddForm(false);
+      setError(null);
     } catch (error) {
-      console.error("Error al agregar:", error.response?.data || error);
-      setError(`Error al registrar: ${JSON.stringify(error.response?.data || error.message)}`);
+      setError(
+        `Error al registrar: ${error.response?.data?.detail || error.message}`
+      );
     }
   };
 
@@ -97,49 +106,61 @@ const Students = () => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `http://localhost:8000/api/estudiantes-api/${editingStudent.idestudiantes}/`,
+        `${API_BASE_URL}api/estudiantes-api/${editingStudent.idestudiantes}/`,
         editingStudent,
         { withCredentials: true }
       );
-      
-      setStudents(students.map(student => 
-        student.idestudiantes === editingStudent.idestudiantes ? response.data : student
-      ));
+
+      setStudents(
+        students.map((student) =>
+          student.idestudiantes === editingStudent.idestudiantes
+            ? response.data
+            : student
+        )
+      );
       setEditingStudent(null);
+      setError(null);
     } catch (error) {
       console.error("Error al actualizar:", error);
-      setError(`Error al actualizar: ${error.response?.data || error.message}`);
+      setError(
+        `Error al actualizar: ${error.response?.data?.detail || error.message}`
+      );
     }
   };
 
-  // Eliminar estudiante
+  // Eliminar estudiante 
   const handleDelete = async (id) => {
-    if (!window.confirm("¿Estás seguro de dar de baja a este estudiante?")) return;
-    
+    if (!window.confirm("¿Estás seguro de dar de baja a este estudiante?"))
+      return;
+
     try {
-      await axios.delete(
-        `http://localhost:8000/api/estudiantes-api/${id}/`,
-        { withCredentials: true }
-      );
-      setStudents(students.filter(student => student.idestudiantes !== id));
+      await axios.delete(`${API_BASE_URL}api/estudiantes-api/${id}/`, {
+        withCredentials: true,
+      });
+      setStudents(students.filter((student) => student.idestudiantes !== id));
+      setError(null);
     } catch (error) {
       console.error("Error al eliminar:", error);
-      setError(`Error al dar de baja: ${error.response?.data || error.message}`);
+      setError(
+        `Error al dar de baja: ${error.response?.data?.detail || error.message}`
+      );
     }
   };
 
   // Manejar cambios en los inputs
   const handleInputChange = (e, isEditing = false) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
+    const val = type === "checkbox" ? checked : value;
+
     if (isEditing) {
       setEditingStudent({
         ...editingStudent,
-        [name]: value
+        [name]: val,
       });
     } else {
       setNewStudent({
         ...newStudent,
-        [name]: value
+        [name]: val,
       });
     }
   };
@@ -152,50 +173,103 @@ const Students = () => {
       <Sidebar />
       <div className="students-content">
         <h2>Gestión de Estudiantes</h2>
-        
+
         <button className="btn-add" onClick={() => setShowAddForm(true)}>
           + Nuevo Estudiante
         </button>
 
-        {/* Formulario para agregar */}
         {showAddForm && (
           <div className="form-container">
             <h3>Registrar Nuevo Estudiante</h3>
             <form onSubmit={handleAdd}>
-              <div className="form-group">
-                <label>ID Estudiante:</label>
-                <input
-                  type="text"
-                  value={newStudent.idestudiantes}
-                  readOnly
-                  className="read-only"
-                />
-              </div>
-
               <div className="form-group">
                 <label>Nombre:</label>
                 <input
                   type="text"
                   name="nombreestudiante"
                   value={newStudent.nombreestudiante}
-                  onChange={(e) => handleInputChange(e)}
+                  onChange={handleInputChange}
                   required
                 />
               </div>
 
-              {/* Repetir para apellido, email, teléfono */}
+              <div className="form-group">
+                <label>Apellido:</label>
+                <input
+                  type="text"
+                  name="apellidoestudiante"
+                  value={newStudent.apellidoestudiante}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Email:</label>
+                <input
+                  type="email"
+                  name="emailestudiante"
+                  value={newStudent.emailestudiante}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Teléfono:</label>
+                <input
+                  type="tel"
+                  name="telefonoestudiante"
+                  value={newStudent.telefonoestudiante}
+                  onChange={handleInputChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Fecha de Ingreso:</label>
+                <input
+                  type="date"
+                  name="fechaingreso"
+                  value={newStudent.fechaingreso}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Fecha Fin de Contrato:</label>
+                <input
+                  type="date"
+                  name="fechafincontrato"
+                  value={newStudent.fechafincontrato}
+                  onChange={handleInputChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Estatus:</label>
+                <input
+                  type="checkbox"
+                  name="estatus"
+                  checked={newStudent.estatus}
+                  onChange={handleInputChange}
+                />
+              </div>
 
               <div className="form-group">
                 <label>Tipo de Estudiante:</label>
                 <select
                   name="idtipoestudiante"
                   value={newStudent.idtipoestudiante}
-                  onChange={(e) => handleInputChange(e)}
+                  onChange={handleInputChange}
                   required
                 >
                   <option value="">Seleccione un tipo</option>
-                  {options.tiposEstudiante.map(tipo => (
-                    <option key={tipo.idtipoestudiante} value={tipo.idtipoestudiante}>
+                  {options.tiposEstudiante.map((tipo) => (
+                    <option
+                      key={tipo.idtipoestudiante}
+                      value={tipo.idtipoestudiante}
+                    >
                       {tipo.nombretipo}
                     </option>
                   ))}
@@ -207,11 +281,11 @@ const Students = () => {
                 <select
                   name="idcarreras"
                   value={newStudent.idcarreras}
-                  onChange={(e) => handleInputChange(e)}
+                  onChange={handleInputChange}
                   required
                 >
                   <option value="">Seleccione una carrera</option>
-                  {options.carreras.map(carrera => (
+                  {options.carreras.map((carrera) => (
                     <option key={carrera.idcarreras} value={carrera.idcarreras}>
                       {carrera.nombrecarrera}
                     </option>
@@ -224,26 +298,64 @@ const Students = () => {
                 <select
                   name="idinvestigadores"
                   value={newStudent.idinvestigadores}
-                  onChange={(e) => handleInputChange(e)}
+                  onChange={handleInputChange}
                   required
                 >
                   <option value="">Seleccione un investigador</option>
-                  {options.investigadores.map(investigador => (
-                    <option key={investigador.idinvestigadores} value={investigador.idinvestigadores}>
+                  {options.investigadores.map((investigador) => (
+                    <option
+                      key={investigador.idinvestigadores}
+                      value={investigador.idinvestigadores}
+                    >
                       {investigador.nombre} {investigador.apellido}
                     </option>
                   ))}
                 </select>
               </div>
 
-              {/* Agregar campos restantes */}
-
               <div className="form-actions">
-                <button type="submit" className="btn-save">Guardar</button>
-                <button 
-                  type="button" 
+                <button type="submit" className="btn-save">
+                  Guardar
+                </button>
+                <button
+                  type="button"
                   className="btn-cancel"
                   onClick={() => setShowAddForm(false)}
+                >
+                  Cancelar
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
+
+        {/* Formulario de edición */}
+        {editingStudent && (
+          <div className="form-container">
+            <h3>Editar Estudiante</h3>
+            <form onSubmit={handleUpdate}>
+              {/* Campos similares al formulario de agregar */}
+              <div className="form-group">
+                <label>Nombre:</label>
+                <input
+                  type="text"
+                  name="nombreestudiante"
+                  value={editingStudent.nombreestudiante}
+                  onChange={(e) => handleInputChange(e, true)}
+                  required
+                />
+              </div>
+
+              {/* Repetir para los demás campos... */}
+
+              <div className="form-actions">
+                <button type="submit" className="btn-save">
+                  Actualizar
+                </button>
+                <button
+                  type="button"
+                  className="btn-cancel"
+                  onClick={() => setEditingStudent(null)}
                 >
                   Cancelar
                 </button>
@@ -260,6 +372,7 @@ const Students = () => {
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
+                <th>Email</th>
                 <th>Tipo</th>
                 <th>Carrera</th>
                 <th>Investigador</th>
@@ -267,19 +380,29 @@ const Students = () => {
               </tr>
             </thead>
             <tbody>
-              {students.map(student => (
+              {students.map((student) => (
                 <tr key={student.idestudiantes}>
                   <td>{student.idestudiantes}</td>
                   <td>{student.nombreestudiante}</td>
                   <td>{student.apellidoestudiante}</td>
-                  <td>{student.idtipoestudiante?.nombretipo || '-'}</td>
-                  <td>{student.idcarreras?.nombrecarrera || '-'}</td>
+                  <td>{student.emailestudiante}</td>
                   <td>
-                    {student.idinvestigadores?.nombreinvestigador || '-'} 
-                    {student.idinvestigadores?.apellidoinvestigador && ` ${student.idinvestigadores.apellidoinvestigador}`}
+                    {options.tiposEstudiante.find(
+                      (t) => t.idtipoestudiante === student.idtipoestudiante
+                    )?.nombretipo || "-"}
                   </td>
                   <td>
-                    <button 
+                    {options.carreras.find(
+                      (c) => c.idcarreras === student.idcarreras
+                    )?.nombrecarrera || "-"}
+                  </td>
+                  <td>
+                    {options.investigadores.find(
+                      (i) => i.idinvestigadores === student.idinvestigadores
+                    )?.nombre || "-"}
+                  </td>
+                  <td>
+                    <button
                       className="btn-edit"
                       onClick={() => setEditingStudent(student)}
                     >
