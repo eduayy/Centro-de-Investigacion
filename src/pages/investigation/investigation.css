@@ -1,0 +1,109 @@
+.lineas-page-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f5f7fa;
+}
+
+.lineas-main-content {
+  flex: 1;
+  padding: 2rem;
+}
+
+.lineas-title {
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+}
+
+.lineas-btn-add,
+.lineas-btn-save,
+.lineas-btn-cancel,
+.lineas-btn-edit,
+.lineas-btn-delete {
+  background-color: #001932;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: background-color 0.3s;
+}
+
+.lineas-btn-add:hover {
+  background-color: #00305f;
+}
+
+.lineas-btn-delete {
+  background-color: #e74c3c;
+}
+
+.lineas-btn-delete:hover {
+  background-color: #c0392b;
+}
+
+.lineas-form-container {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.lineas-form-group {
+  margin-bottom: 1.2rem;
+}
+
+.lineas-form-label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.lineas-form-input,
+.lineas-form-select {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.lineas-form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.lineas-table-container {
+  overflow-x: auto;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.lineas-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.lineas-table-header th {
+  padding: 1rem;
+  text-align: left;
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+
+.lineas-table-body td {
+  padding: 1rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.lineas-table-row:hover {
+  background-color: #f8f9fa;
+}
+
+.lineas-loading,
+.lineas-error-message {
+  text-align: center;
+  padding: 1rem;
+}
