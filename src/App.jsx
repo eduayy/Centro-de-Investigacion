@@ -11,6 +11,7 @@ import Especiality from "./pages/especiality/especiality.jsx";
 import Investigation from "./pages/investigation/investigation.jsx";
 import Events from "./pages/events/events.jsx";
 import Articles from "./pages/articles/articles.jsx";
+import Tools from "./pages/tools/tools.jsx";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="lineas-investigacion" element={<Investigation />}></Route>
         <Route path="/eventos" element={<Events />}></Route>
         <Route path="/articulos" element={<Articles />}></Route>
+        <Route path="/herramientas" element={<Tools />}></Route>
       </Routes>
     </Router>
   );

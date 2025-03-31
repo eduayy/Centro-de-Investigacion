@@ -250,8 +250,7 @@ class Eventos(models.Model):
 
 
 class Herramientas(models.Model):
-    idherramientas = models.AutoField(
-        primary_key=True, db_column='idinvestigadores')
+    idherramientas = models.AutoField(primary_key=True)
     nombreherramienta = models.CharField(max_length=255)
     tipoherramienta = models.CharField(max_length=50)
 
