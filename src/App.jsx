@@ -5,6 +5,7 @@ import Home from "./pages/home/home.jsx";
 import Students from "./pages/students/students.jsx";
 import Careers from "./pages/careers/careers.jsx";
 import Researchers from "./pages/Researchers/researchers.jsx";
+import Proyects from "./pages/proyects/proyects.jsx";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/estudiantes" element={<Students />}></Route>
         <Route path="/carreras" element={<Careers />}></Route>
         <Route path="/investigadores" element={<Researchers />}></Route>
+        <Route path="/proyectos" element={<Proyects />}></Route>
       </Routes>
     </Router>
   );
