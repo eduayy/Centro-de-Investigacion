@@ -1,0 +1,219 @@
+.especialidades-page-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f5f7fa;
+}
+
+.especialidades-main-content {
+  flex: 1;
+  padding: 2rem;
+}
+
+.especialidades-title {
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+}
+
+.especialidades-form-title {
+  color: #2c3e50;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.especialidades-btn-add {
+  background-color: #001932;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  transition: background-color 0.3s;
+}
+
+.especialidades-btn-add:hover {
+  background-color: #00305f;
+}
+
+.especialidades-btn-save {
+  background-color: #001932;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.especialidades-btn-save:hover {
+  background-color: #002e5b;
+}
+
+.especialidades-btn-cancel {
+  background-color: #e74c3c;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.especialidades-btn-cancel:hover {
+  background-color: #c0392b;
+}
+
+.especialidades-btn-edit {
+  background-color: #001932;
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: background-color 0.3s;
+}
+
+.especialidades-btn-edit:hover {
+  background-color: #002b56;
+}
+
+.especialidades-btn-delete {
+  background-color: #e74c3c;
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.especialidades-btn-delete:hover {
+  background-color: #c0392b;
+}
+
+/* Formularios */
+.especialidades-form-container {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.especialidades-form-group {
+  margin-bottom: 1.2rem;
+}
+
+.especialidades-form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.especialidades-form-input,
+.especialidades-form-select,
+.especialidades-form-textarea {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: border 0.3s;
+}
+
+.especialidades-form-input:focus,
+.especialidades-form-select:focus,
+.especialidades-form-textarea:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+.especialidades-checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.especialidades-form-checkbox {
+  width: auto;
+}
+
+.especialidades-form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.especialidades-table-container {
+  overflow-x: auto;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.especialidades-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.especialidades-table-header {
+  background-color: #f8f9fa;
+}
+
+.especialidades-table-header th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #2c3e50;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.especialidades-table-body td {
+  padding: 1rem;
+  border-bottom: 1px solid #dee2e6;
+  color: #495057;
+}
+
+.especialidades-table-row:hover {
+  background-color: #f8f9fa;
+}
+
+.especialidades-actions-cell {
+  white-space: nowrap;
+}
+
+.especialidades-loading {
+  padding: 2rem;
+  text-align: center;
+  color: #7f8c8d;
+}
+
+.especialidades-error-message {
+  padding: 1rem;
+  background-color: #fee;
+  color: #e74c3c;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  border-left: 4px solid #e74c3c;
+}
+
+@media (max-width: 768px) {
+  .especialidades-main-content {
+    margin-left: 0;
+    padding: 1rem;
+  }
+
+  .especialidades-form-actions {
+    flex-direction: column;
+  }
+
+  .especialidades-btn-save,
+  .especialidades-btn-cancel {
+    width: 100%;
+  }
+}
