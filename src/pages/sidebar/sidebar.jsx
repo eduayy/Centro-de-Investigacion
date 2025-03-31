@@ -4,18 +4,16 @@ import "./sidebar.css";
 // Menu items for sidebar
 const menuList = [
   { name: "Inicio", path: "/" },
-  { name: "Empleados", path: "/empleados" },
+  { name: "Carreras", path: "/carreras" },
   { name: "Estudiantes", path: "/estudiantes" },
+  { name: "Investigadores", path: "/investigadores" },
   { name: "Proyectos", path: "/proyectos" },
   { name: "Areas", path: "/areas" },
   { name: "Especialidades", path: "/especialidades" },
   { name: "Lineas Investigación", path: "/lineas-investigacion" },
   { name: "Eventos", path: "/eventos" },
   { name: "Articulos", path: "/articulos" },
-  { name: "Unidades", path: "/unidades" },
-  { name: "Tipo de Eventos", path: "/tipo-eventos" },
-  { name: "Tipo de Proyectos", path: "/tipo-proyectos" },
-  { name: "Nivel de Estudios", path: "/nivel-estudios" },
+  { name: "Herramientas", path: "/herramientas" },
   { name: "Categorías", path: "/categorias" },
 ];
 

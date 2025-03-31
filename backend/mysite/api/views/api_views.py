@@ -8,7 +8,7 @@ from ..serializers import EstudiantesSerializer, ProyectosSerializer, AreaSerial
 
 
 class EstudiantesViewSet(viewsets.ModelViewSet):
-    queryset = Estudiantes.objects.filter(estatus=True)
+    queryset = Estudiantes.objects.all()
     serializer_class = EstudiantesSerializer
     permission_classes = [AllowAny]
 
