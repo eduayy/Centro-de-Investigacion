@@ -33,7 +33,11 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
+'''
+APPLICATION MEMBERS
+CARLOS EDUARDO SANCHEZ RAMOS
+JUAN PABLO VÁZQUEZ AREVALO
+'''
 
 INSTALLED_APPS = [
     'django.contrib.admin',

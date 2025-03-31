@@ -6,6 +6,7 @@ import Students from "./pages/students/students.jsx";
 import Careers from "./pages/careers/careers.jsx";
 import Researchers from "./pages/Researchers/researchers.jsx";
 import Proyects from "./pages/proyects/proyects.jsx";
+import Areas from "./pages/areas/areas.jsx";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/carreras" element={<Careers />}></Route>
         <Route path="/investigadores" element={<Researchers />}></Route>
         <Route path="/proyectos" element={<Proyects />}></Route>
+        <Route path="/areas" element={<Areas />}></Route>
       </Routes>
     </Router>
   );
