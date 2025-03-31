@@ -120,7 +120,7 @@ const Lineas = () => {
     <div className="lineas-page-container">
       <Sidebar />
       <div className="lineas-main-content">
-        <h2 className="lineas-title">Gestión de Líneas de Investigación</h2>
+        <h2 className="lineas-title">Líneas de Investigación</h2>
 
         <button className="lineas-btn-add" onClick={() => setShowAddForm(true)}>
           + Nueva Línea

@@ -9,6 +9,7 @@ import Proyects from "./pages/proyects/proyects.jsx";
 import Areas from "./pages/areas/areas.jsx";
 import Especiality from "./pages/especiality/especiality.jsx";
 import Investigation from "./pages/investigation/investigation.jsx";
+import Events from "./pages/events/events.jsx";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/areas" element={<Areas />}></Route>
         <Route path="/especialidades" element={<Especiality />}></Route>
         <Route path="lineas-investigacion" element={<Investigation />}></Route>
+        <Route path="/eventos" element={<Events />}></Route>
       </Routes>
     </Router>
   );
