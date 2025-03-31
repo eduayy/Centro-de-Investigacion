@@ -2,7 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./login.css";
 
-
+/*
+CREDENCIALS FOR LOGIN TESTING
+Name: Juan Pérez                | Name: Maria Torres
+Email: juan.perez@example.com   | Email: maria.torres@example.com
+Password: 12345                 | Password: mypass2025
+Credential: Guest               | Credential: Admin
+*/
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -36,10 +42,9 @@ const Login = () => {
       );
       if (response.data.status === "success") {
         localStorage.setItem("idusuario", response.data.usuario_id);
-        // Se almacenan otros datos si son necesarios
         setIsLoggedIn(true);
         setError("");
-        window.location.href = "/"; // Redirige a la página principal
+        window.location.href = "/";
       }
     } catch (err) {
       setError("Credenciales incorrectas");

@@ -44,7 +44,7 @@ const Students = () => {
               .get(`${API_BASE_URL}api/estudiantes-api/`, {
                 withCredentials: true,
               })
-              .catch((e) => ({ data: [] })), 
+              .catch((e) => ({ data: [] })), // Si falla, devuelve data vacía
             axios
               .get(`${API_BASE_URL}api/tipo-estudiante-api/`, {
                 withCredentials: true,
