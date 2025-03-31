@@ -1,0 +1,106 @@
+.articulos-page-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f5f7fa;
+}
+
+.articulos-main-content {
+  flex: 1;
+  padding: 2rem;
+}
+
+.articulos-title {
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+}
+
+.articulos-btn-add,
+.articulos-btn-save,
+.articulos-btn-cancel,
+.articulos-btn-edit,
+.articulos-btn-delete {
+  background-color: #001932;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: background-color 0.3s;
+}
+
+.articulos-btn-add:hover {
+  background-color: #00305f;
+}
+
+.articulos-btn-delete {
+  background-color: #e74c3c;
+}
+
+.articulos-btn-delete:hover {
+  background-color: #c0392b;
+}
+
+.articulos-form-container {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.articulos-form-group {
+  margin-bottom: 1.2rem;
+}
+
+.articulos-form-label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.articulos-form-input,
+.articulos-form-select {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.articulos-form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.articulos-table-container {
+  margin-top: 2rem;
+  overflow-x: auto;
+}
+
+.articulos-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+}
+
+.articulos-table-header th {
+  background-color: #001932;
+  color: white;
+  padding: 1rem;
+  text-align: left;
+}
+
+.articulos-table-body td {
+  padding: 1rem;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.articulos-table-row:hover {
+  background-color: #ecf0f1;
+}
+
+.articulos-actions-cell {
+  display: flex;
+  gap: 1rem;
+}
