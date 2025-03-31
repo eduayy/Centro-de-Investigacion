@@ -9,12 +9,12 @@ const menuList = [
   { name: "Investigadores", path: "/investigadores" },
   { name: "Proyectos", path: "/proyectos" },
   { name: "Areas", path: "/areas" },
+  { name: "Unidades", path: "/unidades" },
   { name: "Especialidades", path: "/especialidades" },
   { name: "Lineas Investigación", path: "/lineas-investigacion" },
   { name: "Eventos", path: "/eventos" },
   { name: "Articulos", path: "/articulos" },
   { name: "Herramientas", path: "/herramientas" },
-  { name: "Categorías", path: "/categorias" },
 ];
 
 const Sidebar = () => {

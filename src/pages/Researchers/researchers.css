@@ -153,9 +153,9 @@
 }
 
 .investigadores-table th {
-  background-color: #f9f9f9;
+  background-color: #001932;
+  color: white;
   font-weight: 500;
-  color: #333;
   position: sticky;
   top: 0;
 }

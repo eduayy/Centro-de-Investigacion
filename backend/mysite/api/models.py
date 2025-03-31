@@ -276,7 +276,7 @@ class Investigadores(models.Model):
         db_table = 'investigadores'
 
     def __str__(self):
-        return f"{self.nombre} {self.apellido}"
+        return f"{self.nombre}"
 
 
 class Lineas(models.Model):

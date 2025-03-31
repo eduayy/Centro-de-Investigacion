@@ -134,7 +134,8 @@ body {
 }
 
 .students-table th {
-  background-color: #f5f5f5;
+  background-color: #001932;
+  color: white;
   font-weight: 600;
 }
 
