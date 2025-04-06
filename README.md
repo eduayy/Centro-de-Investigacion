@@ -25,7 +25,7 @@ The goal is to create an intuitive and powerful platform that supports collabora
 
 <p align="center"> <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" height="40" width="40"/> </p>
 
-<p align="center">SETTING UP YOUR REACT PROJECT</p>  
+### SETTING UP YOUR REACT PROJECT
 
 Follow these simple steps to get started with React:
 
