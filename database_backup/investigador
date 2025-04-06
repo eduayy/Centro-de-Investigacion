@@ -1,0 +1,960 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 17.2
+-- Dumped by pg_dump version 17.2
+
+-- Started on 2025-04-05 20:41:55
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 5169 (class 0 OID 17091)
+-- Dependencies: 226
+-- Data for Name: area; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.area (idarea, nombrearea, descripcionarea, estatus, idunidades) FROM stdin;
+2	TI	Tecnologías de la Información	t	2
+3	Electronica	Electrónica	t	3
+4	Quimicos	Química	t	4
+5	Energia	Energía renovable	t	5
+6	Medio ambiente	Cuidado del medio ambiente	t	6
+7	Docencia	Educación y enseñanza	t	2
+\.
+
+
+--
+-- TOC entry 5185 (class 0 OID 17206)
+-- Dependencies: 242
+-- Data for Name: articulos; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.articulos (idarticulo, nombre, revista, pais, aniopublicacion, url, doi) FROM stdin;
+2	Articulo 4	Revista 4	Mexico	2025-02-01	\N	10.1234/abcdf
+3	Articulo 5	Revista 5	Mexico	2025-02-02	\N	10.1234/abcde
+4	Articulo 6	Revista 6	Mexico	2025-02-03	\N	10.1234/abcfg
+5	Articulo 7	Revista 7	Mexico	2025-02-04	\N	10.1234/abcgg
+6	Articulo 8	Revista 8	Mexico	2025-02-05	\N	10.1234/abchh
+7	Articulo 9	Revista 9	Mexico	2025-02-06	\N	10.1234/abcii
+8	Articulo 10	Revista 10	Mexico	2025-02-07	\N	10.1234/abcjj
+9	Articulo 11	Revista 11	Mexico	2025-02-08	\N	10.1234/abckk
+10	Articulo 12	Revista 12	Mexico	2025-02-09	\N	10.1234/abcll
+11	Articulo 13	Revista 13	Mexico	2025-02-10	\N	10.1234/abcmn
+12	Articulo 14	Revista 14	Mexico	2025-02-11	\N	10.1234/abcnn
+13	Articulo 15	Revista 15	Mexico	2025-02-12	\N	10.1234/abcoo
+\.
+
+
+--
+-- TOC entry 5213 (class 0 OID 17786)
+-- Dependencies: 270
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.auth_group (id, name) FROM stdin;
+\.
+
+
+--
+-- TOC entry 5215 (class 0 OID 17794)
+-- Dependencies: 272
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 5211 (class 0 OID 17780)
+-- Dependencies: 268
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
+1	Can add log entry	1	add_logentry
+2	Can change log entry	1	change_logentry
+3	Can delete log entry	1	delete_logentry
+4	Can view log entry	1	view_logentry
+5	Can add permission	2	add_permission
+6	Can change permission	2	change_permission
+7	Can delete permission	2	delete_permission
+8	Can view permission	2	view_permission
+9	Can add group	3	add_group
+10	Can change group	3	change_group
+11	Can delete group	3	delete_group
+12	Can view group	3	view_group
+13	Can add user	4	add_user
+14	Can change user	4	change_user
+15	Can delete user	4	delete_user
+16	Can view user	4	view_user
+17	Can add content type	5	add_contenttype
+18	Can change content type	5	change_contenttype
+19	Can delete content type	5	delete_contenttype
+20	Can view content type	5	view_contenttype
+21	Can add session	6	add_session
+22	Can change session	6	change_session
+23	Can delete session	6	delete_session
+24	Can view session	6	view_session
+25	Can add area	7	add_area
+26	Can change area	7	change_area
+27	Can delete area	7	delete_area
+28	Can view area	7	view_area
+29	Can add articulos	8	add_articulos
+30	Can change articulos	8	change_articulos
+31	Can delete articulos	8	delete_articulos
+32	Can view articulos	8	view_articulos
+33	Can add carreras	9	add_carreras
+34	Can change carreras	9	change_carreras
+35	Can delete carreras	9	delete_carreras
+36	Can view carreras	9	view_carreras
+37	Can add det art	10	add_detart
+38	Can change det art	10	change_detart
+39	Can delete det art	10	delete_detart
+40	Can view det art	10	view_detart
+41	Can add det eventos	11	add_deteventos
+42	Can change det eventos	11	change_deteventos
+43	Can delete det eventos	11	delete_deteventos
+44	Can view det eventos	11	view_deteventos
+45	Can add det herramienta	12	add_detherramienta
+46	Can change det herramienta	12	change_detherramienta
+47	Can delete det herramienta	12	delete_detherramienta
+48	Can view det herramienta	12	view_detherramienta
+49	Can add det lineas	13	add_detlineas
+50	Can change det lineas	13	change_detlineas
+51	Can delete det lineas	13	delete_detlineas
+52	Can view det lineas	13	view_detlineas
+53	Can add det proy	14	add_detproy
+54	Can change det proy	14	change_detproy
+55	Can delete det proy	14	delete_detproy
+56	Can view det proy	14	view_detproy
+57	Can add especialidades	15	add_especialidades
+58	Can change especialidades	15	change_especialidades
+59	Can delete especialidades	15	delete_especialidades
+60	Can view especialidades	15	view_especialidades
+61	Can add estudiantes	16	add_estudiantes
+62	Can change estudiantes	16	change_estudiantes
+63	Can delete estudiantes	16	delete_estudiantes
+64	Can view estudiantes	16	view_estudiantes
+65	Can add eventos	17	add_eventos
+66	Can change eventos	17	change_eventos
+67	Can delete eventos	17	delete_eventos
+68	Can view eventos	17	view_eventos
+69	Can add herramientas	18	add_herramientas
+70	Can change herramientas	18	change_herramientas
+71	Can delete herramientas	18	delete_herramientas
+72	Can view herramientas	18	view_herramientas
+73	Can add investigadores	19	add_investigadores
+74	Can change investigadores	19	change_investigadores
+75	Can delete investigadores	19	delete_investigadores
+76	Can view investigadores	19	view_investigadores
+77	Can add lineas	20	add_lineas
+78	Can change lineas	20	change_lineas
+79	Can delete lineas	20	delete_lineas
+80	Can view lineas	20	view_lineas
+81	Can add nivel edu	21	add_niveledu
+82	Can change nivel edu	21	change_niveledu
+83	Can delete nivel edu	21	delete_niveledu
+84	Can view nivel edu	21	view_niveledu
+85	Can add nivel sni	22	add_nivelsni
+86	Can change nivel sni	22	change_nivelsni
+87	Can delete nivel sni	22	delete_nivelsni
+88	Can view nivel sni	22	view_nivelsni
+89	Can add permisos	23	add_permisos
+90	Can change permisos	23	change_permisos
+91	Can delete permisos	23	delete_permisos
+92	Can view permisos	23	view_permisos
+93	Can add proyectos	24	add_proyectos
+94	Can change proyectos	24	change_proyectos
+95	Can delete proyectos	24	delete_proyectos
+96	Can view proyectos	24	view_proyectos
+97	Can add sni	25	add_sni
+98	Can change sni	25	change_sni
+99	Can delete sni	25	delete_sni
+100	Can view sni	25	view_sni
+101	Can add tipo estudiante	26	add_tipoestudiante
+102	Can change tipo estudiante	26	change_tipoestudiante
+103	Can delete tipo estudiante	26	delete_tipoestudiante
+104	Can view tipo estudiante	26	view_tipoestudiante
+105	Can add tipo evento	27	add_tipoevento
+106	Can change tipo evento	27	change_tipoevento
+107	Can delete tipo evento	27	delete_tipoevento
+108	Can view tipo evento	27	view_tipoevento
+109	Can add unidades	28	add_unidades
+110	Can change unidades	28	change_unidades
+111	Can delete unidades	28	delete_unidades
+112	Can view unidades	28	view_unidades
+113	Can add usuarios	29	add_usuarios
+114	Can change usuarios	29	change_usuarios
+115	Can delete usuarios	29	delete_usuarios
+116	Can view usuarios	29	view_usuarios
+\.
+
+
+--
+-- TOC entry 5217 (class 0 OID 17800)
+-- Dependencies: 274
+-- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
+\.
+
+
+--
+-- TOC entry 5219 (class 0 OID 17808)
+-- Dependencies: 276
+-- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.auth_user_groups (id, user_id, group_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 5221 (class 0 OID 17814)
+-- Dependencies: 278
+-- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 5177 (class 0 OID 17149)
+-- Dependencies: 234
+-- Data for Name: carreras; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.carreras (idcarreras, nombrecarrera, nombreuniversidad) FROM stdin;
+2	Bioquimica	ITESO
+3	Lic. Pedagogía	UNIVA
+4	Ing. Electricidad	TecMilenio
+5	Ing en Electronica	Anahuac
+6	Ing en Mecatronica	Tecnologico de Monterrey
+1	Ing. de Software	Tecmilenio
+7	Ing. Desarrollo automotriz	UP
+8	Ing. Petrolera	UAG
+\.
+
+
+--
+-- TOC entry 5187 (class 0 OID 17217)
+-- Dependencies: 244
+-- Data for Name: detart; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.detart (iddetart, idarticulo, idinvestigadores) FROM stdin;
+1	2	5
+3	4	6
+\.
+
+
+--
+-- TOC entry 5193 (class 0 OID 17253)
+-- Dependencies: 250
+-- Data for Name: deteventos; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.deteventos (iddeteventos, idinvestigadores, idevento) FROM stdin;
+1	5	7
+2	3	2
+\.
+
+
+--
+-- TOC entry 5201 (class 0 OID 17303)
+-- Dependencies: 258
+-- Data for Name: detherramienta; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.detherramienta (iddetherramienta, idproyecto, idherramientas) FROM stdin;
+1	1	3
+2	2	5
+3	3	4
+\.
+
+
+--
+-- TOC entry 5183 (class 0 OID 17189)
+-- Dependencies: 240
+-- Data for Name: detlineas; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.detlineas (iddetlineas, idlineas, idinvestigadores) FROM stdin;
+1	1	5
+2	2	4
+3	3	3
+\.
+
+
+--
+-- TOC entry 5197 (class 0 OID 17279)
+-- Dependencies: 254
+-- Data for Name: detproy; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.detproy (iddetproy, rol, idinvestigadores, idproyecto) FROM stdin;
+2	Investigador	3	4
+3	Investigador	4	5
+\.
+
+
+--
+-- TOC entry 5223 (class 0 OID 17872)
+-- Dependencies: 280
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 5209 (class 0 OID 17772)
+-- Dependencies: 266
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.django_content_type (id, app_label, model) FROM stdin;
+1	admin	logentry
+2	auth	permission
+3	auth	group
+4	auth	user
+5	contenttypes	contenttype
+6	sessions	session
+7	api	area
+8	api	articulos
+9	api	carreras
+10	api	detart
+11	api	deteventos
+12	api	detherramienta
+13	api	detlineas
+14	api	detproy
+15	api	especialidades
+16	api	estudiantes
+17	api	eventos
+18	api	herramientas
+19	api	investigadores
+20	api	lineas
+21	api	niveledu
+22	api	nivelsni
+23	api	permisos
+24	api	proyectos
+25	api	sni
+26	api	tipoestudiante
+27	api	tipoevento
+28	api	unidades
+29	api	usuarios
+\.
+
+
+--
+-- TOC entry 5207 (class 0 OID 17764)
+-- Dependencies: 264
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.django_migrations (id, app, name, applied) FROM stdin;
+1	contenttypes	0001_initial	2025-03-20 18:41:39.169937-06
+2	auth	0001_initial	2025-03-20 18:41:39.431108-06
+3	admin	0001_initial	2025-03-20 18:41:39.469519-06
+4	admin	0002_logentry_remove_auto_add	2025-03-20 18:41:39.481309-06
+5	admin	0003_logentry_add_action_flag_choices	2025-03-20 18:41:39.492478-06
+6	api	0001_initial	2025-03-20 18:41:39.518724-06
+7	contenttypes	0002_remove_content_type_name	2025-03-20 18:41:39.568944-06
+8	auth	0002_alter_permission_name_max_length	2025-03-20 18:41:39.588532-06
+9	auth	0003_alter_user_email_max_length	2025-03-20 18:41:39.600723-06
+10	auth	0004_alter_user_username_opts	2025-03-20 18:41:39.612001-06
+11	auth	0005_alter_user_last_login_null	2025-03-20 18:41:39.62301-06
+12	auth	0006_require_contenttypes_0002	2025-03-20 18:41:39.625582-06
+13	auth	0007_alter_validators_add_error_messages	2025-03-20 18:41:39.636764-06
+14	auth	0008_alter_user_username_max_length	2025-03-20 18:41:39.671101-06
+15	auth	0009_alter_user_last_name_max_length	2025-03-20 18:41:39.684025-06
+16	auth	0010_alter_group_name_max_length	2025-03-20 18:41:39.725321-06
+17	auth	0011_update_proxy_permissions	2025-03-20 18:41:39.743929-06
+18	auth	0012_alter_user_first_name_max_length	2025-03-20 18:41:39.756298-06
+19	sessions	0001_initial	2025-03-20 18:41:39.778133-06
+20	api	0002_alter_estudiantes_options	2025-03-28 23:47:12.13791-06
+21	api	0003_alter_estudiantes_options	2025-03-28 23:47:12.233523-06
+22	api	0004_alter_tipoestudiante_options	2025-03-28 23:47:12.236158-06
+23	api	0005_alter_estudiantes_options	2025-03-28 23:47:12.239069-06
+24	api	0006_alter_estudiantes_options	2025-03-28 23:47:12.241589-06
+\.
+
+
+--
+-- TOC entry 5224 (class 0 OID 17900)
+-- Dependencies: 281
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
+yj587ctidtb07t19z5sm06l0us81yfsw	eyJ1c3VhcmlvX2lkIjoxfQ:1tvQTP:ViDbfHQnbwngukCo3vDKaxe4wRCoEgRZDYFYawtAink	2025-04-03 18:42:55.425614-06
+7vilj5xdo3fd00lzpszuec65suhq35mt	eyJ1c3VhcmlvX2lkIjoyfQ:1tvQfD:Hh9wgedySlIC5vII2nsqyC8oXusdE77x_3uGubMZ3s8	2025-04-03 18:55:07.374618-06
+yahxjzyoyd57hgdhtvm16isbl3pzgu1l	eyJ1c3VhcmlvX2lkIjoyfQ:1tvQkK:nBW6mybmbnWHRhffZePsK92da_jLVhZ2UqlWtnRMqsA	2025-04-03 19:00:24.074944-06
+fu8o7p8hrzgfg8fymjwkt9u7ihjl6sqs	eyJ1c3VhcmlvX2lkIjoxfQ:1txgGh:PdhwYanu7G0yo9xCYZ5p0A4ngipN0X_1rn1F3am2yXw	2025-04-09 23:59:07.743785-06
+t98x1pgf42krbfirn6jlck5ar54lvc5l	eyJ1c3VhcmlvX2lkIjoxfQ:1txgH6:Qk3BQ-x5KcZxKhvKJekGgZ7hmVpo0gTCL6AzIb_N2Ac	2025-04-09 23:59:32.929417-06
+mh4guti7owm3opgmlr7lmgvxrktxclnz	eyJ1c3VhcmlvX2lkIjoxfQ:1txgHc:JUdBDaMw6YGZG1EH5i1d37PrGaT6en1lR_HRcOO6A10	2025-04-10 00:00:04.974033-06
+lf5gyat2qb6cfwzzgl62k4b5ntxflbn1	eyJ1c3VhcmlvX2lkIjoxfQ:1txgLx:JUpqgQUWF1-Yj5YttiWyi4_OQYwXVSaUwcWTq_r8uC8	2025-04-10 00:04:33.287278-06
+xv4424atc01xk3cxhlq4kzldx41s2g0l	eyJ1c3VhcmlvX2lkIjoxfQ:1txyi5:s67FuYhQE4kNa1h-930ogsbfeF0g9SD60aPbQ3vnD2c	2025-04-10 19:40:37.068203-06
+0h57d8cjqbuwzz4gcnqbamb5zls47de3	eyJ1c3VhcmlvX2lkIjoxfQ:1txyjo:y-w3mBPWhCxJ4Uh2n0j0c0yHROYViEsEIIFrzKRBKL8	2025-04-10 19:42:24.692168-06
+khvy8fd5j9z9ouw8pi9rhr2d9yw9r9zd	eyJ1c3VhcmlvX2lkIjo0fQ:1txykj:dUuNVDWkaGdrvp6x_FOtRRXGNCsRwd2qe2WS8CqKsOI	2025-04-10 19:43:21.497166-06
+45t2dvia7bqdzjfn7mohcojbwpkaml1g	eyJ1c3VhcmlvX2lkIjoxfQ:1ty1b4:UrOAo7C4mtHLMCSq9PKKDTJwqOuQ_LR-qN05i8ynZEk	2025-04-10 22:45:34.861844-06
+9uj10436sbqcqwave205lvi69x11fq5b	eyJ1c3VhcmlvX2lkIjoxfQ:1ty1cs:cEhM70dlACOR6V40xjMU02q5iIMdLBr2AvXiojSFFpQ	2025-04-10 22:47:26.393116-06
+you8lajqt8tnngwy75bz9xy8pa1fnuwc	eyJ1c3VhcmlvX2lkIjoxfQ:1ty1e7:3Qv90EQoYXhrWR_xT3M0xBHUH0iVtcH2pQfiOCz_GEg	2025-04-10 22:48:43.543898-06
+0g1awcl24d9fgijgzonngmdz4n4ifnws	eyJ1c3VhcmlvX2lkIjoxfQ:1ty2aj:CgJ7F4V5ZkhnLdvZat4chnbig_hAICv0T57IgdAtl38	2025-04-10 23:49:17.360728-06
+98in55l4mkzdpvgd2xbd7azxua60wdv5	eyJ1c3VhcmlvX2lkIjoxfQ:1ty2iU:O2sHbq3nnVauHGQb7uPogZLSgDJZ_AuaaQDBc8yb9Co	2025-04-10 23:57:18.284019-06
+1evdxk5l0w40gm9ozngzva6qwmkh0g3z	eyJ1c3VhcmlvX2lkIjoxfQ:1ty34R:j0n8074bw6nixjZPkuVy1mEQsrLmPTgxiCB-ecc-HP0	2025-04-11 00:19:59.85907-06
+bc4yu1scsihkx9kgf2493sz15nv4vj33	eyJ1c3VhcmlvX2lkIjoxfQ:1ty3Cl:_Wbj1wL4kMg5G5hpdGJ9npRE0wfNiLzUZmXvJaeP2s8	2025-04-11 00:28:35.129728-06
+0ozw8pm3hxepwzfppol9zny9p98zqdoy	eyJ1c3VhcmlvX2lkIjoxfQ:1ty3F4:NdkI9dN9_RbUif1ixDPWOh_TUCzZwXyzeOZWBWQotfw	2025-04-11 00:30:58.431658-06
+zqpmahwe8ajwqq7bjvp748u1gtij6fnm	eyJ1c3VhcmlvX2lkIjoxLCJyb2wiOjF9:1tyObn:D52zHbH8u3mrV9pjQcWzjnw1l638uJjev6XYdFzp89w	2025-04-11 23:19:51.793523-06
+dgjtbqdf3e1a1wv4ukvzf2xij2woszne	eyJ1c3VhcmlvX2lkIjo0LCJyb2wiOjN9:1tyOjC:YaiIdom89cYedwhFhv1fboEPLjAz-vJ-A7Nj9-h447I	2025-04-11 23:27:30.617069-06
+c0a6ctm66k3k30m98frgrl5eewxrrw92	eyJ1c3VhcmlvX2lkIjoxLCJyb2wiOjF9:1tyPJJ:TbL5zWeclWMnxI1yiBu65Bx-Wk1MfXUKTGJOYJDE1eU	2025-04-12 00:04:49.198255-06
+et6zdyt2iyz8fjmsv35vv9hgn1km012p	eyJ1c3VhcmlvX2lkIjoxLCJyb2wiOjF9:1tyz7X:vRtLd8-aF9YUOp9aidFh8b9V2d7HQZ9-Ey_ZYA96h4I	2025-04-13 14:19:03.277511-06
+yz0hjlih17sj3xuupecclu7eedcogw82	eyJ1c3VhcmlvX2lkIjoxLCJyb2wiOjF9:1tz4vT:uwKCrsITPJrKyRWo2QZzUyOKKLEwwUQtJcwWzyis_YU	2025-04-13 20:30:59.96015-06
+b4wp3mbuoufqrrj53415u9jqo7zlsd5j	eyJ1c3VhcmlvX2lkIjoxLCJyb2wiOjF9:1tzmlO:bLytlBkkgwM4ZM4bcSH6x8xd2uDQDFp79wZNgxypoQg	2025-04-15 19:19:30.387703-06
+nqej10bba2mpyxzvapzrzthuo8c092mw	eyJ1c3VhcmlvX2lkIjoxLCJyb2wiOjF9:1tznBQ:wIF2VseA1v0iKuf_SD68mwPgXvWDKn0u85qUwT4Dyt8	2025-04-15 19:46:24.16174-06
+\.
+
+
+--
+-- TOC entry 5165 (class 0 OID 17070)
+-- Dependencies: 222
+-- Data for Name: especialidades; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.especialidades (idespecialidades, descripcion, estatus) FROM stdin;
+2	Pedagogía	t
+3	Mecatronica	t
+4	Electronica	t
+5	Software	t
+6	Quimica	t
+7	Machine Learning	t
+\.
+
+
+--
+-- TOC entry 5179 (class 0 OID 17156)
+-- Dependencies: 236
+-- Data for Name: estudiantes; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.estudiantes (idestudiantes, nombreestudiante, apellidoestudiante, emailestudiante, telefonoestudiante, fechaingreso, fechafincontrato, estatus, idtipoestudiante, idcarreras, idinvestigadores) FROM stdin;
+22	Roberto	López	roberto@estudiante.com	1234567891	2025-01-01	2025-12-31	t	1	2	3
+23	Diego	Martínez	diego@estudiante.com	1234567892	2025-01-01	2025-12-31	t	1	3	4
+24	Carmen	Ramírez	carmen@estudiante.com	1234567893	2025-01-01	2025-12-31	t	1	4	5
+25	Gerardo	Sánchez	gerardo@estudiante.com	1234567894	2025-01-01	2025-12-31	t	1	5	6
+26	Alberto	González	alberto@estudiante.com	1234567895	2025-01-01	2025-12-31	t	1	6	7
+29	Javier	García	javier@estudiante.com	1234567898	2025-01-01	2025-12-31	t	1	2	10
+30	Rebeca	Vázquez	rebeca@estudiante.com	1234567899	2025-01-01	2025-12-31	t	1	5	11
+\.
+
+
+--
+-- TOC entry 5191 (class 0 OID 17241)
+-- Dependencies: 248
+-- Data for Name: eventos; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.eventos (idevento, nombreevento, lugarevento, fechaevento, duracionevento, empresainvitante, idtipoevento) FROM stdin;
+2	Diplomado en Energía	Guadalajara	2025-02-15	3 días	Energía Ltda	4
+3	Charla sobre Medio Ambiente	Monterrey	2025-02-16	1 día	Medio Ambiente Corp	5
+4	Congreso de Química	Ciudad de Mexico	2025-02-17	2 días	Químicos SA	1
+5	Taller de Software	Guadalajara	2025-02-18	1 día	Desarrollo de Software Inc	2
+6	Conferencia sobre Energía	Cancún	2025-02-19	1 día	Energía Ltda	3
+7	Diplomado en Química	Monterrey	2025-02-20	3 días	Químicos SA	4
+8	Charla sobre TI	México DF	2025-02-21	1 día	TechCorp	5
+9	Congreso de Desarrollo Humano	Guadalajara	2025-02-22	2 días	Desarrollo Humano Corp	1
+10	Taller sobre Medio Ambiente	Monterrey	2025-02-23	1 día	Medio Ambiente Corp	2
+11	Conferencia sobre IA	Cancún	2025-02-24	1 día	TechCorp	3
+\.
+
+
+--
+-- TOC entry 5199 (class 0 OID 17296)
+-- Dependencies: 256
+-- Data for Name: herramientas; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.herramientas (idherramientas, nombreherramienta, tipoherramienta) FROM stdin;
+1	TensorFlow	Software
+2	MATLAB	Software
+3	Python	Lenguaje de programación
+4	Simulink	Software
+5	AutoCAD	Software
+6	LabVIEW	Software
+\.
+
+
+--
+-- TOC entry 5171 (class 0 OID 17104)
+-- Dependencies: 228
+-- Data for Name: investigadores; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.investigadores (idinvestigadores, nombre, email, puesto, idniveledu, idarea) FROM stdin;
+3	Pedro	pedro@investigador.com	Investigador	3	3
+4	Alicia	alicia@investigadora.com	Investigadora	4	4
+5	Noemi	noemi@investigadora.com	Investigadora	2	5
+6	Alondra	alondra@investigadora.com	Investigadora	3	6
+7	Fernando	fernando@investigador.com	Investigador	4	7
+10	Brenda	brenda@investigadora.com	Investigadora	4	2
+11	Luis	luis@investigador.com	Investigador	2	3
+\.
+
+
+--
+-- TOC entry 5181 (class 0 OID 17181)
+-- Dependencies: 238
+-- Data for Name: lineas; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.lineas (idlineas, nombre, descripcion, fechaapertura, estatus) FROM stdin;
+1	IA	Inteligencia Artificial	2025-01-01	t
+2	Energía	Investigación en energías renovables	2025-01-02	t
+3	Microrredes	Investigación sobre microrredes eléctricas	2025-01-03	t
+4	Medio Ambiente	Investigación para la protección del medio ambiente	2025-01-04	t
+5	Desarrollo Humano	Estudios en desarrollo humano	2025-01-05	t
+6	Desarrollo de Software	Investigación en desarrollo de software	2025-01-06	t
+\.
+
+
+--
+-- TOC entry 5167 (class 0 OID 17078)
+-- Dependencies: 224
+-- Data for Name: niveledu; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.niveledu (idniveledu, descripcion, estatus, idespecialidades) FROM stdin;
+2	Licenciatura	t	2
+3	Maestría	t	3
+4	Doctorado	t	4
+5	Licenciatura	t	5
+6	Doctorado	t	6
+\.
+
+
+--
+-- TOC entry 5163 (class 0 OID 17063)
+-- Dependencies: 220
+-- Data for Name: nivelsni; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.nivelsni (idnivelsni, nombre) FROM stdin;
+2	Nivel 1
+3	Nivel 2
+4	Nivel 3
+\.
+
+
+--
+-- TOC entry 5203 (class 0 OID 17744)
+-- Dependencies: 260
+-- Data for Name: permisos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.permisos (idpermiso, descripcion, rol) FROM stdin;
+1	Admin	1
+2	Investigador	2
+3	Estudiante	3
+4	Usuario General	4
+\.
+
+
+--
+-- TOC entry 5195 (class 0 OID 17270)
+-- Dependencies: 252
+-- Data for Name: proyectos; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.proyectos (idproyecto, nombreproyecto, descripcionproyecto, fechainicio, fechatermino) FROM stdin;
+1	Proyecto de Microrredes	Desarrollo de soluciones de microrredes eléctricas	2025-01-01	2025-12-31
+2	Proyecto de Medio Ambiente	Investigación en técnicas de purificación de agua	2025-01-01	2025-12-31
+3	Proyecto de Desarrollo Humano	Estudios sobre el impacto de la educación en el desarrollo humano	2025-01-01	2025-12-31
+4	Proyecto de Software	Desarrollo de nuevas herramientas para el análisis de datos	2025-01-01	2025-12-31
+5	Proyecto de Química de Combustibles	Investigación sobre combustibles más eficientes	2025-01-01	2025-12-31
+6	Proyecto de Energía Renovable	Desarrollo de paneles solares más eficientes	2025-01-01	2025-12-31
+7	Centro de investigación	Proyecto final para desarrollo de aplicaciones web	2025-01-12	2025-05-05
+8	P1	P1	2025-03-20	2025-03-13
+\.
+
+
+--
+-- TOC entry 5173 (class 0 OID 17123)
+-- Dependencies: 230
+-- Data for Name: sni; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.sni (idsni, fechaingreso, fecharenovacion, idnivelsni, idinvestigadores) FROM stdin;
+8	2022-02-01	2023-02-01	3	3
+9	2023-03-01	2024-03-01	4	4
+\.
+
+
+--
+-- TOC entry 5175 (class 0 OID 17142)
+-- Dependencies: 232
+-- Data for Name: tipoestudiante; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.tipoestudiante (idtipoestudiante, descripcionestudiante) FROM stdin;
+1	Estudiante de Mercadotecnia
+2	Estudiante de Ing de Software
+3	Estudiante de Ing en Machine Learning
+\.
+
+
+--
+-- TOC entry 5189 (class 0 OID 17234)
+-- Dependencies: 246
+-- Data for Name: tipoevento; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.tipoevento (idtipoevento, nombreevento) FROM stdin;
+1	Congreso
+2	Taller
+3	Conferencia
+4	Diplomado
+5	Charla
+\.
+
+
+--
+-- TOC entry 5161 (class 0 OID 17056)
+-- Dependencies: 218
+-- Data for Name: unidades; Type: TABLE DATA; Schema: public; Owner: eduayy
+--
+
+COPY public.unidades (idunidades, nombre) FROM stdin;
+2	Jalisco
+3	San Luis Potosí
+4	Edo de Mexico
+5	Tabasco
+6	Sonora
+7	Zacatecas
+8	Monterrey
+\.
+
+
+--
+-- TOC entry 5205 (class 0 OID 17752)
+-- Dependencies: 262
+-- Data for Name: usuarios; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.usuarios (idusuario, nombre, correo, contrasena, idpermiso) FROM stdin;
+1	Juan Pérez	juan.perez@example.com	12345	1
+2	Ana García	ana.garcia@example.com	contraseña123	2
+3	Carlos López	carlos.lopez@example.com	qwerty2025	1
+4	María Torres	maria.torres@example.com	mypass2025	3
+\.
+
+
+--
+-- TOC entry 5253 (class 0 OID 0)
+-- Dependencies: 225
+-- Name: area_idarea_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.area_idarea_seq', 9, true);
+
+
+--
+-- TOC entry 5254 (class 0 OID 0)
+-- Dependencies: 241
+-- Name: articulos_idarticulo_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.articulos_idarticulo_seq', 13, true);
+
+
+--
+-- TOC entry 5255 (class 0 OID 0)
+-- Dependencies: 269
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.auth_group_id_seq', 1, false);
+
+
+--
+-- TOC entry 5256 (class 0 OID 0)
+-- Dependencies: 271
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
+
+
+--
+-- TOC entry 5257 (class 0 OID 0)
+-- Dependencies: 267
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 116, true);
+
+
+--
+-- TOC entry 5258 (class 0 OID 0)
+-- Dependencies: 275
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 1, false);
+
+
+--
+-- TOC entry 5259 (class 0 OID 0)
+-- Dependencies: 273
+-- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.auth_user_id_seq', 1, false);
+
+
+--
+-- TOC entry 5260 (class 0 OID 0)
+-- Dependencies: 277
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
+
+
+--
+-- TOC entry 5261 (class 0 OID 0)
+-- Dependencies: 233
+-- Name: carreras_idcarreras_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.carreras_idcarreras_seq', 9, true);
+
+
+--
+-- TOC entry 5262 (class 0 OID 0)
+-- Dependencies: 243
+-- Name: detart_iddetart_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.detart_iddetart_seq', 3, true);
+
+
+--
+-- TOC entry 5263 (class 0 OID 0)
+-- Dependencies: 249
+-- Name: deteventos_iddeteventos_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.deteventos_iddeteventos_seq', 3, true);
+
+
+--
+-- TOC entry 5264 (class 0 OID 0)
+-- Dependencies: 257
+-- Name: detherramienta_iddetherramienta_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.detherramienta_iddetherramienta_seq', 3, true);
+
+
+--
+-- TOC entry 5265 (class 0 OID 0)
+-- Dependencies: 239
+-- Name: detlineas_iddetlineas_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.detlineas_iddetlineas_seq', 3, true);
+
+
+--
+-- TOC entry 5266 (class 0 OID 0)
+-- Dependencies: 253
+-- Name: detproy_iddetproy_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.detproy_iddetproy_seq', 3, true);
+
+
+--
+-- TOC entry 5267 (class 0 OID 0)
+-- Dependencies: 279
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1, false);
+
+
+--
+-- TOC entry 5268 (class 0 OID 0)
+-- Dependencies: 265
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 29, true);
+
+
+--
+-- TOC entry 5269 (class 0 OID 0)
+-- Dependencies: 263
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 24, true);
+
+
+--
+-- TOC entry 5270 (class 0 OID 0)
+-- Dependencies: 221
+-- Name: especialidades_idespecialidades_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.especialidades_idespecialidades_seq', 7, true);
+
+
+--
+-- TOC entry 5271 (class 0 OID 0)
+-- Dependencies: 235
+-- Name: estudiantes_idestudiantes_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.estudiantes_idestudiantes_seq', 30, true);
+
+
+--
+-- TOC entry 5272 (class 0 OID 0)
+-- Dependencies: 247
+-- Name: eventos_idevento_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.eventos_idevento_seq', 11, true);
+
+
+--
+-- TOC entry 5273 (class 0 OID 0)
+-- Dependencies: 255
+-- Name: herramientas_idherramientas_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.herramientas_idherramientas_seq', 6, true);
+
+
+--
+-- TOC entry 5274 (class 0 OID 0)
+-- Dependencies: 227
+-- Name: investigadores_idinvestigadores_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.investigadores_idinvestigadores_seq', 11, true);
+
+
+--
+-- TOC entry 5275 (class 0 OID 0)
+-- Dependencies: 237
+-- Name: lineas_idlineas_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.lineas_idlineas_seq', 7, true);
+
+
+--
+-- TOC entry 5276 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: niveledu_idniveledu_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.niveledu_idniveledu_seq', 6, true);
+
+
+--
+-- TOC entry 5277 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: nivelsni_idnivelsni_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.nivelsni_idnivelsni_seq', 4, true);
+
+
+--
+-- TOC entry 5278 (class 0 OID 0)
+-- Dependencies: 259
+-- Name: permisos_idpermiso_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.permisos_idpermiso_seq', 1, false);
+
+
+--
+-- TOC entry 5279 (class 0 OID 0)
+-- Dependencies: 251
+-- Name: proyectos_idproyecto_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.proyectos_idproyecto_seq', 8, true);
+
+
+--
+-- TOC entry 5280 (class 0 OID 0)
+-- Dependencies: 229
+-- Name: sni_idsni_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.sni_idsni_seq', 9, true);
+
+
+--
+-- TOC entry 5281 (class 0 OID 0)
+-- Dependencies: 231
+-- Name: tipoestudiante_idtipoestudiante_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.tipoestudiante_idtipoestudiante_seq', 3, true);
+
+
+--
+-- TOC entry 5282 (class 0 OID 0)
+-- Dependencies: 245
+-- Name: tipoevento_idtipoevento_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.tipoevento_idtipoevento_seq', 5, true);
+
+
+--
+-- TOC entry 5283 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: unidades_idunidades_seq; Type: SEQUENCE SET; Schema: public; Owner: eduayy
+--
+
+SELECT pg_catalog.setval('public.unidades_idunidades_seq', 8, true);
+
+
+--
+-- TOC entry 5284 (class 0 OID 0)
+-- Dependencies: 261
+-- Name: usuarios_idusuario_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.usuarios_idusuario_seq', 1, false);
+
+
+-- Completed on 2025-04-05 20:41:57
+
+--
+-- PostgreSQL database dump complete
+--
+
