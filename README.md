@@ -1,3 +1,11 @@
+# comentarios del profesor
+No indicas paso a paso las librerias wque se deben instalar ni como instalarlas
+No idicas como llenar la BD con datos existentes
+No indicas el usuario y pass de administrador y que pueda usar para revisar el proyecto
+No dicias la ruta que debe posicionarse para compilar y ejecutar tanto el backend como frontend
+modulo de carreras da error
+
+
 # Centro de Investigacion (CIATEQ)
 
 #### Members:
