@@ -8,6 +8,7 @@ En cd backend/mysite:
 
 pip install django-cors-headers
 pip install djangorestframework
+pip install drf-yasg
 
 En el frontend: 
 
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     'api',
     'corsheaders',
     'rest_framework',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
