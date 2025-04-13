@@ -8,6 +8,7 @@ En cd backend/mysite:
 
 pip install django-cors-headers
 pip install djangorestframework
+pip install drf-yasg
 
 En el frontend: 
 
@@ -32,13 +33,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
-'''
-APPLICATION MEMBERS
-CARLOS EDUARDO SANCHEZ RAMOS
-JUAN PABLO VÁZQUEZ AREVALO
-'''
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -49,6 +43,7 @@ INSTALLED_APPS = [
     'api',
     'corsheaders',
     'rest_framework',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -95,8 +90,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'investigadores_database',         # Nombre de tu base de datos
-        'USER': 'postgres',              # Usuario de PostgreSQL
-        'PASSWORD': 'Juanpis09@',       # Contraseña del usuario
+        'USER': 'eduayy',              # Usuario de PostgreSQL
+        'PASSWORD': 'Kamysql23!',       # Contraseña del usuario
         'HOST': 'localhost',
         'PORT': '5432',
     }
