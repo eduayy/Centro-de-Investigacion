@@ -59,23 +59,36 @@ const Login = () => {
   return (
     <div className="login-container">
       <form onSubmit={handleSubmit} className="login-form">
-        <h2>Iniciar Sesión</h2>
+        <div className="login-header">
+          <h2>Welcome Back</h2>
+          <p className="login-subtitle">Sign in to your account</p>
+        </div>
+
         <div className="form-group">
-          <label>Correo:</label>
+          <label htmlFor="email" className="input-label">
+            Email
+          </label>
           <input
+            id="email"
             type="email"
             name="correo"
+            placeholder="Enter your email"
             value={formData.correo}
             onChange={handleInputChange}
             required
             className="login-input"
           />
         </div>
+
         <div className="form-group">
-          <label>Contraseña:</label>
+          <label htmlFor="password" className="input-label">
+            Password
+          </label>
           <input
+            id="password"
             type="password"
             name="contrasena"
+            placeholder="Enter your password"
             value={formData.contrasena}
             onChange={handleInputChange}
             required
@@ -83,9 +96,15 @@ const Login = () => {
           />
         </div>
         {error && <p className="error-message">{error}</p>}
+
         <button type="submit" className="login-button">
-          Ingresar
+          Sign In
+          <span className="button-icon">→</span>
         </button>
+
+        <p className="login-redirect">
+          Don´t have an account ? <a href="/register">Signup</a>
+        </p>
       </form>
     </div>
   );
