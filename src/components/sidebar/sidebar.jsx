@@ -39,7 +39,7 @@ const Sidebar = () => {
                 <hr />
               </li>
               <li>
-                <Link to="/registro">Registrarse</Link>
+                <Link to="/register">Registrarse</Link>
                 <hr />
               </li>
             </>
