@@ -144,7 +144,7 @@ body {
 }
 
 .error-message {
-  color: var(--error-color);
+  color: red;
   font-size: 14px;
   text-align: center;
   margin: 15px 0;
