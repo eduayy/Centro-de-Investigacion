@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "../auth/login/login.jsx";
+import Register from "../auth/Register/register.jsx";
 import Home from "../features/Home/home.jsx";
 import Students from "../features/pages/students/students.jsx";
 import Careers from "../features/pages/careers/careers.jsx";
@@ -20,6 +21,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/login" element={<Login />}></Route>
+        <Route path="/register" element={<Register />}></Route>
         <Route path="/estudiantes" element={<Students />}></Route>
         <Route path="/carreras" element={<Careers />}></Route>
         <Route path="/investigadores" element={<Researchers />}></Route>
