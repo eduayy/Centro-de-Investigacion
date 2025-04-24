@@ -8,6 +8,7 @@ export const useResearchers = () => {
   const [editingInvestigador, setEditingInvestigador] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [options, setOptions] = useState({ nivelEdu: [], areas: [] });
+  const [selectedResearcher, setSelectedResearcher] = useState(null);
 
   const initialInvestigadorState = {
     nombre: "",
@@ -27,7 +28,7 @@ export const useResearchers = () => {
         const { investigadores, nivelEdu, areas } =
           await api.fetchInitialData();
         setInvestigadores(investigadores);
-        setOptions({ nivelEdu, areas });
+        setOptions({ nivelesEdu: nivelEdu, areas });
         setError(null);
       } catch (err) {
         setError(`Error loading data: ${err.message}`);
@@ -120,5 +121,7 @@ export const useResearchers = () => {
     handleInputChange,
     setShowAddForm,
     setEditingInvestigador,
+    selectedResearcher,
+    setSelectedResearcher,
   };
 };

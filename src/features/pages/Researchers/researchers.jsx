@@ -2,6 +2,7 @@ import React from "react";
 import Sidebar from "../../../components/sidebar/sidebar";
 import ResearchersForm from "./jsx/ResearchersForm.jsx";
 import ResearchersTable from "./jsx/ResearchersTable.jsx";
+import ResearchersCard from "./jsx/ResearchersCard.jsx";
 import { useResearchers } from "./js/useResearchers_temp.js";
 import "./style/researchers.css";
 
@@ -20,6 +21,8 @@ const Researchers = () => {
     handleInputChange,
     setShowAddForm,
     setEditingInvestigador,
+    selectedResearcher,
+    setSelectedResearcher,
   } = useResearchers();
 
   if (loading) return <div className="loading">Loading Researchers...</div>;
@@ -61,7 +64,12 @@ const Researchers = () => {
           options={options}
           onEdit={setEditingInvestigador}
           onDelete={handleDelete}
+          onSelect={setSelectedResearcher}
         />
+
+        {selectedResearcher && (
+          <ResearchersCard investigador={selectedResearcher} />
+        )}
       </div>
     </div>
   );

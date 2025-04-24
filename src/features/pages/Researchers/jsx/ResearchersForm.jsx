@@ -35,7 +35,7 @@ const ResearchersForm = ({
           required
         >
           <option value="">Seleccione un nivel</option>
-          {options.nivelesEdu.map((n) => (
+          {options.nivelesEdu?.map((n) => (
             <option key={n.idniveledu} value={n.idniveledu}>
               {n.nombrenivel}
             </option>
