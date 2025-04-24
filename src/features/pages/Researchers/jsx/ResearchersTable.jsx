@@ -21,11 +21,11 @@ const ResearchersTable = ({ investigadores, options, onEdit, onDelete }) => (
             <td>{i.nombre}</td>
             <td>{i.email}</td>
             <td>{i.puesto}</td>
-            {options.nivelesEdu.find((n) => n.idniveledu === i.idniveledu)
-              ?.nombrenivel || "-"}
             <td>
-              {options.areas.find((a) => a.idarea === i.idarea)?.nombrearea ||
-                "-"}
+              {options?.nivelEdu?.find((n) => n.idniveledu === i.idniveledu)?.nombrenivel || "-"}
+            </td>
+            <td>
+              {options?.areas?.find((a) => a.idarea === i.idarea)?.nombrearea || "-"}
             </td>
             <td>
               <button className="btn-edit" onClick={() => onEdit(i)}>

@@ -91,3 +91,6 @@ from .niveledu_views import (
     NivelEduListCreateAPIView,
     NivelEduRetrieveUpdateDestroyAPIView
 )
+
+# o TipoEstudianteViewSet si usas ViewSet
+from .tipoestudiante_views import TipoEstudianteList

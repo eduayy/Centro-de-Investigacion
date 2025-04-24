@@ -50,9 +50,10 @@ from .views import (
     editar_investigador,
     baja_investigador,
     NivelEduListCreateAPIView,
-    NivelEduRetrieveUpdateDestroyAPIView
+    NivelEduRetrieveUpdateDestroyAPIView,
+    tipoestudiante_views
 )
-from .views.api_views import EstudiantesViewSet, ProyectosViewSet, AreaViewSet, EspecialidadesViewSet, LineasViewSet, EventosViewSet, ArticulosViewSet, UnidadesViewSet, HerramientasViewSet, CarrerasViewSet, InvestigadoresViewSet
+from .views.api_views import EstudiantesViewSet, ProyectosViewSet, AreaViewSet, EspecialidadesViewSet, LineasViewSet, EventosViewSet, ArticulosViewSet, UnidadesViewSet, HerramientasViewSet, CarrerasViewSet, InvestigadoresViewSet, NivelEduViewSet, TipoEstudianteViewSet
 
 router = DefaultRouter()
 router.register(r'estudiantes-api', EstudiantesViewSet, basename='estudiantes')
@@ -69,7 +70,9 @@ router.register(r'herramientas-api', HerramientasViewSet,
 router.register(r'carreras-api', CarrerasViewSet, basename='carreras')
 router.register(r'investigadores-api', InvestigadoresViewSet,
                 basename='investigadores')
-
+router.register(r'nivel-edu-api', NivelEduViewSet, basename='niveledu')
+router.register(r'tipoestudiantes', TipoEstudianteViewSet,
+                basename='tipoestudiante')
 
 urlpatterns = [
     # Autenticación
@@ -156,6 +159,11 @@ urlpatterns = [
          name='niveledu-list-create'),
     path('niveledu/<int:pk>/',
          NivelEduRetrieveUpdateDestroyAPIView.as_view(), name='niveledu-detail'),
+
+    # Tipo estudiante
+    path('tipoestudiantes/', tipoestudiante_views.TipoEstudianteList.as_view(),
+         name='tipoestudiante-list'),
+
 
     # API
     path('api/', include(router.urls)),

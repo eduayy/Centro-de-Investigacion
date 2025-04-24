@@ -7,7 +7,7 @@ export const useResearchers = () => {
   const [error, setError] = useState(null);
   const [editingInvestigador, setEditingInvestigador] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
-  const [options, setOptions] = useState({ nivelesEdu: [], areas: [] });
+  const [options, setOptions] = useState({ nivelEdu: [], areas: [] });
 
   const initialInvestigadorState = {
     nombre: "",
@@ -24,10 +24,10 @@ export const useResearchers = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { investigadores, nivelesEdu, areas } =
+        const { investigadores, nivelEdu, areas } =
           await api.fetchInitialData();
         setInvestigadores(investigadores);
-        setOptions({ nivelesEdu, areas });
+        setOptions({ nivelEdu, areas });
         setError(null);
       } catch (err) {
         setError(`Error loading data: ${err.message}`);

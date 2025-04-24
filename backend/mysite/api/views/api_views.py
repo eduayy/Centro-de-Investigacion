@@ -1,8 +1,8 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from ..models import Estudiantes, Proyectos, Area, Especialidades, Lineas, Eventos, Articulos, Unidades, Herramientas, Carreras, Investigadores, NivelEdu
-from ..serializers import EstudiantesSerializer, ProyectosSerializer, AreaSerializer, EspecialidadesSerializer, LineasSerializer, EventosSerializer, ArticulosSerializer, UnidadesSerializer, HerramientasSerializer, CarrerasSerializer, InvestigadoresSerializer
+from ..models import Estudiantes, Proyectos, Area, Especialidades, Lineas, Eventos, Articulos, Unidades, Herramientas, Carreras, Investigadores, NivelEdu, TipoEstudiante
+from ..serializers import EstudiantesSerializer, ProyectosSerializer, AreaSerializer, EspecialidadesSerializer, LineasSerializer, EventosSerializer, ArticulosSerializer, UnidadesSerializer, HerramientasSerializer, CarrerasSerializer, InvestigadoresSerializer, NivelEduSerializer, TipoEstudianteSerializer
 
 # Estudiantes
 
@@ -210,3 +210,15 @@ class InvestigadoresViewSet(viewsets.ModelViewSet):
             )
 
 # Nivel Educativo
+
+
+class NivelEduViewSet(viewsets.ModelViewSet):
+    queryset = NivelEdu.objects.all()
+    serializer_class = NivelEduSerializer
+
+# Tipo estudainte
+
+
+class TipoEstudianteViewSet(viewsets.ModelViewSet):
+    queryset = TipoEstudiante.objects.all()
+    serializer_class = TipoEstudianteSerializer

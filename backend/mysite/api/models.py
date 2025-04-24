@@ -21,7 +21,7 @@ class Area(models.Model):
     idunidades = models.ForeignKey(
         'Unidades',
         on_delete=models.CASCADE,
-        db_column='idunidades'  # Esto indica a Django usar exactamente este nombre de columna
+        db_column='idunidades'
     )
 
     objects = SafeGetManager()
