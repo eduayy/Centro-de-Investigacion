@@ -48,7 +48,9 @@ from .views import (
     lista_investigadores,
     alta_investigador,
     editar_investigador,
-    baja_investigador
+    baja_investigador,
+    NivelEduListCreateAPIView,
+    NivelEduRetrieveUpdateDestroyAPIView
 )
 from .views.api_views import EstudiantesViewSet, ProyectosViewSet, AreaViewSet, EspecialidadesViewSet, LineasViewSet, EventosViewSet, ArticulosViewSet, UnidadesViewSet, HerramientasViewSet, CarrerasViewSet, InvestigadoresViewSet
 
@@ -148,6 +150,12 @@ urlpatterns = [
          editar_investigador, name='editar_investigador'),
     path('investigadores/baja/<int:pk>/',
          baja_investigador, name='baja_investigador'),
+
+    # NivelEdu
+    path('niveledu/', NivelEduListCreateAPIView.as_view(),
+         name='niveledu-list-create'),
+    path('niveledu/<int:pk>/',
+         NivelEduRetrieveUpdateDestroyAPIView.as_view(), name='niveledu-detail'),
 
     # API
     path('api/', include(router.urls)),

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from api.models import Estudiantes, Proyectos, Area, Especialidades, Lineas, Eventos, Articulos, Unidades, Herramientas, Carreras, Investigadores
+from api.models import Estudiantes, Proyectos, Area, Especialidades, Lineas, Eventos, Articulos, Unidades, Herramientas, Carreras, Investigadores, NivelEdu
 
 
 # Estudiantes
@@ -70,4 +70,10 @@ class CarrerasSerializer(serializers.ModelSerializer):
 class InvestigadoresSerializer(serializers.ModelSerializer):
     class Meta:
         model = Investigadores
+        fields = '__all__'
+
+
+class NivelEduSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NivelEdu
         fields = '__all__'

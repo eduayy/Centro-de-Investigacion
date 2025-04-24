@@ -86,3 +86,8 @@ from .investigadores_views import (
     editar_investigador,
     baja_investigador
 )
+
+from .niveledu_views import (
+    NivelEduListCreateAPIView,
+    NivelEduRetrieveUpdateDestroyAPIView
+)
