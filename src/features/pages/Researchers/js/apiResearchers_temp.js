@@ -3,14 +3,15 @@ import axios from "axios";
 const BASE_URL = "http://localhost:8000/api/";
 
 export const fetchInitialData = async () => {
-  const [investigadoresRes, areasRes] = await Promise.all([
+  const [investigadoresRes, nivelEdu, areasRes] = await Promise.all([
     axios.get(`${BASE_URL}investigadores-api/`, { withCredentials: true }),
-    // axios.get(`${BASE_URL}nivel-edu-api/`),
+    axios.get(`${BASE_URL}nivel-edu-api/`),
     axios.get(`${BASE_URL}areas-api/`, { withCredentials: true }),
   ]);
 
   return {
     investigadores: investigadoresRes.data,
+    nivel: nivelEdu.data,
     areas: areasRes.data,
   };
 };

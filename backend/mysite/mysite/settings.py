@@ -90,8 +90,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'investigadores_database',         # Nombre de tu base de datos
-        'USER': 'postgres',              # Usuario de PostgreSQL
-        'PASSWORD': 'Juanpis09@',       # Contraseña del usuario
+        'USER': 'eduayy',              # Usuario de PostgreSQL
+        'PASSWORD': 'Kamysql23!',       # Contraseña del usuario
         'HOST': 'localhost',
         'PORT': '5432',
     }

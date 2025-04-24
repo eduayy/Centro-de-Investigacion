@@ -1,7 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from ..models import Estudiantes, Proyectos, Area, Especialidades, Lineas, Eventos, Articulos, Unidades, Herramientas, Carreras, Investigadores
+from ..models import Estudiantes, Proyectos, Area, Especialidades, Lineas, Eventos, Articulos, Unidades, Herramientas, Carreras, Investigadores, NivelEdu
 from ..serializers import EstudiantesSerializer, ProyectosSerializer, AreaSerializer, EspecialidadesSerializer, LineasSerializer, EventosSerializer, ArticulosSerializer, UnidadesSerializer, HerramientasSerializer, CarrerasSerializer, InvestigadoresSerializer
 
 # Estudiantes
@@ -208,3 +208,5 @@ class InvestigadoresViewSet(viewsets.ModelViewSet):
                 {"detail": str(e)},
                 status=status.HTTP_400_BAD_REQUEST
             )
+
+# Nivel Educativo

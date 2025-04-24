@@ -26,8 +26,7 @@ const ResearchersForm = ({
         </div>
       ))}
 
-      {/* Education Level not avaiable yet */}
-      {/* <div className="form-group">
+      <div className="form-group">
         <label>Nivel Educativo:</label>
         <select
           name="idniveledu"
@@ -42,7 +41,7 @@ const ResearchersForm = ({
             </option>
           ))}
         </select>
-      </div> */}
+      </div>
 
       <div className="form-group">
         <label>Área:</label>

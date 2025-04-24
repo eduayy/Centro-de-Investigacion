@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import * as api from "./apiResearchers.js";
+import * as api from "./apiResearchers_temp.js";
 
 export const useResearchers = () => {
   const [investigadores, setInvestigadores] = useState([]);
@@ -28,8 +28,9 @@ export const useResearchers = () => {
           await api.fetchInitialData();
         setInvestigadores(investigadores);
         setOptions({ nivelesEdu, areas });
+        setError(null);
       } catch (err) {
-        setError(`Error al cargar datos: ${err.message}`);
+        setError(`Error loading data: ${err.message}`);
       } finally {
         setLoading(false);
       }
@@ -40,21 +41,37 @@ export const useResearchers = () => {
 
   const handleAdd = async (e) => {
     e.preventDefault();
+    const { nombre, email, puesto, idniveledu, idarea } = newInvestigador;
+
+    if (!nombre || !email || !puesto || !idniveledu || !idarea) {
+      setError("Please complete the missing fields.");
+      return;
+    }
+
     try {
-      const nuevo = await api.addInvestigador(newInvestigador);
+      const nuevo = await api.addInvestigador({
+        ...newInvestigador,
+        idniveledu: Number(idniveledu),
+        idarea: Number(idarea),
+      });
       setInvestigadores((prev) => [...prev, nuevo]);
       setNewInvestigador(initialInvestigadorState);
       setShowAddForm(false);
       setError(null);
     } catch (err) {
-      setError(`Error al registrar: ${err.message}`);
+      setError(`Register error: ${err.response?.data?.detail || err.message}`);
     }
   };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const actualizado = await api.updateInvestigador(editingInvestigador);
+      const actualizado = await api.updateInvestigador({
+        ...editingInvestigador,
+        idniveledu: Number(editingInvestigador.idniveledu),
+        idarea: Number(editingInvestigador.idarea),
+      });
+
       setInvestigadores((prev) =>
         prev.map((i) =>
           i.idinvestigadores === actualizado.idinvestigadores ? actualizado : i
@@ -63,7 +80,7 @@ export const useResearchers = () => {
       setEditingInvestigador(null);
       setError(null);
     } catch (err) {
-      setError(`Error al actualizar: ${err.message}`);
+      setError(`Update error: ${err.response?.data?.detail || err.message}`);
     }
   };
 
@@ -76,7 +93,7 @@ export const useResearchers = () => {
       );
       setError(null);
     } catch (err) {
-      setError(`Error al eliminar: ${err.message}`);
+      setError(`Delete error: ${err.response?.data?.detail || err.message}`);
     }
   };
 

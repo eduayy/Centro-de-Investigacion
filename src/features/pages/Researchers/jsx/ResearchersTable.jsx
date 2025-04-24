@@ -9,7 +9,7 @@ const ResearchersTable = ({ investigadores, options, onEdit, onDelete }) => (
           <th>Nombre</th>
           <th>Email</th>
           <th>Puesto</th>
-          {/* <th>Nivel Educativo</th> */}
+          <th>Nivel Educativo</th>
           <th>Área</th>
           <th>Acciones</th>
         </tr>
@@ -21,10 +21,8 @@ const ResearchersTable = ({ investigadores, options, onEdit, onDelete }) => (
             <td>{i.nombre}</td>
             <td>{i.email}</td>
             <td>{i.puesto}</td>
-            {/* <td>
-              {options.nivelesEdu.find((n) => n.idniveledu === i.idniveledu)
-                ?.nombrenivel || "-"}
-            </td> */}
+            {options.nivelesEdu.find((n) => n.idniveledu === i.idniveledu)
+              ?.nombrenivel || "-"}
             <td>
               {options.areas.find((a) => a.idarea === i.idarea)?.nombrearea ||
                 "-"}
