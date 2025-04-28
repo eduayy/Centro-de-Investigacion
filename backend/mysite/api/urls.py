@@ -5,10 +5,6 @@ from .views import (
     login_api,
     inicio,
     logout_view,
-    lista_estudiantes,
-    alta_estudiante,
-    editar_estudiante,
-    baja_estudiante,
     lista_proyectos,
     alta_proyecto,
     editar_proyecto,
@@ -92,13 +88,6 @@ urlpatterns = [
     path('login-api/', login_api, name='login_api'),
     path('inicio/', inicio, name='inicio'),
     path('logout/', logout_view, name='logout'),
-
-    # Estudiantes
-    path('estudiantes/', lista_estudiantes, name='lista_estudiantes'),
-    path('estudiantes/alta/', alta_estudiante, name='alta_estudiante'),
-    path('estudiantes/editar/<int:pk>/',
-         editar_estudiante, name='editar_estudiante'),
-    path('estudiantes/baja/<int:pk>/', baja_estudiante, name='baja_estudiante'),
 
     # Proyectos
     path('proyectos/', lista_proyectos, name='lista_proyectos'),

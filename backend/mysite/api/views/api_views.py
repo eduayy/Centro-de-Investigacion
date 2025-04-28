@@ -19,15 +19,6 @@ class EstudiantesViewSet(viewsets.ModelViewSet):
     serializer_class = EstudiantesSerializer
     permission_classes = [AllowAny]
 
-    def destroy(self, request, *args, **kwargs):
-        instance = self.get_object()
-        if instance.dar_de_baja():
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        return Response(
-            {"detail": "No se pudo realizar la baja"},
-            status=status.HTTP_400_BAD_REQUEST
-        )
-
 # Proyectos
 
 

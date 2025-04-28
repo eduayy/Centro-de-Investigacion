@@ -19,7 +19,7 @@ const Students = () => {
     investigadores: [],
   });
 
-  // Estado inicial para nuevo estudiante
+  // Estado inicial para nuevo estudiante (sin idestudiantes)
   const initialStudentState = {
     nombreestudiante: "",
     apellidoestudiante: "",
@@ -44,7 +44,7 @@ const Students = () => {
               .get(`${API_BASE_URL}api/estudiantes-api/`, {
                 withCredentials: true,
               })
-              .catch(() => ({ data: [] })), // Si falla, devuelve data vacía
+              .catch(() => ({ data: [] })),
             axios
               .get(`${API_BASE_URL}api/tipoestudiantes-api/`, {
                 withCredentials: true,
@@ -83,18 +83,19 @@ const Students = () => {
   // Agregar nuevo estudiante
   const handleAdd = async (e) => {
     e.preventDefault();
+    console.log("Datos a enviar:", newStudent);
     try {
       const response = await axios.post(
         `${API_BASE_URL}api/estudiantes-api/`,
         newStudent,
         { withCredentials: true }
       );
-
       setStudents([...students, response.data]);
       setNewStudent(initialStudentState);
       setShowAddForm(false);
       setError(null);
     } catch (error) {
+      console.error("Error al registrar:", error.response || error);
       setError(
         `Error al registrar: ${error.response?.data?.detail || error.message}`
       );
@@ -104,13 +105,13 @@ const Students = () => {
   // Actualizar estudiante
   const handleUpdate = async (e) => {
     e.preventDefault();
+    console.log("Datos a actualizar:", editingStudent);
     try {
       const response = await axios.put(
         `${API_BASE_URL}api/estudiantes-api/${editingStudent.idestudiantes}/`,
         editingStudent,
         { withCredentials: true }
       );
-
       setStudents(
         students.map((student) =>
           student.idestudiantes === editingStudent.idestudiantes
@@ -132,7 +133,6 @@ const Students = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("¿Estás seguro de dar de baja a este estudiante?"))
       return;
-
     try {
       await axios.delete(`${API_BASE_URL}api/estudiantes-api/${id}/`, {
         withCredentials: true,
@@ -270,7 +270,7 @@ const Students = () => {
                       key={tipo.idtipoestudiante}
                       value={tipo.idtipoestudiante}
                     >
-                      {tipo.nombretipo}
+                      {tipo.descripcion}
                     </option>
                   ))}
                 </select>
@@ -329,12 +329,10 @@ const Students = () => {
           </div>
         )}
 
-        {/* Formulario de edición */}
         {editingStudent && (
           <div className="form-container">
             <h3>Editar Estudiante</h3>
             <form onSubmit={handleUpdate}>
-              {/* Campos similares al formulario de agregar */}
               <div className="form-group">
                 <label>Nombre:</label>
                 <input
@@ -346,7 +344,125 @@ const Students = () => {
                 />
               </div>
 
-              {/* Repetir para los demás campos... */}
+              <div className="form-group">
+                <label>Apellido:</label>
+                <input
+                  type="text"
+                  name="apellidoestudiante"
+                  value={editingStudent.apellidoestudiante}
+                  onChange={(e) => handleInputChange(e, true)}
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Email:</label>
+                <input
+                  type="email"
+                  name="emailestudiante"
+                  value={editingStudent.emailestudiante}
+                  onChange={(e) => handleInputChange(e, true)}
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Teléfono:</label>
+                <input
+                  type="tel"
+                  name="telefonoestudiante"
+                  value={editingStudent.telefonoestudiante}
+                  onChange={(e) => handleInputChange(e, true)}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Fecha de Ingreso:</label>
+                <input
+                  type="date"
+                  name="fechaingreso"
+                  value={editingStudent.fechaingreso}
+                  onChange={(e) => handleInputChange(e, true)}
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Fecha Fin de Contrato:</label>
+                <input
+                  type="date"
+                  name="fechafincontrato"
+                  value={editingStudent.fechafincontrato}
+                  onChange={(e) => handleInputChange(e, true)}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Estatus:</label>
+                <input
+                  type="checkbox"
+                  name="estatus"
+                  checked={editingStudent.estatus}
+                  onChange={(e) => handleInputChange(e, true)}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Tipo de Estudiante:</label>
+                <select
+                  name="idtipoestudiante"
+                  value={editingStudent.idtipoestudiante}
+                  onChange={(e) => handleInputChange(e, true)}
+                  required
+                >
+                  <option value="">Seleccione un tipo</option>
+                  {options.tiposEstudiante.map((tipo) => (
+                    <option
+                      key={tipo.idtipoestudiante}
+                      value={tipo.idtipoestudiante}
+                    >
+                      {tipo.descripcion}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label>Carrera:</label>
+                <select
+                  name="idcarreras"
+                  value={editingStudent.idcarreras}
+                  onChange={(e) => handleInputChange(e, true)}
+                  required
+                >
+                  <option value="">Seleccione una carrera</option>
+                  {options.carreras.map((carrera) => (
+                    <option key={carrera.idcarreras} value={carrera.idcarreras}>
+                      {carrera.nombrecarrera}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label>Investigador:</label>
+                <select
+                  name="idinvestigadores"
+                  value={editingStudent.idinvestigadores}
+                  onChange={(e) => handleInputChange(e, true)}
+                  required
+                >
+                  <option value="">Seleccione un investigador</option>
+                  {options.investigadores.map((investigador) => (
+                    <option
+                      key={investigador.idinvestigadores}
+                      value={investigador.idinvestigadores}
+                    >
+                      {investigador.nombre} {investigador.apellido}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
               <div className="form-actions">
                 <button type="submit" className="btn-save">
@@ -364,7 +480,6 @@ const Students = () => {
           </div>
         )}
 
-        {/* Tabla de estudiantes */}
         <div className="students-table-container">
           <table className="students-table">
             <thead>
@@ -387,13 +502,10 @@ const Students = () => {
                   <td>{student.apellidoestudiante}</td>
                   <td>{student.emailestudiante}</td>
                   <td>
-  {/* Mostrar el nombre del tipo de estudiante directamente si idtipoestudiante es un objeto */}
-  {student.idtipoestudiante?.nombretipo 
-    ? student.idtipoestudiante.nombretipo 
-    : options.tiposEstudiante.find(
-        (t) => t.idtipoestudiante === student.idtipoestudiante
-      )?.nombretipo || "-"}
-</td>
+                    {options.tiposEstudiante.find(
+                      (t) => t.idtipoestudiante === student.idtipoestudiante
+                    )?.descripcion || "-"}
+                  </td>
                   <td>
                     {options.carreras.find(
                       (c) => c.idcarreras === student.idcarreras

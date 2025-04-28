@@ -4,12 +4,7 @@ from .auth_views import (
     inicio,
     logout_view
 )
-from .estudiante_views import (
-    lista_estudiantes,
-    alta_estudiante,
-    editar_estudiante,
-    baja_estudiante
-)
+
 from .api_views import (
     EstudiantesViewSet
 )

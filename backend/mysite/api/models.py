@@ -1,5 +1,7 @@
 from django.db import connection
 from django.db import models
+from django.db.models import Max
+
 
 # Create your models here.
 
@@ -67,12 +69,12 @@ class DetArt(models.Model):
     idarticulo = models.ForeignKey(
         'Articulos',
         on_delete=models.CASCADE,
-        db_column='idarticulo'  # Recomiendo añadir esto también para consistencia
+        db_column='idarticulo'
     )
     idinvestigador = models.ForeignKey(
-        'Investigadores',  # Referencia al modelo Investigador entre comillas
+        'Investigadores',
         on_delete=models.CASCADE,
-        db_column='idinvestigadores'  # Nombre real en la BD
+        db_column='idinvestigadores'
     )
     objects = SafeGetManager()
 
@@ -86,12 +88,12 @@ class DetEventos(models.Model):
     idinvestigadores = models.ForeignKey(
         'Investigadores',
         on_delete=models.CASCADE,
-        db_column='idinvestigadores'  # Nombre exacto de la columna en BD
+        db_column='idinvestigadores'
     )
     idevento = models.ForeignKey(
         'Eventos',
         on_delete=models.CASCADE,
-        db_column='idevento'  # También recomendado para consistencia
+        db_column='idevento'
     )
 
     objects = SafeGetManager()
@@ -108,12 +110,12 @@ class DetHerramienta(models.Model):
     idproyecto = models.ForeignKey(
         'Proyectos',
         on_delete=models.CASCADE,
-        db_column='idproyecto'  # Especifica explícitamente el nombre de columna
+        db_column='idproyecto'
     )
     idherramientas = models.ForeignKey(
         'Herramientas',
         on_delete=models.CASCADE,
-        db_column='idherramientas'  # Especifica explícitamente el nombre de columna
+        db_column='idherramientas'
     )
 
     class Meta:
@@ -126,12 +128,12 @@ class DetLineas(models.Model):
     idlineas = models.ForeignKey(
         'Lineas',
         on_delete=models.CASCADE,
-        db_column='idlineas'  # Especificamos el nombre real en BD
+        db_column='idlineas'
     )
     idinvestigadores = models.ForeignKey(
         'Investigadores',
         on_delete=models.CASCADE,
-        db_column='idinvestigadores'  # Nombre exacto en BD
+        db_column='idinvestigadores'
     )
 
     objects = SafeGetManager()
@@ -147,12 +149,12 @@ class DetProy(models.Model):
     idinvestigadores = models.ForeignKey(
         'Investigadores',
         on_delete=models.CASCADE,
-        db_column='idinvestigadores'  # Nombre exacto en la BD
+        db_column='idinvestigadores'
     )
     idproyecto = models.ForeignKey(
         'Proyectos',
         on_delete=models.CASCADE,
-        db_column='idproyecto'  # También especificado para consistencia
+        db_column='idproyecto'
     )
 
     objects = SafeGetManager()
@@ -175,13 +177,15 @@ class Especialidades(models.Model):
 
 
 class Estudiantes(models.Model):
-    idestudiantes = models.IntegerField(primary_key=True)
+    idestudiantes = models.AutoField(primary_key=True)
     nombreestudiante = models.CharField(max_length=50)
     apellidoestudiante = models.CharField(max_length=50)
     emailestudiante = models.CharField(max_length=50)
-    telefonoestudiante = models.CharField(max_length=20)
+    telefonoestudiante = models.CharField(
+        max_length=20, blank=True, null=True)
     fechaingreso = models.DateField()
-    fechafincontrato = models.DateField()
+    fechafincontrato = models.DateField(
+        blank=True, null=True)
     estatus = models.BooleanField(default=True)
 
     # Claves foráneas
@@ -210,9 +214,20 @@ class Estudiantes(models.Model):
     def __str__(self):
         return f"{self.nombreestudiante} {self.apellidoestudiante}"
 
+    def save(self, *args, **kwargs):
+        """
+        Sobreescribe el método save() para asignar manualmente un ID si no existe.
+        Útil cuando managed=False y la secuencia no está configurada en la BD.
+        """
+        if not self.idestudiantes:
+            # Obtener el máximo ID actual y sumar 1
+            max_id = Estudiantes.objects.aggregate(
+                max_id=Max('idestudiantes'))['max_id']
+            self.idestudiantes = (max_id or 0) + 1
+        super().save(*args, **kwargs)
+
     def dar_de_baja(self):
         """Método para baja lógica que funciona con managed=False"""
-        from django.db import connection
         try:
             with connection.cursor() as cursor:
                 cursor.execute(
@@ -302,7 +317,7 @@ class NivelEdu(models.Model):
     idespecialidades = models.ForeignKey(
         'Especialidades',
         on_delete=models.CASCADE,
-        db_column='idespecialidades'  # Asegúrate que coincida con tu BD
+        db_column='idespecialidades'
     )
 
     objects = SafeGetManager()
@@ -369,12 +384,12 @@ class Sni(models.Model):
     idnivelsni = models.ForeignKey(
         'NivelSni',
         on_delete=models.CASCADE,
-        db_column='idnivelsni'  # Especificamos el nombre real en BD
+        db_column='idnivelsni'
     )
     idinvestigadores = models.ForeignKey(
         'Investigadores',
         on_delete=models.CASCADE,
-        db_column='idinvestigadores'  # Nombre exacto en BD
+        db_column='idinvestigadores'
     )
 
     objects = SafeGetManager()
@@ -385,9 +400,7 @@ class Sni(models.Model):
 
 
 class TipoEstudiante(models.Model):
-    # Usar IntegerField en lugar de AutoField
     idtipoestudiante = models.IntegerField(primary_key=True)
-    # Nombre exacto como en tu BD
     descripcion = models.CharField(max_length=255)
 
     objects = SafeGetManager()
