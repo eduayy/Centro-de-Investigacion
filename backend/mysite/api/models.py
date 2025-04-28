@@ -33,6 +33,13 @@ class Area(models.Model):
         db_table = 'area'
 
 
+def save(self, *args, **kwargs):
+    if not self.idarea:
+        max_id = Area.objects.aggregate(max_id=Max('idarea'))['max_id']
+        self.idarea = (max_id or 0) + 1
+    super().save(*args, **kwargs)
+
+
 class Articulos(models.Model):
     idarticulo = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=30)
@@ -49,6 +56,14 @@ class Articulos(models.Model):
         db_table = 'articulos'
 
 
+def save(self, *args, **kwargs):
+    if not self.idarticulo:
+        max_id = Articulos.objects.aggregate(
+            max_id=Max('idarticulo'))['max_id']
+        self.idarticulo = (max_id or 0) + 1
+    super().save(*args, **kwargs)
+
+
 class Carreras(models.Model):
     idcarreras = models.AutoField(primary_key=True)
     nombrecarrera = models.CharField(max_length=40)
@@ -62,6 +77,14 @@ class Carreras(models.Model):
 
     def __str__(self):
         return f"{self.nombrecarrera} ({self.nombreuniversidad})"
+
+
+def save(self, *args, **kwargs):
+
+    if not self.idcarreras:
+        max_id = Carreras.objects.aggregate(max_id=Max('idcarreras'))['max_id']
+        self.idcarreras = (max_id or 0) + 1
+    super().save(*args, **kwargs)
 
 
 class DetArt(models.Model):
@@ -176,6 +199,14 @@ class Especialidades(models.Model):
         db_table = 'especialidades'
 
 
+def save(self, *args, **kwargs):
+    if not self.idespecialidades:
+        max_id = Especialidades.objects.aggregate(
+            max_id=Max('idespecialidades'))['max_id']
+        self.idespecialidades = (max_id or 0) + 1
+    super().save(*args, **kwargs)
+
+
 class Estudiantes(models.Model):
     idestudiantes = models.AutoField(primary_key=True)
     nombreestudiante = models.CharField(max_length=50)
@@ -215,10 +246,6 @@ class Estudiantes(models.Model):
         return f"{self.nombreestudiante} {self.apellidoestudiante}"
 
     def save(self, *args, **kwargs):
-        """
-        Sobreescribe el método save() para asignar manualmente un ID si no existe.
-        Útil cuando managed=False y la secuencia no está configurada en la BD.
-        """
         if not self.idestudiantes:
             # Obtener el máximo ID actual y sumar 1
             max_id = Estudiantes.objects.aggregate(
@@ -264,6 +291,14 @@ class Eventos(models.Model):
         return self.nombreevento
 
 
+def save(self, *args, **kwargs):
+    if not self.idevento:
+        max_id = Eventos.objects.aggregate(
+            max_id=Max('idevento'))['max_id']
+        self.idevento = (max_id or 0) + 1
+    super().save(*args, **kwargs)
+
+
 class Herramientas(models.Model):
     idherramientas = models.AutoField(primary_key=True)
     nombreherramienta = models.CharField(max_length=255)
@@ -274,6 +309,14 @@ class Herramientas(models.Model):
     class Meta:
         managed = False
         db_table = 'herramientas'
+
+
+def save(self, *args, **kwargs):
+    if not self.idherramientas:
+        max_id = Herramientas.objects.aggregate(
+            max_id=Max('idherramientas'))['max_id']
+        self.idherramientas = (max_id or 0) + 1
+    super().save(*args, **kwargs)
 
 
 class Investigadores(models.Model):
@@ -294,8 +337,16 @@ class Investigadores(models.Model):
         return f"{self.nombre}"
 
 
+def save(self, *args, **kwargs):
+
+    if not self.idinvestigadores:
+        max_id = Investigadores.objects.aggregate(
+            max_id=Max('idinvestigadores'))['max_id']
+        self.idinvestigadores = (max_id or 0) + 1
+    super().save(*args, **kwargs)
+
+
 class Lineas(models.Model):
-    # Especifica explícitamente el nombre de columna
     idlineas = models.AutoField(primary_key=True, db_column='idlineas')
     nombre = models.CharField(max_length=50)
     descripcion = models.CharField(max_length=100, blank=True, null=True)
@@ -308,6 +359,14 @@ class Lineas(models.Model):
 
     def __str__(self):
         return self.nombre
+
+
+def save(self, *args, **kwargs):
+    if not self.idlineas:
+        max_id = Lineas.objects.aggregate(
+            max_id=Max('idlineas'))['max_id']
+        self.idlineas = (max_id or 0) + 1
+    super().save(*args, **kwargs)
 
 
 class NivelEdu(models.Model):
@@ -377,6 +436,15 @@ class Proyectos(models.Model):
         db_table = 'proyectos'
 
 
+def save(self, *args, **kwargs):
+
+    if not self.idproyecto:
+        max_id = Proyectos.objects.aggregate(
+            max_id=Max('idproyecto'))['max_id']
+        self.idproyecto = (max_id or 0) + 1
+    super().save(*args, **kwargs)
+
+
 class Sni(models.Model):
     idsni = models.AutoField(primary_key=True)
     fechaingreso = models.DateField()
@@ -434,6 +502,13 @@ class Unidades(models.Model):
     class Meta:
         managed = False
         db_table = 'unidades'
+
+
+def save(self, *args, **kwargs):
+    if not self.idunidades:
+        max_id = Unidades.objects.aggregate(max_id=Max('idunidades'))['max_id']
+        self.idunidades = (max_id or 0) + 1
+    super().save(*args, **kwargs)
 
 
 class Usuarios(models.Model):
