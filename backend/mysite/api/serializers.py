@@ -1,7 +1,11 @@
 from .models import TipoEstudiante
 from rest_framework import serializers
-from api.models import Estudiantes, Proyectos, Area, Especialidades, Lineas, Eventos, Articulos, Unidades, Herramientas, Carreras, Investigadores, NivelEdu, TipoEstudiante
-
+from api.models import (Estudiantes, Proyectos, Area, Especialidades,
+                        Lineas, Eventos, Articulos, Unidades, Herramientas,
+                        Carreras, Investigadores, NivelEdu, TipoEstudiante,
+                        DetArt, DetEventos, DetHerramienta, DetLineas, DetProy,
+                        NivelSni, TipoEvento, Sni
+                        )
 
 # Estudiantes
 
@@ -83,4 +87,52 @@ class NivelEduSerializer(serializers.ModelSerializer):
 class TipoEstudianteSerializer(serializers.ModelSerializer):
     class Meta:
         model = TipoEstudiante
+        fields = '__all__'
+
+
+class DetArtSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DetArt
+        fields = '__all__'
+
+
+class DetEventosSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DetEventos
+        fields = '__all__'
+
+
+class DetHerramientaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DetHerramienta
+        fields = '__all__'
+
+
+class DetLineasSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DetLineas
+        fields = '__all__'
+
+
+class DetProySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DetProy
+        fields = '__all__'
+
+
+class NivelSniSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NivelSni
+        fields = '__all__'
+
+
+class TipoEventoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TipoEvento
+        fields = '__all__'
+
+
+class SniSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sni
         fields = '__all__'

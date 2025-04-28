@@ -1,9 +1,16 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from ..models import Estudiantes, Proyectos, Area, Especialidades, Lineas, Eventos, Articulos, Unidades, Herramientas, Carreras, Investigadores, NivelEdu, TipoEstudiante
-from ..serializers import EstudiantesSerializer, ProyectosSerializer, AreaSerializer, EspecialidadesSerializer, LineasSerializer, EventosSerializer, ArticulosSerializer, UnidadesSerializer, HerramientasSerializer, CarrerasSerializer, InvestigadoresSerializer, NivelEduSerializer, TipoEstudianteSerializer
-
+from ..models import (Estudiantes, Proyectos, Area, Especialidades, Lineas, Eventos,
+                      Articulos, Unidades, Herramientas, Carreras, Investigadores, NivelEdu,
+                      TipoEstudiante, DetArt, DetEventos, DetHerramienta, DetLineas, DetProy,
+                      NivelSni, TipoEvento, Sni)
+from ..serializers import (EstudiantesSerializer, ProyectosSerializer, AreaSerializer, EspecialidadesSerializer,
+                           LineasSerializer, EventosSerializer, ArticulosSerializer, UnidadesSerializer, HerramientasSerializer,
+                           CarrerasSerializer, InvestigadoresSerializer, NivelEduSerializer, TipoEstudianteSerializer, DetArtSerializer,
+                           DetEventosSerializer, DetHerramientaSerializer, DetLineasSerializer, DetProySerializer, NivelSniSerializer,
+                           TipoEventoSerializer, SniSerializer
+                           )
 # Estudiantes
 
 
@@ -222,3 +229,64 @@ class NivelEduViewSet(viewsets.ModelViewSet):
 class TipoEstudianteViewSet(viewsets.ModelViewSet):
     queryset = TipoEstudiante.objects.all()
     serializer_class = TipoEstudianteSerializer
+
+# DetArt
+
+
+class DetArtViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = DetArt.objects.all()
+    serializer_class = DetArtSerializer
+    permission_classes = [AllowAny]
+
+# DetEventos
+
+
+class DetEventosViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = DetEventos.objects.all()
+    serializer_class = DetEventosSerializer
+    permission_classes = [AllowAny]
+
+# DetHerramienta
+
+
+class DetHerramientaViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = DetHerramienta.objects.all()
+    serializer_class = DetHerramientaSerializer
+    permission_classes = [AllowAny]
+
+# DetLineas
+
+
+class DetLineasViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = DetLineas.objects.all()
+    serializer_class = DetLineasSerializer
+    permission_classes = [AllowAny]
+
+# DetProy
+
+
+class DetProyViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = DetProy.objects.all()
+    serializer_class = DetProySerializer
+    permission_classes = [AllowAny]
+
+# NivelSNI
+
+
+class NivelSniViewSet(viewsets.ModelViewSet):
+    queryset = NivelSni.objects.all()
+    serializer_class = NivelSniSerializer
+
+# TipoEvento
+
+
+class TipoEventoViewSet(viewsets.ModelViewSet):
+    queryset = TipoEvento.objects.all()
+    serializer_class = TipoEventoSerializer
+
+# SNI
+
+
+class SniViewSet(viewsets.ModelViewSet):
+    queryset = Sni.objects.all()
+    serializer_class = SniSerializer

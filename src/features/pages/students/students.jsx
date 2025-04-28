@@ -46,7 +46,7 @@ const Students = () => {
               })
               .catch(() => ({ data: [] })), // Si falla, devuelve data vacía
             axios
-              .get(`${API_BASE_URL}api/tipo-estudiante-api/`, {
+              .get(`${API_BASE_URL}api/tipoestudiantes-api/`, {
                 withCredentials: true,
               })
               .catch(() => ({ data: [] })),
@@ -387,10 +387,13 @@ const Students = () => {
                   <td>{student.apellidoestudiante}</td>
                   <td>{student.emailestudiante}</td>
                   <td>
-                    {options.tiposEstudiante.find(
-                      (t) => t.idtipoestudiante === student.idtipoestudiante
-                    )?.nombretipo || "-"}
-                  </td>
+  {/* Mostrar el nombre del tipo de estudiante directamente si idtipoestudiante es un objeto */}
+  {student.idtipoestudiante?.nombretipo 
+    ? student.idtipoestudiante.nombretipo 
+    : options.tiposEstudiante.find(
+        (t) => t.idtipoestudiante === student.idtipoestudiante
+      )?.nombretipo || "-"}
+</td>
                   <td>
                     {options.carreras.find(
                       (c) => c.idcarreras === student.idcarreras
