@@ -41,6 +41,48 @@
   background-color: #003161;
 }
 
+.table-container {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  margin-top: 1.5rem;
+}
+
+.investigadores-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: "Segoe UI", Roboto, sans-serif;
+}
+
+.investigadores-table th {
+  background-color: #001932;
+  color: white;
+  font-weight: 500;
+  padding: 1rem 1.5rem;
+  text-align: left;
+  font-size: 0.95rem;
+  position: sticky;
+  top: 0;
+}
+
+.investigadores-table td {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #f0f0f0;
+  color: #333;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.investigadores-table tr:last-child td {
+  border-bottom: none;
+}
+
+.investigadores-table tr:hover td {
+  background-color: #f8fafc;
+  cursor: pointer;
+}
+
 .form-container {
   background-color: white;
   padding: 1.5rem;
@@ -132,70 +174,7 @@
   background-color: #d32f2f;
 }
 
-.table-container {
-  overflow-x: auto;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.investigadores-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.9rem;
-}
-
-.investigadores-table th,
-.investigadores-table td {
-  padding: 0.8rem;
-  text-align: left;
-  border-bottom: 1px solid #eee;
-}
-
-.investigadores-table th {
-  background-color: #001932;
-  color: white;
-  font-weight: 500;
-  position: sticky;
-  top: 0;
-}
-
-.investigadores-table tr:hover {
-  background-color: #f5f5f5;
-}
-
-.btn-edit {
-  background-color: #001932;
-  color: white;
-  padding: 0.4rem 0.8rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-right: 0.5rem;
-  font-size: 0.8rem;
-  transition: background-color 0.3s;
-}
-
-.btn-edit:hover {
-  background-color: #003367;
-}
-
-.btn-delete {
-  background-color: #f44336;
-  color: white;
-  padding: 0.4rem 0.8rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.8rem;
-  transition: background-color 0.3s;
-}
-
-.btn-delete:hover {
-  background-color: #d32f2f;
-}
-
-@media (max-width: 1024px) {
+@media (max-width: 500px) {
   .investigadores-table {
     display: block;
   }
@@ -214,7 +193,6 @@
   .investigadores-table td {
     display: flex;
     justify-content: space-between;
-    padding: 0.5rem 1rem;
     border-bottom: 1px solid #eee;
   }
 
@@ -256,7 +234,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -264,16 +242,23 @@
 }
 
 .researcher-card {
-  background-color: #f0f4f8;
+  background-color: #ffffff;
   border-radius: 12px;
   padding: 2rem;
-  margin-left: 200px;
   width: 70%;
+  margin-left: 200px;
   max-width: 800px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 20px rgba(106, 106, 106, 0.4);
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
+  transition: all 0.3s ease-out;
+  position: relative;
+  z-index: 1000;
+}
+
+.researcher-card.stats-open {
+  transform: translateX(-20%);
 }
 
 .researcher-data-header {
@@ -285,25 +270,41 @@
 
 .researcher-data-header h3 {
   margin: 0;
+  height: 30px;
   font-size: 1.5rem;
   color: #333;
 }
 
 .researcher-data-header button {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-color: #ff4444;
+  width: 100px;
+  height: 40px;
+  border-radius: 15px;
+  background-color: #001932;
   color: white;
   border: none;
   font-weight: bold;
   cursor: pointer;
+  transition: all 0.3s ease-out;
+}
+
+.open-researcher-stats {
+  margin-right: 10px;
+}
+
+.researcher-data-header button:hover {
+  transform: scale(1.05);
+  background-color: rgba(0, 25, 50, 0.9);
 }
 
 .about-researcher {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  transition: all 0.3s ease-out;
+}
+
+.about-researcher:hover {
+  transform: scale(1.05);
 }
 
 .about-researcher img {
@@ -322,21 +323,133 @@
   line-height: 1.5;
 }
 
-.researcher-info {
+.researcher-details {
+  background-color: #eeeeee;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-top: 1rem;
+  border: solid 1px rgb(220, 220, 220);
+}
+
+.detail-row {
+  display: flex;
+  margin-bottom: 1rem;
+  align-items: baseline;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid #f0f0f0;
+  transition: all 0.3s ease-out;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.detail-label {
+  font-weight: 600;
+  color: #001932;
+  min-width: 100px;
+  font-size: 0.95rem;
+}
+
+.detail-value {
+  color: #333;
+  font-size: 0.95rem;
+  flex: 1;
+}
+
+.detail-value.email {
+  color: #0066cc;
+  word-break: break-all;
+}
+
+.empty-field {
+  color: #999;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.detail-row:hover {
+  transform: scale(1.08);
+}
+
+.stats-popup {
+  position: fixed;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+  width: 400px;
+  min-width: 400px;
+  min-height: 425px;
+  background-color: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+  animation: slideIn 0.3s ease-out;
+}
+
+.stats-popup.closing {
+  animation: slideOut 0.3s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%) translateY(-50%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0) translateY(-50%);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0) translateY(-50%);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%) translateY(-50%);
+    opacity: 0;
+  }
+}
+
+.stats-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.stats-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #001932;
+}
+
+.close-stats-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.2s;
+}
+
+.close-stats-btn:hover {
+  color: #001932;
+}
+
+.stats-content {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding-left: 1rem;
-  border-left: 1px solid #ccc;
+  gap: 0.8rem;
 }
 
-.researcher-info p {
-  margin: 0;
-  display: flex;
-}
-
-.researcher-info strong {
-  color: #333;
-  min-width: 80px;
-  display: inline-block;
+.stat-value {
+  font-weight: 600;
+  color: #001932;
 }
