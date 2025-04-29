@@ -5,6 +5,7 @@ import "../style/researchers.css";
 const ResearchersCard = ({ investigador, selectedResearcher, onClose }) => {
   const [showStats, setShowStats] = useState(false);
   if (!investigador) return null;
+  console.log("Hello World");
 
   console.log(onClose);
 
