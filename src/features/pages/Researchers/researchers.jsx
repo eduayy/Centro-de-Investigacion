@@ -1,7 +1,7 @@
 import React from "react";
 import Sidebar from "../../../components/sidebar/sidebar";
-import ResearchersForm from "./jsx/ResearchersForm.jsx";
-import ResearchersTable from "./jsx/ResearchersTable.jsx";
+import ResearchersForm from "./JSX/ResearchersForm.jsx";
+import ResearchersTable from "./JSX/ResearchersTable.jsx";
 import ResearchersCard from "./jsx/ResearchersCard.jsx";
 import { useResearchers } from "./js/useResearchers_temp.js";
 import "./style/researchers.css";
@@ -68,7 +68,11 @@ const Researchers = () => {
         />
 
         {selectedResearcher && (
-          <ResearchersCard investigador={selectedResearcher} />
+          <ResearchersCard
+            investigador={selectedResearcher}
+            selectedResearcher={selectedResearcher}
+            onClose={() => setSelectedResearcher(null)}
+          />
         )}
       </div>
     </div>
