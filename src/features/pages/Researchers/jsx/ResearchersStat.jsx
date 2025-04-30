@@ -1,4 +1,5 @@
 import "../style/researchers.css";
+import Dashboard from "../../../../components/Dashboard/Dasboard";
 
 function ResearchersStat({ investigador, onClose }) {
   if (!investigador) return null;
@@ -11,7 +12,13 @@ function ResearchersStat({ investigador, onClose }) {
           ×
         </button>
       </div>
-      <div className="stats-content"></div>
+      <div className="stats-content">
+        {Dashboard && (
+          <div className="stats-dashboard">
+            <Dashboard />
+          </div>
+        )}
+      </div>
     </div>
   );
 }
