@@ -258,7 +258,11 @@
 }
 
 .researcher-card.stats-open {
-  transform: translateX(-20%);
+  transform: translateX(-33%);
+
+  .researcher-card {
+    transform: translateX(20%);
+  }
 }
 
 .researcher-data-header {
@@ -376,7 +380,7 @@
 .stats-popup {
   position: fixed;
   top: 50%;
-  right: 5%;
+  right: 1%;
   transform: translateY(-50%);
   width: 400px;
   min-width: 400px;
