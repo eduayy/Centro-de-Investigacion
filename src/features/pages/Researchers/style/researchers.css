@@ -245,7 +245,7 @@
   background-color: #ffffff;
   border-radius: 12px;
   padding: 2rem;
-  width: 70%;
+  width: 50%;
   margin-left: 200px;
   max-width: 800px;
   box-shadow: 0 4px 20px rgba(106, 106, 106, 0.4);
@@ -258,7 +258,7 @@
 }
 
 .researcher-card.stats-open {
-  transform: translateX(-33%);
+  transform: translateX(-53%);
 
   .researcher-card {
     transform: translateX(20%);
@@ -292,7 +292,7 @@
 }
 
 .open-researcher-stats {
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
 .researcher-data-header button:hover {
@@ -380,9 +380,9 @@
 .stats-popup {
   position: fixed;
   top: 50%;
-  right: 1%;
+  right: 0.5%;
   transform: translateY(-50%);
-  width: 400px;
+  width: 40%;
   min-width: 400px;
   min-height: 425px;
   background-color: white;
