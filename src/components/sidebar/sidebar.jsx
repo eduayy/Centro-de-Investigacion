@@ -3,6 +3,7 @@ import "./sidebar.css";
 
 // Menu items for sidebar
 const menuList = [
+  { name: "Load data" },
   { name: "Inicio", path: "/" },
   { name: "Carreras", path: "/carreras" },
   { name: "Estudiantes", path: "/estudiantes" },

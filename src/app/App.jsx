@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "./App.css";
 import Login from "../auth/login/login.jsx";
 import Register from "../auth/Register/register.jsx";
 import Home from "../features/Home/home.jsx";
@@ -15,6 +14,7 @@ import Events from "../features/pages/events/events.jsx";
 import Articles from "../features/pages/articles/articles.jsx";
 import Tools from "../features/pages/tools/tools.jsx";
 import Unidades from "../features/pages/unidades/unidades.jsx";
+import "../global.css";
 
 function App() {
   return (

@@ -3,12 +3,17 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f5f7fa;
 }
 
 .carreras-content {
   flex: 1;
   padding: 2rem;
+}
+
+.carreras-content h2 {
+  position: fixed;
+  top: 0;
+  margin-top: 100px;
 }
 
 .loading {
@@ -31,6 +36,7 @@
   background-color: #001932;
   color: white;
   padding: 0.6rem 1.2rem;
+
   border: none;
   border-radius: 4px;
   cursor: pointer;
