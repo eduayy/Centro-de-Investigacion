@@ -98,7 +98,7 @@ const ResearchersCard = ({ investigador, selectedResearcher, onClose }) => {
       </div>
       {showStats && (
         <ResearchersStat
-          investigador={investigador}
+          investigador={selectedResearcher}
           onClose={() => setShowStats(false)}
         />
       )}
