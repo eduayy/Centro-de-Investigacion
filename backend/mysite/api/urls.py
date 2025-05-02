@@ -12,34 +12,53 @@ from .views.api_views import (EstudiantesViewSet, ProyectosViewSet, AreaViewSet,
                               DetEventosViewSet, DetHerramientaViewSet, DetLineasViewSet, DetProyViewSet, NivelSniViewSet, TipoEventoViewSet,
                               SniViewSet
                               )
-
 router = DefaultRouter()
-router.register(r'estudiantes-api', EstudiantesViewSet, basename='estudiantes')
-router.register(r'proyectos-api', ProyectosViewSet, basename='proyectos')
+# Area endpoints
 router.register(r'areas-api', AreaViewSet, basename='areas')
-router.register(r'especialidades-api', EspecialidadesViewSet,
-                basename='especialidades')
-router.register(r'lineas-api', LineasViewSet, basename='lineas')
-router.register(r'eventos-api', EventosViewSet, basename='eventos')
+
+# Articles endpoints
 router.register(r'articulos-api', ArticulosViewSet, basename='articulos')
-router.register(r'unidades-api', UnidadesViewSet, basename='unidades')
-router.register(r'herramientas-api', HerramientasViewSet,
-                basename='herramientas')
-router.register(r'carreras-api', CarrerasViewSet, basename='carreras')
-router.register(r'investigadores-api', InvestigadoresViewSet,
-                basename='investigadores')
-router.register(r'nivel-edu-api', NivelEduViewSet, basename='niveledu')
-router.register(r'tipoestudiantes-api', TipoEstudianteViewSet,
-                basename='tipoestudiante')
 router.register(r'detart-api', DetArtViewSet, basename='detart')
+
+# Carreras endpoints
+router.register(r'carreras-api', CarrerasViewSet, basename='carreras')
+
+# Events endpoints
 router.register(r'deteventos-api', DetEventosViewSet, basename='deteventos')
-router.register(r'detherramienta-api', DetHerramientaViewSet,
-                basename='detherramienta')
-router.register(r'detlineas-api', DetLineasViewSet, basename='detlineas')
-router.register(r'detproy-api', DetProyViewSet, basename='detproy')
-router.register(r'nivelsni-api', NivelSniViewSet, basename='nivelsni')
+router.register(r'eventos-api', EventosViewSet, basename='eventos')
 router.register(r'tipoevento-api', TipoEventoViewSet, basename='tipoevento')
+
+# Information endpoints
+router.register(r'nivel-edu-api', NivelEduViewSet, basename='niveledu')
+
+# Investigadores endpoints
+router.register(r'investigadores-api', InvestigadoresViewSet, basename='investigadores')
+
+# Lines endpoints
+router.register(r'lineas-api', LineasViewSet, basename='lineas')
+router.register(r'detlineas-api', DetLineasViewSet, basename='detlineas')
+
+# Proyects endpoints
+router.register(r'detproy-api', DetProyViewSet, basename='detproy')
+router.register(r'proyectos-api', ProyectosViewSet, basename='proyectos')
+
+# Specialties endpoints
+router.register(r'especialidades-api', EspecialidadesViewSet, basename='especialidades')
+
+# Sni endpoints
+router.register(r'nivelsni-api', NivelSniViewSet, basename='nivelsni')
 router.register(r'sni-api', SniViewSet, basename='sni')
+
+# Students endpoints
+router.register(r'estudiantes-api', EstudiantesViewSet, basename='estudiantes')
+router.register(r'tipoestudiantes-api', TipoEstudianteViewSet, basename='tipoestudiante')
+
+# Tools endpoints
+router.register(r'detherramienta-api', DetHerramientaViewSet, basename='detherramienta')
+router.register(r'herramientas-api', HerramientasViewSet, basename='herramientas')
+
+# Units endpoints
+router.register(r'unidades-api', UnidadesViewSet, basename='unidades')
 
 
 urlpatterns = [
