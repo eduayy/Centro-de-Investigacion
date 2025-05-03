@@ -13,7 +13,7 @@
 .carreras-content h2 {
   position: fixed;
   top: 0;
-  margin-top: 100px;
+  font-style: italic;
 }
 
 .loading {

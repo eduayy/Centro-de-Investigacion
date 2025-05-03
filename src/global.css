@@ -2,4 +2,5 @@
   margin: 0;
   padding: 0;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  cursor: url("./assets/images/image.png"), auto;
 }
