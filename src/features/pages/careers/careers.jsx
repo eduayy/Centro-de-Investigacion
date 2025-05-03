@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebar from "../../../components/sidebar/sidebar.jsx";
+import Sidebar from "@/components/sidebar/sidebar.jsx";
 import CareersForm from "./jsx/CareersForm";
 import CareersTable from "./jsx/CareersTable";
 import useCareers from "./js/useCareers";

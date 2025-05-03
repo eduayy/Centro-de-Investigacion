@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebar from "../../../components/sidebar/sidebar";
+import Sidebar from "@/components/sidebar/sidebar";
 import ResearchersForm from "./JSX/ResearchersForm.jsx";
 import ResearchersTable from "./JSX/ResearchersTable.jsx";
 import ResearchersCard from "./jsx/ResearchersCard.jsx";

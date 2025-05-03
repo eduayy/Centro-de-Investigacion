@@ -263,6 +263,11 @@
   .researcher-card {
     transform: translateX(20%);
   }
+
+  .researcher-data-header button {
+    background-color: white;
+    color: white;
+  }
 }
 
 .researcher-data-header {

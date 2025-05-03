@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./events.css";
-import Sidebar from "../../../components/sidebar/sidebar.jsx";
+import Sidebar from "@/components/sidebar/sidebar.jsx";
 
 const API_BASE_URL = "http://localhost:8000/";
 
