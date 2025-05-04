@@ -16,95 +16,123 @@ This project is inspired by **CIATEQ**, a cutting-edge research center in Mexico
 - **Projects**: Monitor ongoing and completed projects, including budgets, timelines, and participants.
 - **Events and Seminars**: A calendar-based system to promote academic events, guest talks, and workshops.
 
-**Goal**: To create an intuitive and powerful platform that supports collaboration, transparency, and innovation within research centers like CIATEQ.
-
+**Goal**: To create an intuitive and powerful platform that supports collaboration, transparency, and innovation within research centers like CIATEQ.  
 ---
-
-<p align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React Logo" height="50" width="50"/>
-</p>
-
----
-
-## **Setting Up Your React Project**
+# 🚀 Setting Up the Project from a Cloned Repository  
 
 ### **Requirements**  
 Ensure that you have **Node.js** and **npm** installed on your system.
 
 [**Click here to install Node.js**](https://nodejs.org/)
 
----
+### 📦 React Project
 
-# 🚀 **Steps to Install React:**
+This is a React-based project that includes dependencies like Axios, React Router DOM, and Recharts.
 
-## **🎯 Step 1: Create a React Project with Vite**
+## 🚀 Technologies Used
 
-Run the following command in your terminal to create a new React project using Vite:
-```bash
-npm create vite@latest myapp
-```
-
-## **👉 Step 2: Select Framework**  
-```
-Select > React
-```
-## **📕 Step 3: Select Language** 
-```
-Select > Javascript
-```
-
-## **📂 Step 4: Navigate to Your Project Directory**  
-```
-cd myapp
-```
-
-## **📦 Step 5: Install dependencies**
-```
-npm install
-```
-
-## **📦 Step 6: Install React Router DOM**
-```
-npm install react-router-dom
-```
-
-## **🌐 Step 7: Start development server**
-```
-myapp/> code .
-```
----
-
-# 🚀 Setting Up the Project from a Cloned Repository
-
-Follow these steps to clone and run the React project locally.
+- [React](https://reactjs.org/)
+- [Vite](https://vitejs.dev/)
+- [Axios](https://axios-http.com/)
+- [React Router DOM](https://reactrouter.com/)
+- [Recharts](https://recharts.org/)
+- [Django](https://www.djangoproject.com/)
+- PostgreSQL
 
 ---
 
-## ✅ Step 1: Clone the Repository
+## 📁 Clone the Repository
 
-Use the following command to clone the repository to your machine:
+Start by cloning the repository to your local machine:
 
 ```
-git clone https://github.com/your-username/Centro-de-Investigacion.git
-```
-
-## 📂 Step 2: Navigate to project directory
-```
+git clone https://github.com/eduayy/Centro-de-Investigacion.git
 cd Centro-de-Investigacion
 ```
-## 📦 Step 3: Install dependencies  
-Install all required dependencies listed in package.json:
+
+## 📦 Install dependencies
+
 ```
 npm install
 ```
 
-## 📦 Step 4: Install React Router DOM  
-If it is installed you can skip this step.
-```
-npm install react-router-dom
-```
-
-## 🌐 Step 5: Start the server  
+## 🌐 Run the project
 ```
 npm run dev
 ```
+The app will be avaible at http://localhost:5173 
+
+## 🎯 Setting the backend
+Enter to backend file
+```
+Centro-de-Investigacion> cd backend
+Centro-de-Investigacion\backend> pip install -r requirements.txt
+```
+
+## 🤖 Run the Django server 
+Enter to mysite file.
+```
+Centro-de-Investigacion\backend> cd mysite
+# Run the following command
+Centro-de-Investigacion\backend\mysite> python manage.py runserver
+```
+## 🎰 Configure database 
+
+### Configure database connection
+In `settings.py` file, you shold look this:
+```
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'YOUR DB NAME',
+        'USER': 'YOUR USER NAME',
+        'PASSWORD': 'DATABASE PASSWORD',
+        'HOST': 'localhost', -> You can change it if not local
+        'PORT': '5432',
+    }
+}
+```
+
+### If necessary make migrations
+- After restoring the database backup, look if there are pending migrations
+- Run the following command
+```
+Centro-de-Investigacion\backend\mysite> python manage.py migrate
+```
+
+## Entity-Relation diagram  
+-You can open the pdf with this link:  
+📄 [ERD PDF](./ERD-RESEARCHER-CENTER.pdf)  
+If you want to see it on Visual Studio Code, install this extension.  
+![VSCodeExtension](https://github.com/user-attachments/assets/1d89afab-f617-4dbf-8c0f-864696d5b8b3)
+
+---  
+# Researcher Center Overview
+
+### Home page
+This page shows login, register, see who are us, timelapse of CIATEQ, and access to our information. 
+![Home-Page](https://github.com/user-attachments/assets/1945c803-9221-4a60-aefe-6e87976d66c1)
+
+## Login page  
+
+![Login-Page](https://github.com/user-attachments/assets/570c1213-92cd-4e49-aeca-65e415ff1d6e)
+
+## Register page  
+
+![Register-Page](https://github.com/user-attachments/assets/9123b4d2-5255-499d-878b-45a03807f562)
+
+## Example page (Researchers)
+
+SHOWING ALL OUR RESEARCHERS  
+
+![Researcher-Page](https://github.com/user-attachments/assets/f3638fdb-f947-45c0-9f17-27edd5edca87)  
+
+INFORMATION ABOUT OUR RESEARCHERS  
+
+![Researcher-Info](https://github.com/user-attachments/assets/5f06fdd0-bec1-46d4-87ed-1846fd935ae2)
+
+YOU CAN ALSO SEE STADISTICS OF OUR RESEARCHERS
+
+![Researcher-Stadistics](https://github.com/user-attachments/assets/fe63d491-e85b-489a-ae11-6b6c967da01d)
+
+
