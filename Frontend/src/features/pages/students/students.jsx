@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./students.css";
 import Sidebar from "@/components/sidebar/sidebar.jsx";
+import StudentCard from "./StudentsCard.jsx";
 
 const API_BASE_URL = "http://localhost:8000/";
 
@@ -11,15 +12,14 @@ const Students = () => {
   const [error, setError] = useState(null);
   const [editingStudent, setEditingStudent] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [selectedStudent, setSelectedStudent] = useState(null); // Estado para el estudiante seleccionado
 
-  // Opciones para los selects
   const [options, setOptions] = useState({
     tiposEstudiante: [],
     carreras: [],
     investigadores: [],
   });
 
-  // Estado inicial para nuevo estudiante (sin idestudiantes)
   const initialStudentState = {
     nombreestudiante: "",
     apellidoestudiante: "",
@@ -80,6 +80,15 @@ const Students = () => {
     fetchInitialData();
   }, []);
 
+  // Mostrar popup al seleccionar un estudiante
+  const handleSelectStudent = (student) => {
+    setSelectedStudent(student); // Establece el estudiante seleccionado
+  };
+
+  const handleClosePopup = () => {
+    setSelectedStudent(null); // Cierra el popup
+  };
+
   // Agregar nuevo estudiante
   const handleAdd = async (e) => {
     e.preventDefault();
@@ -102,69 +111,6 @@ const Students = () => {
     }
   };
 
-  // Actualizar estudiante
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    console.log("Datos a actualizar:", editingStudent);
-    try {
-      const response = await axios.put(
-        `${API_BASE_URL}api/estudiantes-api/${editingStudent.idestudiantes}/`,
-        editingStudent,
-        { withCredentials: true }
-      );
-      setStudents(
-        students.map((student) =>
-          student.idestudiantes === editingStudent.idestudiantes
-            ? response.data
-            : student
-        )
-      );
-      setEditingStudent(null);
-      setError(null);
-    } catch (error) {
-      console.error("Error al actualizar:", error);
-      setError(
-        `Error al actualizar: ${error.response?.data?.detail || error.message}`
-      );
-    }
-  };
-
-  // Eliminar estudiante
-  const handleDelete = async (id) => {
-    if (!window.confirm("¿Estás seguro de dar de baja a este estudiante?"))
-      return;
-    try {
-      await axios.delete(`${API_BASE_URL}api/estudiantes-api/${id}/`, {
-        withCredentials: true,
-      });
-      setStudents(students.filter((student) => student.idestudiantes !== id));
-      setError(null);
-    } catch (error) {
-      console.error("Error al eliminar:", error);
-      setError(
-        `Error al dar de baja: ${error.response?.data?.detail || error.message}`
-      );
-    }
-  };
-
-  // Manejar cambios en los inputs
-  const handleInputChange = (e, isEditing = false) => {
-    const { name, value, type, checked } = e.target;
-    const val = type === "checkbox" ? checked : value;
-
-    if (isEditing) {
-      setEditingStudent({
-        ...editingStudent,
-        [name]: val,
-      });
-    } else {
-      setNewStudent({
-        ...newStudent,
-        [name]: val,
-      });
-    }
-  };
-
   if (loading) return <div className="loading">Cargando...</div>;
   if (error) return <div className="error-message">{error}</div>;
 
@@ -178,307 +124,7 @@ const Students = () => {
           + Nuevo Estudiante
         </button>
 
-        {showAddForm && (
-          <div className="form-container">
-            <h3>Registrar Nuevo Estudiante</h3>
-            <form onSubmit={handleAdd}>
-              <div className="form-group">
-                <label>Nombre:</label>
-                <input
-                  type="text"
-                  name="nombreestudiante"
-                  value={newStudent.nombreestudiante}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Apellido:</label>
-                <input
-                  type="text"
-                  name="apellidoestudiante"
-                  value={newStudent.apellidoestudiante}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Email:</label>
-                <input
-                  type="email"
-                  name="emailestudiante"
-                  value={newStudent.emailestudiante}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Teléfono:</label>
-                <input
-                  type="tel"
-                  name="telefonoestudiante"
-                  value={newStudent.telefonoestudiante}
-                  onChange={handleInputChange}
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Fecha de Ingreso:</label>
-                <input
-                  type="date"
-                  name="fechaingreso"
-                  value={newStudent.fechaingreso}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Fecha Fin de Contrato:</label>
-                <input
-                  type="date"
-                  name="fechafincontrato"
-                  value={newStudent.fechafincontrato}
-                  onChange={handleInputChange}
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Estatus:</label>
-                <input
-                  type="checkbox"
-                  name="estatus"
-                  checked={newStudent.estatus}
-                  onChange={handleInputChange}
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Tipo de Estudiante:</label>
-                <select
-                  name="idtipoestudiante"
-                  value={newStudent.idtipoestudiante}
-                  onChange={handleInputChange}
-                  required
-                >
-                  <option value="">Seleccione un tipo</option>
-                  {options.tiposEstudiante.map((tipo) => (
-                    <option
-                      key={tipo.idtipoestudiante}
-                      value={tipo.idtipoestudiante}
-                    >
-                      {tipo.descripcion}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="form-group">
-                <label>Carrera:</label>
-                <select
-                  name="idcarreras"
-                  value={newStudent.idcarreras}
-                  onChange={handleInputChange}
-                  required
-                >
-                  <option value="">Seleccione una carrera</option>
-                  {options.carreras.map((carrera) => (
-                    <option key={carrera.idcarreras} value={carrera.idcarreras}>
-                      {carrera.nombrecarrera}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="form-group">
-                <label>Investigador:</label>
-                <select
-                  name="idinvestigadores"
-                  value={newStudent.idinvestigadores}
-                  onChange={handleInputChange}
-                  required
-                >
-                  <option value="">Seleccione un investigador</option>
-                  {options.investigadores.map((investigador) => (
-                    <option
-                      key={investigador.idinvestigadores}
-                      value={investigador.idinvestigadores}
-                    >
-                      {investigador.nombre} {investigador.apellido}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="form-actions">
-                <button type="submit" className="btn-save">
-                  Guardar
-                </button>
-                <button
-                  type="button"
-                  className="btn-cancel"
-                  onClick={() => setShowAddForm(false)}
-                >
-                  Cancelar
-                </button>
-              </div>
-            </form>
-          </div>
-        )}
-
-        {editingStudent && (
-          <div className="form-container">
-            <h3>Editar Estudiante</h3>
-            <form onSubmit={handleUpdate}>
-              <div className="form-group">
-                <label>Nombre:</label>
-                <input
-                  type="text"
-                  name="nombreestudiante"
-                  value={editingStudent.nombreestudiante}
-                  onChange={(e) => handleInputChange(e, true)}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Apellido:</label>
-                <input
-                  type="text"
-                  name="apellidoestudiante"
-                  value={editingStudent.apellidoestudiante}
-                  onChange={(e) => handleInputChange(e, true)}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Email:</label>
-                <input
-                  type="email"
-                  name="emailestudiante"
-                  value={editingStudent.emailestudiante}
-                  onChange={(e) => handleInputChange(e, true)}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Teléfono:</label>
-                <input
-                  type="tel"
-                  name="telefonoestudiante"
-                  value={editingStudent.telefonoestudiante}
-                  onChange={(e) => handleInputChange(e, true)}
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Fecha de Ingreso:</label>
-                <input
-                  type="date"
-                  name="fechaingreso"
-                  value={editingStudent.fechaingreso}
-                  onChange={(e) => handleInputChange(e, true)}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Fecha Fin de Contrato:</label>
-                <input
-                  type="date"
-                  name="fechafincontrato"
-                  value={editingStudent.fechafincontrato}
-                  onChange={(e) => handleInputChange(e, true)}
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Estatus:</label>
-                <input
-                  type="checkbox"
-                  name="estatus"
-                  checked={editingStudent.estatus}
-                  onChange={(e) => handleInputChange(e, true)}
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Tipo de Estudiante:</label>
-                <select
-                  name="idtipoestudiante"
-                  value={editingStudent.idtipoestudiante}
-                  onChange={(e) => handleInputChange(e, true)}
-                  required
-                >
-                  <option value="">Seleccione un tipo</option>
-                  {options.tiposEstudiante.map((tipo) => (
-                    <option
-                      key={tipo.idtipoestudiante}
-                      value={tipo.idtipoestudiante}
-                    >
-                      {tipo.descripcion}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="form-group">
-                <label>Carrera:</label>
-                <select
-                  name="idcarreras"
-                  value={editingStudent.idcarreras}
-                  onChange={(e) => handleInputChange(e, true)}
-                  required
-                >
-                  <option value="">Seleccione una carrera</option>
-                  {options.carreras.map((carrera) => (
-                    <option key={carrera.idcarreras} value={carrera.idcarreras}>
-                      {carrera.nombrecarrera}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="form-group">
-                <label>Investigador:</label>
-                <select
-                  name="idinvestigadores"
-                  value={editingStudent.idinvestigadores}
-                  onChange={(e) => handleInputChange(e, true)}
-                  required
-                >
-                  <option value="">Seleccione un investigador</option>
-                  {options.investigadores.map((investigador) => (
-                    <option
-                      key={investigador.idinvestigadores}
-                      value={investigador.idinvestigadores}
-                    >
-                      {investigador.nombre} {investigador.apellido}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="form-actions">
-                <button type="submit" className="btn-save">
-                  Actualizar
-                </button>
-                <button
-                  type="button"
-                  className="btn-cancel"
-                  onClick={() => setEditingStudent(null)}
-                >
-                  Cancelar
-                </button>
-              </div>
-            </form>
-          </div>
-        )}
+        <StudentCard student={selectedStudent} onClose={handleClosePopup} />
 
         <div className="students-table-container">
           <table className="students-table">
@@ -487,49 +133,18 @@ const Students = () => {
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
-                <th>Email</th>
-                <th>Tipo</th>
-                <th>Carrera</th>
-                <th>Investigador</th>
-                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
               {students.map((student) => (
-                <tr key={student.idestudiantes}>
+                <tr
+                  key={student.idestudiantes}
+                  onClick={() => handleSelectStudent(student)}
+                  className="clickable-row"
+                >
                   <td>{student.idestudiantes}</td>
                   <td>{student.nombreestudiante}</td>
                   <td>{student.apellidoestudiante}</td>
-                  <td>{student.emailestudiante}</td>
-                  <td>
-                    {options.tiposEstudiante.find(
-                      (t) => t.idtipoestudiante === student.idtipoestudiante
-                    )?.descripcion || "-"}
-                  </td>
-                  <td>
-                    {options.carreras.find(
-                      (c) => c.idcarreras === student.idcarreras
-                    )?.nombrecarrera || "-"}
-                  </td>
-                  <td>
-                    {options.investigadores.find(
-                      (i) => i.idinvestigadores === student.idinvestigadores
-                    )?.nombre || "-"}
-                  </td>
-                  <td>
-                    <button
-                      className="btn-edit"
-                      onClick={() => setEditingStudent(student)}
-                    >
-                      Editar
-                    </button>
-                    <button
-                      className="btn-delete"
-                      onClick={() => handleDelete(student.idestudiantes)}
-                    >
-                      Baja
-                    </button>
-                  </td>
                 </tr>
               ))}
             </tbody>

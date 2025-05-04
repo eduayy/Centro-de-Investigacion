@@ -7,7 +7,7 @@ body {
 }
 
 .sidebar {
-  width: 255px;
+  width: 270px;
   min-height: 100vh;
   background-color: #001932;
 }
@@ -15,11 +15,14 @@ body {
 .sidebar ul {
   width: 100%;
   list-style-type: none;
-  padding: 0;
+  padding: 12px;
+  margin-top: 10px;
+  font-size: 15px;
 }
 
 .sidebar li {
   width: 90%;
+  margin-bottom: 15px;
   cursor: pointer;
 }
 
