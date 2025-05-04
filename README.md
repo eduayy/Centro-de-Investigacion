@@ -37,6 +37,7 @@ This is a React-based project that includes dependencies like Axios, React Route
 - [React Router DOM](https://reactrouter.com/)
 - [Recharts](https://recharts.org/)
 #### 🌐 BackEnd dependencies
+- [Nginx](https://nginx.org/en/)
 - [Django REST Framework](https://www.django-rest-framework.org/)
 - [PostgreSQL](https://www.postgresql.org/)
 - [DRF Yasg](https://drf-yasg.readthedocs.io/)
