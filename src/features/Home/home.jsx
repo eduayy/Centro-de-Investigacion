@@ -7,7 +7,7 @@ function Home() {
       <Sidebar />
       <div className="Home">
         <section className="container-info">
-          <img src="src/assets/image.png"></img>
+          <img src="./src/assets/images/image.png"></img>
           <h1>CENTRO DE INVESTIGACIÓN JALISCO</h1>
         </section>
         <section className="container-video">

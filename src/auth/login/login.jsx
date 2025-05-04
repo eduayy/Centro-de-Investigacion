@@ -60,6 +60,11 @@ const Login = () => {
     <div className="login-container">
       <form onSubmit={handleSubmit} className="login-form">
         <div className="login-header">
+          <img
+            src="src\assets\images\image.png"
+            alt="ciateq-icon"
+            style={{ width: "180px", height: "60px" }}
+          ></img>
           <h2>Welcome Back</h2>
           <p className="login-subtitle">Sign in to your account</p>
         </div>

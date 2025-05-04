@@ -5,6 +5,11 @@ function register() {
     <main className="main-content">
       <div className="register-form">
         <div className="register-title">
+          <img
+            src="src\assets\images\image.png"
+            alt="ciateq-icon"
+            style={{ width: "180px", height: "60px" }}
+          ></img>
           <h4
             style={{
               fontSize: "35px",
