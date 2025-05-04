@@ -30,15 +30,21 @@ Ensure that you have **Node.js** and **npm** installed on your system.
 This is a React-based project that includes dependencies like Axios, React Router DOM, and Recharts.
 
 ## 🚀 Technologies Used
-
+#### 🤳 FrontEnd dependencies
 - [React](https://reactjs.org/)
 - [Vite](https://vitejs.dev/)
 - [Axios](https://axios-http.com/)
 - [React Router DOM](https://reactrouter.com/)
 - [Recharts](https://recharts.org/)
-- [Django](https://www.djangoproject.com/)
-- PostgreSQL
-
+#### 🌐 BackEnd dependencies
+- [Django REST Framework](https://www.django-rest-framework.org/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [DRF Yasg](https://drf-yasg.readthedocs.io/)
+- [Django CORS Headers](https://pypi.org/project/django-cors-headers/)
+- [Psycopg2](https://pypi.org/project/psycopg2/)
+#### 👾 DevOps dependencies  
+- [Docker](https://www.docker.com/)
+- [Nginx](https://www.nginx.com/)
 ---
 
 ## 📁 Clone the Repository
