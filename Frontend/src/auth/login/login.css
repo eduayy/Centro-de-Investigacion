@@ -68,7 +68,7 @@ body {
 }
 
 .login-input {
-  width: 100%;
+  width: 400px !important;
   height: 30px;
   border: 1px solid #e2e8f0;
   background-color: #f7fafc;
