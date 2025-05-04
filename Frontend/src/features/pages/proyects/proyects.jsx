@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./proyects.css";
 import Sidebar from "@/components/sidebar/sidebar.jsx";
+import ProyectoCard from "./ProyectoCard.jsx";
 
 const API_BASE_URL = "http://localhost:8000/";
 
@@ -11,6 +12,7 @@ const Proyectos = () => {
   const [error, setError] = useState(null);
   const [editingProyecto, setEditingProyecto] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [selectedProyecto, setSelectedProyecto] = useState(null);
 
   const initialProyectoState = {
     nombreproyecto: "",
@@ -136,6 +138,11 @@ const Proyectos = () => {
           + Nuevo Proyecto
         </button>
 
+        <ProyectoCard
+          proyecto={selectedProyecto}
+          onClose={() => setSelectedProyecto(null)}
+        />
+
         {showAddForm && (
           <div className="proyectos-form-container">
             <h3 className="proyectos-form-title">Registrar Nuevo Proyecto</h3>
@@ -211,16 +218,6 @@ const Proyectos = () => {
           </div>
         )}
 
-        {editingProyecto && (
-          <div className="proyectos-form-container">
-            <h3 className="proyectos-form-title">Editar Proyecto</h3>
-            <form onSubmit={handleUpdate} className="proyectos-form">
-              {/* Campos similares al formulario de agregar */}
-              {/* ... */}
-            </form>
-          </div>
-        )}
-
         <div className="proyectos-table-container">
           <table className="proyectos-data-table">
             <thead className="proyectos-table-header">
@@ -228,33 +225,18 @@ const Proyectos = () => {
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Descripción</th>
-                <th>Inicio</th>
-                <th>Término</th>
-                <th>Acciones</th>
               </tr>
             </thead>
             <tbody className="proyectos-table-body">
               {proyectos.map((proyecto) => (
-                <tr key={proyecto.idproyecto} className="proyectos-table-row">
+                <tr
+                  key={proyecto.idproyecto}
+                  className="proyectos-table-row"
+                  onClick={() => setSelectedProyecto(proyecto)}
+                >
                   <td>{proyecto.idproyecto}</td>
                   <td>{proyecto.nombreproyecto}</td>
                   <td>{proyecto.descripcionproyecto || "-"}</td>
-                  <td>{formatDate(proyecto.fechainicio)}</td>
-                  <td>{formatDate(proyecto.fechatermino)}</td>
-                  <td className="proyectos-actions-cell">
-                    <button
-                      className="proyectos-btn-edit"
-                      onClick={() => setEditingProyecto(proyecto)}
-                    >
-                      Editar
-                    </button>
-                    <button
-                      className="proyectos-btn-delete"
-                      onClick={() => handleDelete(proyecto.idproyecto)}
-                    >
-                      Eliminar
-                    </button>
-                  </td>
                 </tr>
               ))}
             </tbody>

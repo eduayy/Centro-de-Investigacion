@@ -255,7 +255,6 @@ const Eventos = () => {
                 <th>Duración</th>
                 <th>Empresa</th>
                 <th>Tipo</th>
-                <th>Acciones</th>
               </tr>
             </thead>
             <tbody className="eventos-table-body">
@@ -268,20 +267,6 @@ const Eventos = () => {
                   <td>{evento.duracionevento || "-"}</td>
                   <td>{evento.empresainvitante || "-"}</td>
                   <td>{evento.nombretipoevento}</td>
-                  <td className="eventos-actions-cell">
-                    <button
-                      className="eventos-btn-edit"
-                      onClick={() => handleUpdate(evento)}
-                    >
-                      Editar
-                    </button>
-                    <button
-                      className="eventos-btn-delete"
-                      onClick={() => handleDelete(evento.idevento)}
-                    >
-                      Eliminar
-                    </button>
-                  </td>
                 </tr>
               ))}
             </tbody>

@@ -267,7 +267,6 @@ const Lineas = () => {
                 <th>Descripción</th>
                 <th>Fecha de Apertura</th>
                 <th>Estatus</th>
-                <th>Acciones</th>
               </tr>
             </thead>
             <tbody className="lineas-table-body">
@@ -278,20 +277,6 @@ const Lineas = () => {
                   <td>{linea.descripcion || "-"}</td>
                   <td>{linea.fechaapertura}</td>
                   <td>{linea.estatus ? "Activo" : "Inactivo"}</td>
-                  <td className="lineas-actions-cell">
-                    <button
-                      className="lineas-btn-edit"
-                      onClick={() => setEditingLinea(linea)}
-                    >
-                      Editar
-                    </button>
-                    <button
-                      className="lineas-btn-delete"
-                      onClick={() => handleDelete(linea.idlineas)}
-                    >
-                      Eliminar
-                    </button>
-                  </td>
                 </tr>
               ))}
             </tbody>

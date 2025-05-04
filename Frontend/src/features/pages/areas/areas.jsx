@@ -33,7 +33,8 @@ const Areas = () => {
         ]);
 
         setAreas(areasRes.data);
-        setUnidades(unidadesRes.data);
+        const idsUnidades = areasRes.data.map((area) => area.idunidades);
+        setUnidades(idsUnidades);
       } catch (error) {
         setError(
           `Error al cargar datos: ${
@@ -288,7 +289,6 @@ const Areas = () => {
                 <th>Descripción</th>
                 <th>Unidad</th>
                 <th>Estatus</th>
-                <th>Acciones</th>
               </tr>
             </thead>
             <tbody className="areas-table-body">
@@ -299,20 +299,6 @@ const Areas = () => {
                   <td>{area.descripcionarea || "-"}</td>
                   <td>{getUnidadName(area.idunidades)}</td>
                   <td>{area.estatus ? "Activo" : "Inactivo"}</td>
-                  <td className="areas-actions-cell">
-                    <button
-                      className="areas-btn-edit"
-                      onClick={() => setEditingArea(area)}
-                    >
-                      Editar
-                    </button>
-                    <button
-                      className="areas-btn-delete"
-                      onClick={() => handleDelete(area.idarea)}
-                    >
-                      Eliminar
-                    </button>
-                  </td>
                 </tr>
               ))}
             </tbody>

@@ -1,7 +1,7 @@
 .proyectos-page-container {
   display: flex;
   min-height: 100vh;
-  background-color: #f5f7fa;
+  background-color: #f4f6f8;
 }
 
 .proyectos-main-content {
@@ -9,216 +9,146 @@
   padding: 2rem;
 }
 
-.proyectos-form-title {
+.proyectos-title {
+  font-size: 1.8rem;
   color: #2c3e50;
-  margin-top: 0;
   margin-bottom: 1.5rem;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 0.5rem;
 }
 
+/* Botón Nuevo Proyecto */
 .proyectos-btn-add {
   background-color: #001932;
   color: white;
-  padding: 0.6rem 1.2rem;
+  padding: 0.6rem 1rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
-  margin-bottom: 1.5rem;
   transition: background-color 0.3s;
+  margin-bottom: 1.5rem;
 }
 
 .proyectos-btn-add:hover {
-  background-color: rgb(0, 51, 85);
-}
-
-.proyectos-btn-save {
-  background-color: #001932;
-  color: white;
-  padding: 0.6rem 1.2rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.proyectos-btn-save:hover {
   background-color: #00376e;
 }
 
-.proyectos-btn-cancel {
-  background-color: #e74c3c;
-  color: white;
-  padding: 0.6rem 1.2rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.proyectos-btn-cancel:hover {
-  background-color: #c0392b;
-}
-
-.proyectos-btn-edit {
-  background-color: #001932;
-  color: white;
-  padding: 0.4rem 0.8rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-right: 0.5rem;
-  transition: background-color 0.3s;
-}
-
-.proyectos-btn-edit:hover {
-  background-color: #00376e;
-}
-
-.proyectos-btn-delete {
-  background-color: #e74c3c;
-  color: white;
-  padding: 0.4rem 0.8rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.proyectos-btn-delete:hover {
-  background-color: #c0392b;
-}
-
+/* Formulario */
 .proyectos-form-container {
   background-color: white;
   padding: 1.5rem;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 2rem;
 }
 
+.proyectos-form-title {
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  color: #2c3e50;
+}
+
 .proyectos-form-group {
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .proyectos-form-label {
-  display: block;
   margin-bottom: 0.5rem;
   font-weight: 500;
-  color: #555;
+  color: #34495e;
 }
 
 .proyectos-form-input,
-.proyectos-form-textarea,
-.proyectos-form-select {
+.proyectos-form-textarea {
+  padding: 0.5rem;
   width: 100%;
-  padding: 0.6rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  transition: border 0.3s;
-}
-
-.proyectos-form-input:focus,
-.proyectos-form-textarea:focus,
-.proyectos-form-select:focus {
-  outline: none;
-  border-color: #3498db;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
 }
 
 .proyectos-form-textarea {
-  min-height: 100px;
   resize: vertical;
 }
 
 .proyectos-form-row {
   display: flex;
   gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.proyectos-form-row .proyectos-form-group {
-  flex: 1;
+  flex-wrap: wrap;
 }
 
 .proyectos-form-actions {
+  margin-top: 1.5rem;
   display: flex;
   gap: 1rem;
-  margin-top: 1.5rem;
+}
+
+.proyectos-btn-save,
+.proyectos-btn-cancel {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.proyectos-btn-save {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.proyectos-btn-save:hover {
+  background-color: #27ae60;
+}
+
+.proyectos-btn-cancel {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.proyectos-btn-cancel:hover {
+  background-color: #c0392b;
 }
 
 .proyectos-table-container {
+  margin-top: 2rem;
   overflow-x: auto;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .proyectos-data-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.9rem;
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .proyectos-table-header {
-  background-color: #f8f9fa;
-}
-
-.proyectos-table-header th {
-  padding: 1rem;
-  text-align: left;
-  font-weight: 600;
   background-color: #001932;
   color: white;
-  border-bottom: 2px solid #dee2e6;
 }
 
-.proyectos-table-body td {
-  padding: 1rem;
-  border-bottom: 1px solid #dee2e6;
-  color: #495057;
+.proyectos-data-table th,
+.proyectos-data-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
 }
 
 .proyectos-table-row:hover {
-  background-color: #f8f9fa;
+  background-color: #f0f8ff;
+  cursor: pointer;
 }
 
-.proyectos-actions-cell {
-  white-space: nowrap;
-}
-
-.loading {
-  padding: 2rem;
+/* Mensajes */
+.loading,
+.error-message {
+  font-size: 1.2rem;
+  margin: 2rem;
   text-align: center;
-  color: #7f8c8d;
 }
 
 .error-message {
-  padding: 1rem;
-  background-color: #fee;
   color: #e74c3c;
-  border-radius: 4px;
-  margin-bottom: 1rem;
-  border-left: 4px solid #e74c3c;
-}
-
-@media (max-width: 768px) {
-  .proyectos-main-content {
-    margin-left: 0;
-    padding: 1rem;
-  }
-
-  .proyectos-form-row {
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .proyectos-form-actions {
-    flex-direction: column;
-  }
-
-  .proyectos-btn-save,
-  .proyectos-btn-cancel {
-    width: 100%;
-  }
 }

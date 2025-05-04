@@ -233,7 +233,6 @@ const Articulos = () => {
                 <th>País</th>
                 <th>Año</th>
                 <th>DOI</th>
-                <th>Acciones</th>
               </tr>
             </thead>
             <tbody className="articulos-table-body">
@@ -245,20 +244,6 @@ const Articulos = () => {
                   <td>{articulo.pais}</td>
                   <td>{articulo.aniopublicacion}</td>
                   <td>{articulo.doi}</td>
-                  <td className="articulos-actions-cell">
-                    <button
-                      className="articulos-btn-edit"
-                      onClick={() => handleUpdate(articulo)}
-                    >
-                      Editar
-                    </button>
-                    <button
-                      className="articulos-btn-delete"
-                      onClick={() => handleDelete(articulo.idarticulo)}
-                    >
-                      Eliminar
-                    </button>
-                  </td>
                 </tr>
               ))}
             </tbody>

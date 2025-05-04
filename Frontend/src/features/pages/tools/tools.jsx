@@ -186,7 +186,6 @@ const Herramientas = () => {
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Tipo de Herramienta</th>
-                <th>Acciones</th>
               </tr>
             </thead>
             <tbody className="herramientas-table-body">
@@ -198,20 +197,6 @@ const Herramientas = () => {
                   <td>{herramienta.idherramientas}</td>
                   <td>{herramienta.nombreherramienta}</td>
                   <td>{herramienta.tipoherramienta}</td>
-                  <td className="herramientas-actions-cell">
-                    <button
-                      className="herramientas-btn-edit"
-                      onClick={() => setEditingHerramienta(herramienta)}
-                    >
-                      Editar
-                    </button>
-                    <button
-                      className="herramientas-btn-delete"
-                      onClick={() => handleDelete(herramienta.idherramientas)}
-                    >
-                      Eliminar
-                    </button>
-                  </td>
                 </tr>
               ))}
             </tbody>

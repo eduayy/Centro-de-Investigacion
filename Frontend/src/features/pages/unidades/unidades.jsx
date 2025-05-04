@@ -163,7 +163,6 @@ const Unidades = () => {
               <tr>
                 <th>ID</th>
                 <th>Nombre</th>
-                <th>Acciones</th>
               </tr>
             </thead>
             <tbody className="unidades-table-body">
@@ -171,20 +170,6 @@ const Unidades = () => {
                 <tr key={unidad.idunidades} className="unidades-table-row">
                   <td>{unidad.idunidades}</td>
                   <td>{unidad.nombre}</td>
-                  <td className="unidades-actions-cell">
-                    <button
-                      className="unidades-btn-edit"
-                      onClick={() => setEditingUnidad(unidad)}
-                    >
-                      Editar
-                    </button>
-                    <button
-                      className="unidades-btn-delete"
-                      onClick={() => handleDelete(unidad.idunidades)}
-                    >
-                      Eliminar
-                    </button>
-                  </td>
                 </tr>
               ))}
             </tbody>

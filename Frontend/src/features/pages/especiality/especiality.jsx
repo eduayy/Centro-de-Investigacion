@@ -236,7 +236,6 @@ const Especialidades = () => {
                 <th>ID</th>
                 <th>Descripción</th>
                 <th>Estatus</th>
-                <th>Acciones</th>
               </tr>
             </thead>
             <tbody className="especialidades-table-body">
@@ -248,22 +247,6 @@ const Especialidades = () => {
                   <td>{especialidad.idespecialidades}</td>
                   <td>{especialidad.descripcion}</td>
                   <td>{especialidad.estatus ? "Activo" : "Inactivo"}</td>
-                  <td className="especialidades-actions-cell">
-                    <button
-                      className="especialidades-btn-edit"
-                      onClick={() => setEditingEspecialidad(especialidad)}
-                    >
-                      Editar
-                    </button>
-                    <button
-                      className="especialidades-btn-delete"
-                      onClick={() =>
-                        handleDelete(especialidad.idespecialidades)
-                      }
-                    >
-                      Eliminar
-                    </button>
-                  </td>
                 </tr>
               ))}
             </tbody>
