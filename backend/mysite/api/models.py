@@ -23,20 +23,17 @@ class Area(models.Model):
     idunidades = models.ForeignKey(
         'Unidades',
         on_delete=models.CASCADE,
-        db_column='idunidades'
+        db_column='idunidades',
+        default=1
     )
 
     objects = SafeGetManager()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'area'
 
-    def save(self, *args, **kwargs):
-        if not self.idarea:
-            max_id = Area.objects.aggregate(max_id=Max('idarea'))['max_id']
-            self.idarea = (max_id or 0) + 1
-        super().save(*args, **kwargs)
+    
 
 
 class Articulos(models.Model):
@@ -51,15 +48,10 @@ class Articulos(models.Model):
     objects = SafeGetManager()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'articulos'
 
-    def save(self, *args, **kwargs):
-        if not self.idarticulo:
-            max_id = Articulos.objects.aggregate(
-                max_id=Max('idarticulo'))['max_id']
-            self.idarticulo = (max_id or 0) + 1
-        super().save(*args, **kwargs)
+   
 
 
 class Carreras(models.Model):
@@ -70,19 +62,12 @@ class Carreras(models.Model):
     objects = SafeGetManager()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'carreras'
 
     def __str__(self):
         return f"{self.nombrecarrera} ({self.nombreuniversidad})"
 
-    def save(self, *args, **kwargs):
-
-        if not self.idcarreras:
-            max_id = Carreras.objects.aggregate(
-                max_id=Max('idcarreras'))['max_id']
-            self.idcarreras = (max_id or 0) + 1
-        super().save(*args, **kwargs)
 
 
 class DetArt(models.Model):
@@ -90,17 +75,19 @@ class DetArt(models.Model):
     idarticulo = models.ForeignKey(
         'Articulos',
         on_delete=models.CASCADE,
-        db_column='idarticulo'
+        db_column='idarticulo',
+        default=1
     )
     idinvestigador = models.ForeignKey(
         'Investigadores',
         on_delete=models.CASCADE,
-        db_column='idinvestigadores'
+        db_column='idinvestigadores',
+        default=1
     )
     objects = SafeGetManager()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'detart'
 
 
@@ -109,18 +96,20 @@ class DetEventos(models.Model):
     idinvestigadores = models.ForeignKey(
         'Investigadores',
         on_delete=models.CASCADE,
-        db_column='idinvestigadores'
+        db_column='idinvestigadores',
+        default=1
     )
     idevento = models.ForeignKey(
         'Eventos',
         on_delete=models.CASCADE,
-        db_column='idevento'
+        db_column='idevento',
+        default=1
     )
 
     objects = SafeGetManager()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'deteventos'
         verbose_name = 'Detalle de Evento'
         verbose_name_plural = 'Detalles de Eventos'
@@ -131,16 +120,18 @@ class DetHerramienta(models.Model):
     idproyecto = models.ForeignKey(
         'Proyectos',
         on_delete=models.CASCADE,
-        db_column='idproyecto'
+        db_column='idproyecto',
+        default=1
     )
     idherramientas = models.ForeignKey(
         'Herramientas',
         on_delete=models.CASCADE,
-        db_column='idherramientas'
+        db_column='idherramientas',
+        default=1
     )
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'detherramienta'
 
 
@@ -149,18 +140,20 @@ class DetLineas(models.Model):
     idlineas = models.ForeignKey(
         'Lineas',
         on_delete=models.CASCADE,
-        db_column='idlineas'
+        db_column='idlineas',
+        default=1
     )
     idinvestigadores = models.ForeignKey(
         'Investigadores',
         on_delete=models.CASCADE,
-        db_column='idinvestigadores'
+        db_column='idinvestigadores',
+        default=1
     )
 
     objects = SafeGetManager()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'detlineas'
 
 
@@ -170,18 +163,20 @@ class DetProy(models.Model):
     idinvestigadores = models.ForeignKey(
         'Investigadores',
         on_delete=models.CASCADE,
-        db_column='idinvestigadores'
+        db_column='idinvestigadores',
+        default=1
     )
     idproyecto = models.ForeignKey(
         'Proyectos',
         on_delete=models.CASCADE,
-        db_column='idproyecto'
+        db_column='idproyecto',
+        default=1
     )
 
     objects = SafeGetManager()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'detproy'
 
 
@@ -193,15 +188,9 @@ class Especialidades(models.Model):
     objects = SafeGetManager()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'especialidades'
 
-    def save(self, *args, **kwargs):
-        if not self.idespecialidades:
-            max_id = Especialidades.objects.aggregate(
-                max_id=Max('idespecialidades'))['max_id']
-            self.idespecialidades = (max_id or 0) + 1
-        super().save(*args, **kwargs)
 
 
 class Estudiantes(models.Model):
@@ -215,53 +204,46 @@ class Estudiantes(models.Model):
     fechafincontrato = models.DateField(
         blank=True, null=True)
     estatus = models.BooleanField(default=True)
-
-    # Claves foráneas
     idtipoestudiante = models.ForeignKey(
         'TipoEstudiante',
         on_delete=models.CASCADE,
-        db_column='idtipoestudiante'
+        db_column='idtipoestudiante',
+        default=1
     )
     idcarreras = models.ForeignKey(
         'Carreras',
         on_delete=models.CASCADE,
-        db_column='idcarreras'
+        db_column='idcarreras',
+        default=1
     )
     idinvestigadores = models.ForeignKey(
         'Investigadores',
         on_delete=models.CASCADE,
-        db_column='idinvestigadores'
+        db_column='idinvestigadores',
+        default=1
     )
 
     objects = SafeGetManager()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'estudiantes'
 
     def __str__(self):
         return f"{self.nombreestudiante} {self.apellidoestudiante}"
 
-    def save(self, *args, **kwargs):
-        if not self.idestudiantes:
-            # Obtener el máximo ID actual y sumar 1
-            max_id = Estudiantes.objects.aggregate(
-                max_id=Max('idestudiantes'))['max_id']
-            self.idestudiantes = (max_id or 0) + 1
-        super().save(*args, **kwargs)
-
     def dar_de_baja(self):
-        """Método para baja lógica que funciona con managed=False"""
+        """Método para baja lógica que funciona con managed=True"""
         try:
             with connection.cursor() as cursor:
                 cursor.execute(
                     "UPDATE estudiantes SET estatus = %s WHERE idestudiantes = %s",
-                    [False, self.idestudiantes]
+                    [True, self.idestudiantes]
                 )
             return True
         except Exception as e:
             print(f"Error al dar de baja: {str(e)}")
-            return False
+            return True
 
 
 class Eventos(models.Model):
@@ -277,22 +259,18 @@ class Eventos(models.Model):
     idtipoevento = models.ForeignKey(
         'TipoEvento',
         on_delete=models.CASCADE,
-        db_column='idtipoevento'
+        db_column='idtipoevento',
+        default=1
     )
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'eventos'
 
     def __str__(self):
         return self.nombreevento
 
-    def save(self, *args, **kwargs):
-        if not self.idevento:
-            max_id = Eventos.objects.aggregate(
-                max_id=Max('idevento'))['max_id']
-            self.idevento = (max_id or 0) + 1
-        super().save(*args, **kwargs)
+    
 
 
 class Herramientas(models.Model):
@@ -303,15 +281,8 @@ class Herramientas(models.Model):
     objects = SafeGetManager()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'herramientas'
-
-    def save(self, *args, **kwargs):
-        if not self.idherramientas:
-            max_id = Herramientas.objects.aggregate(
-                max_id=Max('idherramientas'))['max_id']
-            self.idherramientas = (max_id or 0) + 1
-        super().save(*args, **kwargs)
 
 
 class Investigadores(models.Model):
@@ -320,24 +291,19 @@ class Investigadores(models.Model):
     email = models.EmailField(unique=True)
     puesto = models.CharField(max_length=50, default="Investigador")
     idniveledu = models.ForeignKey(
-        'NivelEdu', on_delete=models.CASCADE, db_column='idniveledu')
+        'NivelEdu', on_delete=models.CASCADE, db_column='idniveledu', default=1)
     idarea = models.ForeignKey(
-        'Area', on_delete=models.CASCADE, db_column='idarea')
+        'Area', on_delete=models.CASCADE, 
+        db_column='idarea',
+        default=1
+        )
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'investigadores'
 
     def __str__(self):
         return f"{self.nombre}"
-
-    def save(self, *args, **kwargs):
-
-        if not self.idinvestigadores:
-            max_id = Investigadores.objects.aggregate(
-                max_id=Max('idinvestigadores'))['max_id']
-            self.idinvestigadores = (max_id or 0) + 1
-        super().save(*args, **kwargs)
 
 
 class Lineas(models.Model):
@@ -348,18 +314,11 @@ class Lineas(models.Model):
     estatus = models.BooleanField(default=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'lineas'
 
     def __str__(self):
         return self.nombre
-
-    def save(self, *args, **kwargs):
-        if not self.idlineas:
-            max_id = Lineas.objects.aggregate(
-                max_id=Max('idlineas'))['max_id']
-            self.idlineas = (max_id or 0) + 1
-        super().save(*args, **kwargs)
 
 
 class NivelEdu(models.Model):
@@ -369,13 +328,14 @@ class NivelEdu(models.Model):
     idespecialidades = models.ForeignKey(
         'Especialidades',
         on_delete=models.CASCADE,
-        db_column='idespecialidades'
+        db_column='idespecialidades',
+        default=1
     )
 
     objects = SafeGetManager()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'niveledu'
         verbose_name = 'Nivel Educativo'
         verbose_name_plural = 'Niveles Educativos'
@@ -391,7 +351,7 @@ class NivelSni(models.Model):
     objects = SafeGetManager()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'nivelsni'
 
 
@@ -408,7 +368,7 @@ class Permisos(models.Model):
     objects = SafeGetManager()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'permisos'
 
     def __str__(self):
@@ -425,16 +385,8 @@ class Proyectos(models.Model):
     objects = SafeGetManager()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'proyectos'
-
-    def save(self, *args, **kwargs):
-
-        if not self.idproyecto:
-            max_id = Proyectos.objects.aggregate(
-                max_id=Max('idproyecto'))['max_id']
-            self.idproyecto = (max_id or 0) + 1
-        super().save(*args, **kwargs)
 
 
 class Sni(models.Model):
@@ -444,29 +396,31 @@ class Sni(models.Model):
     idnivelsni = models.ForeignKey(
         'NivelSni',
         on_delete=models.CASCADE,
-        db_column='idnivelsni'
+        db_column='idnivelsni',
+        default=1
     )
     idinvestigadores = models.ForeignKey(
         'Investigadores',
         on_delete=models.CASCADE,
-        db_column='idinvestigadores'
+        db_column='idinvestigadores',
+        default=1
     )
 
     objects = SafeGetManager()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'sni'
 
 
 class TipoEstudiante(models.Model):
     idtipoestudiante = models.IntegerField(primary_key=True)
-    descripcion = models.CharField(max_length=255)
+    descripcion = models.CharField(max_length=255, default="Valor por defecto")
 
     objects = SafeGetManager()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'tipoestudiante'
         verbose_name_plural = 'Tipos de Estudiante'
 
@@ -481,7 +435,7 @@ class TipoEvento(models.Model):
     objects = SafeGetManager()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'tipoevento'
 
 
@@ -492,15 +446,9 @@ class Unidades(models.Model):
     objects = SafeGetManager()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'unidades'
 
-    def save(self, *args, **kwargs):
-        if not self.idunidades:
-            max_id = Unidades.objects.aggregate(
-                max_id=Max('idunidades'))['max_id']
-            self.idunidades = (max_id or 0) + 1
-        super().save(*args, **kwargs)
 
 
 class Usuarios(models.Model):
@@ -519,7 +467,7 @@ class Usuarios(models.Model):
     objects = SafeGetManager()
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'usuarios'
 
     def __str__(self):
