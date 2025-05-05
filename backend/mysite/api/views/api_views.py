@@ -287,27 +287,28 @@ class SniViewSet(viewsets.ModelViewSet):
     queryset = Sni.objects.all()
     serializer_class = SniSerializer
 
-#BD Restorer
+# BD Restorer
+
 
 @csrf_exempt
 def restaurar_bd(request):
     if request.method == "POST":
         try:
-            # 
+            #
             db_name = "investigadores_db_restored"
-            db_user = "postgres" # Tu usuario
+            db_user = "postgres"  # Tu usuario
             db_password = "12345"  # Tu contraseña
-            
+
             ruta_sql = os.path.join(
-                settings.BASE_DIR, 
-                "api", 
-                "DataBase", 
+                settings.BASE_DIR,
+                "api",
+                "DataBase",
                 "investigadores_database.sql"
             )
 
             if not os.path.exists(ruta_sql):
                 return JsonResponse(
-                    {"error": f"Archivo SQL no encontrado: {ruta_sql}"}, 
+                    {"error": f"Archivo SQL no encontrado: {ruta_sql}"},
                     status=500
                 )
 
@@ -326,7 +327,7 @@ def restaurar_bd(request):
                     text=True,
                     env={**os.environ, "PGPASSWORD": db_password}
                 )
-                
+
                 print(f"Ejecutado: {comando}")
                 print(f"Salida: {resultado.stdout}")
                 if resultado.stderr:
@@ -337,12 +338,13 @@ def restaurar_bd(request):
             })
 
         except subprocess.CalledProcessError as e:
-            error_detail = f"ERROR PostgreSQL: {e.stderr}" if e.stderr else str(e)
+            error_detail = f"ERROR PostgreSQL: {e.stderr}" if e.stderr else str(
+                e)
             return JsonResponse({
                 "error": f"Fallo en comando: {e.cmd}",
                 "detalle": error_detail
             }, status=500)
-            
+
         except Exception as e:
             return JsonResponse({
                 "error": "Error inesperado",

@@ -89,9 +89,9 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'investigadores_db_restored',         # Nombre de tu base de datos
+        'NAME': 'investigadores_database',         # Nombre de tu base de datos
         'USER': 'postgres',              # Tú usuario de PostgreSQL
-        'PASSWORD': '12345',       # Tú contraseña del usuario
+        'PASSWORD': 'Juanpis09@',       # Tú contraseña del usuario
         'HOST': 'localhost',
         'PORT': '5432',
     }
