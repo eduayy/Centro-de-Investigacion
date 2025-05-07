@@ -1,8 +1,8 @@
 # **CIATEQ Research Center**
 
 ### **Members:**
-1. **Carlos Eduardo Sánchez Ramos**
-2. **Juan Pablo Vázquez Arévalo**
+1. **Carlos Eduardo Sánchez Ramos** (FrontEnd)
+2. **Juan Pablo Vázquez Arévalo**   (BackEnd)
 
 ---
 
