@@ -31,6 +31,9 @@ const ProyectoCard = ({ proyecto, onEdit, onDelete }) => {
             <strong>Fecha de Término:</strong>{" "}
             {new Date(proyecto.fechatermino).toLocaleDateString()}
           </p>
+          <p>
+            <strong>Investigadores a cargo:</strong>{" "}
+          </p>
           <div className="proyecto-card-actions">
             <button
               className="proyecto-btn-edit"

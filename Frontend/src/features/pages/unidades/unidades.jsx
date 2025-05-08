@@ -11,6 +11,7 @@ const Unidades = () => {
   const [error, setError] = useState(null);
   const [editingUnidad, setEditingUnidad] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
+
   const initialUnidadState = {
     nombre: "",
   };
@@ -56,27 +57,6 @@ const Unidades = () => {
     }
   };
 
-  /* const handleUpdate = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.put(
-        `${API_BASE_URL}api/unidades-api/${editingUnidad.idunidades}/`,
-        editingUnidad,
-        { withCredentials: true }
-      );
-      setUnidades(
-        unidades.map((u) =>
-          u.idunidades === editingUnidad.idunidades ? response.data : u
-        )
-      );
-      setEditingUnidad(null);
-    } catch (error) {
-      setError(
-        `Error al actualizar: ${error.response?.data?.detail || error.message}`
-      );
-    }
-  }; */
-
   const handleDelete = async (id) => {
     if (!window.confirm("¿Estás seguro de eliminar esta unidad?")) return;
 
@@ -92,20 +72,12 @@ const Unidades = () => {
     }
   };
 
-  const handleInputChange = (e, isEditing = false) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
-
-    if (isEditing) {
-      setEditingUnidad({
-        ...editingUnidad,
-        [name]: value,
-      });
-    } else {
-      setNewUnidad({
-        ...newUnidad,
-        [name]: value,
-      });
-    }
+    setNewUnidad({
+      ...newUnidad,
+      [name]: value,
+    });
   };
 
   if (loading)
@@ -116,7 +88,12 @@ const Unidades = () => {
     <div className="unidades-page-container">
       <Sidebar />
       <div className="unidades-main-content">
-        <h2 className="unidades-title">Gestión de Unidades</h2>
+        <div className="unidades-header">
+          <h2 className="unidades-title">Gestión de Unidades</h2>
+          <p className="unidades-subtitle">
+            Administra las unidades del sistema
+          </p>
+        </div>
 
         <button
           className="unidades-btn-add"
@@ -124,36 +101,45 @@ const Unidades = () => {
         >
           + Nueva Unidad
         </button>
-
         {showAddForm && (
-          <div className="unidades-form-container">
-            <h3 className="unidades-form-title">Registrar Nueva Unidad</h3>
-            <form onSubmit={handleAdd} className="unidades-form">
-              <div className="unidades-form-group">
-                <label className="unidades-form-label">Nombre:</label>
-                <input
-                  type="text"
-                  name="nombre"
-                  className="unidades-form-input"
-                  value={newUnidad.nombre}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-
-              <div className="unidades-form-actions">
-                <button type="submit" className="unidades-btn-save">
-                  Guardar
-                </button>
+          <div className="modal-overlay">
+            <div className="modal-container">
+              <div className="modal-header">
+                <h3 className="modal-title">Registrar Nueva Unidad</h3>
                 <button
-                  type="button"
-                  className="unidades-btn-cancel"
+                  className="modal-close-btn"
                   onClick={() => setShowAddForm(false)}
                 >
-                  Cancelar
+                  &times;
                 </button>
               </div>
-            </form>
+              <form onSubmit={handleAdd} className="unidades-form">
+                <div className="unidades-form-group">
+                  <label className="unidades-form-label">Nombre:</label>
+                  <input
+                    type="text"
+                    name="nombre"
+                    className="unidades-form-input"
+                    value={newUnidad.nombre}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+
+                <div className="modal-footer">
+                  <button type="submit" className="unidades-btn-save">
+                    Guardar
+                  </button>
+                  <button
+                    type="button"
+                    className="unidades-btn-cancel"
+                    onClick={() => setShowAddForm(false)}
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         )}
 

@@ -13,6 +13,7 @@ const Careers = () => {
     editingCarrera,
     showAddForm,
     newCarrera,
+    universidades,
     setShowAddForm,
     setEditingCarrera,
     setNewCarrera,
@@ -22,47 +23,61 @@ const Careers = () => {
     handleInputChange,
   } = useCareers();
 
-  if (loading) return <div className="loading">Cargando carreras...</div>;
+  if (loading) return <div className="loading-spinner">Cargando...</div>;
   if (error) return <div className="error-message">{error}</div>;
 
-  console.log(setNewCarrera);
-
   return (
-    <div className="carreras-page">
+    <div className="careers-container">
       <Sidebar />
-      <div className="carreras-content">
-        <h2>LISTADO DE CARRERAS</h2>
+      <main className="careers-main">
+        <header className="careers-header">
+          <h1>Administración de Carreras</h1>
+          <p>Gestiona las carreras universitarias registradas en el sistema</p>
+        </header>
 
-        <button className="btn-add" onClick={() => setShowAddForm(true)}>
-          + Nueva Carrera
-        </button>
+        <div className="careers-actions">
+          <button
+            className="primary-button"
+            onClick={() => setShowAddForm(true)}
+          >
+            <span className="plus-icon">+</span> Agregar Carrera
+          </button>
+        </div>
 
         {showAddForm && (
-          <CareersForm
-            title="Nueva Carrera"
-            carrera={newCarrera}
-            onChange={handleInputChange}
-            onSubmit={handleAdd}
-            onCancel={() => setShowAddForm(false)}
-          />
+          <div className="modal-overlay">
+            <CareersForm
+              title="Nueva Carrera"
+              carrera={newCarrera}
+              onChange={handleInputChange}
+              onSubmit={handleAdd}
+              onCancel={() => setShowAddForm(false)}
+              universidades={universidades}
+            />
+          </div>
         )}
 
         {editingCarrera && (
-          <CareersForm
-            title="Editar Carrera"
-            carrera={editingCarrera}
-            onChange={(e) => handleInputChange(e, true)}
-            onSubmit={handleUpdate}
-            onCancel={() => setEditingCarrera(null)}
-          />
+          <div className="modal-overlay">
+            <CareersForm
+              title="Editar Carrera"
+              carrera={editingCarrera}
+              onChange={(e) => handleInputChange(e, true)}
+              onSubmit={handleUpdate}
+              onCancel={() => setEditingCarrera(null)}
+              universidades={universidades}
+            />
+          </div>
         )}
 
-        <CareersTable
-          carreras={carreras}
-          onEdit={setEditingCarrera}
-          onDelete={handleDelete}
-        />
-      </div>
+        <section className="careers-data">
+          <CareersTable
+            carreras={carreras}
+            onEdit={setEditingCarrera}
+            onDelete={handleDelete}
+          />
+        </section>
+      </main>
     </div>
   );
 };

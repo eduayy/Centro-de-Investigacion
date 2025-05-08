@@ -1,53 +1,70 @@
 import "./home.css";
-import Sidebar from "../../components/sidebar/sidebar.jsx";
-import image from "../../assets/images/image.png"; // 👈 Importación agregada
+import Sidebar from "@/components/sidebar/sidebar.jsx";
+import image from "@/assets/images/image.png";
+import Dashboard from "@/components/Dashboard/Dasboard.jsx";
+import { useEffect, useState } from "react";
+import { getResearcherInfo } from "../../components/Dashboard/DashboardFetch"; 
 
 function Home() {
+  const [stats, setStats] = useState(null);
+  const [sidebarVisible, setSidebarVisible] = useState(true);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const data = await getResearcherInfo();
+        setStats(data);
+      } catch (error) {
+        console.error("Error al cargar estadísticas:", error);
+      }
+    };
+
+    fetchStats();
+  }, []);
+
   return (
     <div className="Main">
-      <Sidebar />
+      <Sidebar
+        isVisible={sidebarVisible}
+        onToggle={() => setSidebarVisible(!sidebarVisible)}
+      />
       <div className="Home">
         <section className="container-info">
-          <img src={image} alt="Imagen del Home" /> {/* 👈 Línea corregida */}
-          <h1>CENTRO DE INVESTIGACIÓN JALISCO</h1>
+          <img src={image} alt="Imagen del Home" className="home-logo" />
+          <h1 className="home-title">CENTRO DE INVESTIGACIÓN JALISCO</h1>
         </section>
+
         <section className="container-video">
           <div className="section-info">
-            <h1>Quienes Somos</h1>
+            <h2>¿Quiénes Somos?</h2>
             <p>
-              CIATEQ fundado en noviembre de 1978, es un Centro Público de
+              CIATEQ, fundado en noviembre de 1978, es un Centro Público de
               Investigación especializado en manufactura avanzada y procesos
-              industriales que realiza servicios, proyectos de desarrollo
+              industriales. Realiza servicios, proyectos de desarrollo
               tecnológico, investigación aplicada y formación de Recursos
-              Humanos para contribuir a elevar la competitividad de nuestros
-              clientes. Formamos parte de la Secretaría de Ciencia, Humanidades,
-              Tecnología e Innovación (Secihti), institución del Gobierno de
-              México (2024-2030) que formula y conduce la política nacional en
-              la materia; articula y coordina las capacidades, los
-              conocimientos, recursos y el talento de las personas
-              investigadoras y tecnólogas para consolidar un Sistema Nacional
-              científico, humanístico, tecnológico y de innovación. Nuestras
-              instalaciones se concentran en siete estados de la República
-              Mexicana, lo que nos permite tener cobertura nacional. La oferta
-              tecnológica que ofrecemos es integral en cada Unidad, y consta de
-              seis áreas de especialidad, contando con las capacidades para
-              apoyar el desarrollo de los diferentes sectores de la industria
-              como agua, salud, energía, aeronáutico, alimentos, automotriz y
-              autopartes, electrodomésticos, comunicaciones y transportes,
-              energético, hidrocarburos, maquinaria y equipo, entre otros.
-              Poseemos importantes capacidades humanas y de infraestructura para
-              el diseño, modelación y fabricación de herramentales empleados en
-              diversas industrias.
+              Humanos para elevar la competitividad de nuestros clientes.
+            </p>
+            <p>
+              Formamos parte de la Secretaría de Ciencia, Humanidades,
+              Tecnología e Innovación (Secihti), del Gobierno de México
+              (2024-2030).
             </p>
           </div>
-          <iframe
-            className="video-ciatq"
-            src="https://www.youtube.com/embed/8n7foYEXbg4?si=CitGZ_Rat8edWsW7"
-            title="Ciateq timeline video"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-          ></iframe>
+
+          <div className="video-wrapper">
+            <iframe
+              className="video-ciatq"
+              src="https://www.youtube.com/embed/8n7foYEXbg4?si=CitGZ_Rat8edWsW7"
+              title="Ciateq timeline video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </section>
+
+        <section className="dashboard-section">
+          {stats && <Dashboard stats={stats} />}
         </section>
       </div>
     </div>

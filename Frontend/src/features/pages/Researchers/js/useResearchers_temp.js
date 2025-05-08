@@ -18,18 +18,42 @@ export const useResearchers = () => {
     idarea: "",
   };
 
-  const [newInvestigador, setNewInvestigador] = useState(
-    initialInvestigadorState
-  );
+  const [newInvestigador, setNewInvestigador] = useState({
+    initialInvestigadorState,
+    lineas: [],
+  });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { investigadores, nivelEdu, areas } =
-          await api.fetchInitialData();
-        setInvestigadores(investigadores);
-        setOptions({ nivelesEdu: nivelEdu, areas });
-        setError(null);
+        const data = await api.fetchInitialData();
+        console.log(data);
+        if (!data.lineas) {
+          console.warn("La API no devolvió líneas de investigación");
+          data.lineas = [];
+        }
+        const investigadoresConLineas = data.investigadores.map(
+          (investigador) => {
+            const lineasIds = investigador.lineas || [];
+            const nombresLineas = lineasIds
+              .map((id) => {
+                const linea = data.lineas.find((l) => l.idlinea === id);
+                return linea ? linea.nombrelinea : null;
+              })
+              .filter(Boolean);
+
+            return {
+              ...investigador,
+              lineasNombres: nombresLineas.join(", ") || "No especificado",
+            };
+          }
+        );
+        setInvestigadores(investigadoresConLineas);
+        setOptions({
+          nivelesEdu: data.nivelEdu,
+          areas: data.areas,
+          lineas: data.lineas,
+        });
       } catch (err) {
         setError(`Error loading data: ${err.message}`);
       } finally {

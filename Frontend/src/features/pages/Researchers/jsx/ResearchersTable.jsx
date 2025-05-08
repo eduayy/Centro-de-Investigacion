@@ -7,7 +7,7 @@ const ResearchersTable = ({ investigadores, onSelect }) => (
         <tr>
           <th>Número de Investigador (ID)</th>
           <th>Nombre del Investigador</th>
-          <th>Correo del Investigador</th>
+          <th>Línea del Investigador</th>
         </tr>
       </thead>
       <tbody>
@@ -15,7 +15,7 @@ const ResearchersTable = ({ investigadores, onSelect }) => (
           <tr key={i.idinvestigadores} onClick={() => onSelect(i)}>
             <td>{i.idinvestigadores}</td>
             <td>{i.nombre}</td>
-            <td>{i.email}</td>
+            <td>{i.lineasNombres || `No especificado`}</td>
           </tr>
         ))}
       </tbody>

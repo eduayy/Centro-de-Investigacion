@@ -11,6 +11,7 @@ const initialCarreraState = {
 const useCareers = () => {
   const [carreras, setCarreras] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [universidades, setUniversidades] = useState([]);
   const [error, setError] = useState(null);
   const [editingCarrera, setEditingCarrera] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
@@ -23,6 +24,7 @@ const useCareers = () => {
           withCredentials: true,
         });
         setCarreras(response.data || []);
+        setUniversidades(response.data.map((u) => u.nombreuniversidad) || []);
       } catch (error) {
         setError(`Error al cargar carreras: ${error.message}`);
       } finally {
@@ -99,6 +101,7 @@ const useCareers = () => {
     editingCarrera,
     showAddForm,
     newCarrera,
+    universidades,
     setShowAddForm,
     setEditingCarrera,
     setNewCarrera,

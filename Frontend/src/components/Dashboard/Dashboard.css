@@ -1,0 +1,15 @@
+.dashboard-container {
+  width: 95%;
+  margin: 0 auto;
+  background: #002b5c;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+}
+
+.dashboard-title {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: white;
+  font-size: 1.5rem;
+}

@@ -1,10 +1,15 @@
 .proyecto-card {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 1.5rem;
-  padding: 1rem;
-  transition: box-shadow 0.3s;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 0;
+  border: none;
+  margin-bottom: 2rem;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+
+  margin-top: 15px;
 }
 
 .proyecto-card-header {
@@ -12,51 +17,134 @@
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #4361ee, #3a0ca3);
+  color: white;
+  position: relative;
+  z-index: 2;
 }
 
 .proyecto-card-header h3 {
   margin: 0;
-  font-size: 1.2rem;
-  color: #2c3e50;
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.proyecto-card-header span {
+  font-size: 1.5rem;
+  font-weight: 300;
+  transition: transform 0.3s ease;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
 }
 
 .proyecto-card-body {
-  padding-top: 1rem;
+  padding: 1.5rem;
+  background: #ffffff;
+  animation: fadeIn 0.4s ease-out;
 }
 
 .proyecto-card-body p {
-  margin: 0.5rem 0;
-  color: #555;
+  margin: 0.75rem 0;
+  color: #4a5568;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.proyecto-card-body strong {
+  color: #2d3748;
+  font-weight: 600;
 }
 
 .proyecto-card-actions {
-  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .proyecto-btn-edit,
 .proyecto-btn-delete {
-  background-color: #001932;
-  color: white;
-  padding: 0.4rem 0.8rem;
-  border: none;
-  border-radius: 4px;
+  flex: 1;
+  padding: 0.85rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.3s;
-  margin-right: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.proyecto-btn-edit {
+  background: linear-gradient(135deg, #4cc9f0, #4361ee);
+  color: white;
+  border: none;
+  box-shadow: 0 2px 10px rgba(67, 97, 238, 0.3);
 }
 
 .proyecto-btn-edit:hover {
-  background-color: #00376e;
+  background: linear-gradient(135deg, #4361ee, #3a0ca3);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
 }
 
+
 .proyecto-btn-delete {
-  background-color: #e74c3c;
+  background: linear-gradient(135deg, #f72585, #b5179e);
+  color: white;
+  border: none;
+  box-shadow: 0 2px 10px rgba(247, 37, 133, 0.3);
 }
 
 .proyecto-btn-delete:hover {
-  background-color: #c0392b;
+  background: linear-gradient(135deg, #b5179e, #7209b7);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(247, 37, 133, 0.4);
 }
 
-.proyecto-card:hover {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.proyecto-card-header:hover span {
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .proyecto-card {
+    border-radius: 12px;
+  }
+
+  .proyecto-card-header {
+    padding: 1.25rem;
+  }
+
+  .proyecto-card-actions {
+    flex-direction: column;
+  }
+
+  .proyecto-btn-edit,
+  .proyecto-btn-delete {
+    width: 100%;
+  }
 }
