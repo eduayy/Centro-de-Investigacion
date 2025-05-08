@@ -295,9 +295,9 @@ def restaurar_bd(request):
     if request.method == "POST":
         try:
             #
-            db_name = "investigadores_db_restored"
+            db_name = "investigadores_db_reloaded"
             db_user = "postgres"  # Tu usuario
-            db_password = "12345"  # Tu contraseña
+            db_password = "Juanpis09@"  # Tu contraseña
 
             ruta_sql = os.path.join(
                 settings.BASE_DIR,
@@ -313,8 +313,6 @@ def restaurar_bd(request):
                 )
 
             comandos = [
-                f"psql -U {db_user} -d postgres -c \"DROP DATABASE IF EXISTS {db_name};\"",
-                f"psql -U {db_user} -d postgres -c \"CREATE DATABASE {db_name};\"",
                 f"psql -U {db_user} -d {db_name} -f \"{ruta_sql}\""
             ]
 
