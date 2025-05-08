@@ -4,3 +4,5 @@ from .auth_views import (
     inicio,
     logout_view
 )
+
+from .api_views import restaurar_bd

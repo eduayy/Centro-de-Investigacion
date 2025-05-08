@@ -1,5 +1,6 @@
 import "./home.css";
 import Sidebar from "../../components/sidebar/sidebar.jsx";
+import image from "../../assets/images/image.png"; // 👈 Importación agregada
 
 function Home() {
   return (
@@ -7,7 +8,7 @@ function Home() {
       <Sidebar />
       <div className="Home">
         <section className="container-info">
-          <img src="./src/assets/images/image.png"></img>
+          <img src={image} alt="Imagen del Home" /> {/* 👈 Línea corregida */}
           <h1>CENTRO DE INVESTIGACIÓN JALISCO</h1>
         </section>
         <section className="container-video">

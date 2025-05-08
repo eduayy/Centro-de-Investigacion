@@ -10,7 +10,7 @@ from .views.api_views import (EstudiantesViewSet, ProyectosViewSet, AreaViewSet,
                               LineasViewSet, EventosViewSet, ArticulosViewSet, UnidadesViewSet, HerramientasViewSet,
                               CarrerasViewSet, InvestigadoresViewSet, NivelEduViewSet, TipoEstudianteViewSet, DetArtViewSet,
                               DetEventosViewSet, DetHerramientaViewSet, DetLineasViewSet, DetProyViewSet, NivelSniViewSet, TipoEventoViewSet,
-                              SniViewSet
+                              SniViewSet, restaurar_bd
                               )
 router = DefaultRouter()
 # Area endpoints
@@ -67,6 +67,8 @@ urlpatterns = [
     path('login-api/', login_api, name='login_api'),
     path('inicio/', inicio, name='inicio'),
     path('logout/', logout_view, name='logout'),
+    path('api/restaurar-bd/', restaurar_bd, name='restaurar_bd'),
+
 
     # API
     path('api/', include(router.urls)),

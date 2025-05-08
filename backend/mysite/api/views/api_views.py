@@ -1,3 +1,8 @@
+import subprocess
+import os
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
@@ -281,3 +286,67 @@ class TipoEventoViewSet(viewsets.ModelViewSet):
 class SniViewSet(viewsets.ModelViewSet):
     queryset = Sni.objects.all()
     serializer_class = SniSerializer
+
+# BD Restorer
+
+
+@csrf_exempt
+def restaurar_bd(request):
+    if request.method == "POST":
+        try:
+            #
+            db_name = "investigadores_db_reloaded"
+            db_user = "postgres"  # Tu usuario
+            db_password = "Juanpis09@"  # Tu contraseña
+
+            ruta_sql = os.path.join(
+                settings.BASE_DIR,
+                "api",
+                "DataBase",
+                "investigadores_database.sql"
+            )
+
+            if not os.path.exists(ruta_sql):
+                return JsonResponse(
+                    {"error": f"Archivo SQL no encontrado: {ruta_sql}"},
+                    status=500
+                )
+
+            comandos = [
+                f"psql -U {db_user} -d {db_name} -f \"{ruta_sql}\""
+            ]
+
+            for comando in comandos:
+                resultado = subprocess.run(
+                    comando,
+                    shell=True,
+                    check=True,
+                    capture_output=True,
+                    text=True,
+                    env={**os.environ, "PGPASSWORD": db_password}
+                )
+
+                print(f"Ejecutado: {comando}")
+                print(f"Salida: {resultado.stdout}")
+                if resultado.stderr:
+                    print(f"Error: {resultado.stderr}")
+
+            return JsonResponse({
+                "message": f"Base de datos '{db_name}' restaurada exitosamente desde: {ruta_sql}"
+            })
+
+        except subprocess.CalledProcessError as e:
+            error_detail = f"ERROR PostgreSQL: {e.stderr}" if e.stderr else str(
+                e)
+            return JsonResponse({
+                "error": f"Fallo en comando: {e.cmd}",
+                "detalle": error_detail
+            }, status=500)
+
+        except Exception as e:
+            return JsonResponse({
+                "error": "Error inesperado",
+                "detalle": str(e)
+            }, status=500)
+
+    return JsonResponse({"error": "Método no permitido. Usa POST."}, status=405)
