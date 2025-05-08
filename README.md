@@ -60,14 +60,18 @@ cd Centro-de-Investigacion
 ## 📦 Install dependencies
 
 ```
-npm install
+cd frontend
+Centro-de-Investigacion\frontend> npm install
 ```
 
 ## 🌐 Run the project
 ```
-npm run dev
+Centro-de-Investigacion> cd frontend
+Centro-de-Investigacion\frontend> cd nginx
+Centro-de-Investigacion\frontend\nginx> start nginx
 ```
-The app will be avaible at http://localhost:5173 
+The app will be avaible at http://localhost:8080
+)
 
 ## 🎯 Setting the backend
 Enter to backend file
