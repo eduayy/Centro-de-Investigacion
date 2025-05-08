@@ -8,31 +8,39 @@ const API_BASE_URL = "http://localhost:8000/";
 
 const Proyectos = () => {
   const [proyectos, setProyectos] = useState([]);
+  const [investigadores, setInvestigadores] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [editingProyecto, setEditingProyecto] = useState(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [selectedProyecto, setSelectedProyecto] = useState(null);
+  const [selectedInvestigador, setSelectedInvestigador] = useState("");
 
   const initialProyectoState = {
     nombreproyecto: "",
     descripcionproyecto: "",
     fechainicio: "",
     fechatermino: "",
+    idinvestigador: [],
   };
 
   const [newProyecto, setNewProyecto] = useState(initialProyectoState);
 
   useEffect(() => {
-    const fetchProyectos = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}api/proyectos-api/`, {
-          withCredentials: true,
-        });
-        setProyectos(response.data);
+        const [proyectosRes, investigadoresRes] = await Promise.all([
+          axios.get(`${API_BASE_URL}api/proyectos-api/`, {
+            withCredentials: true,
+          }),
+          axios.get(`${API_BASE_URL}api/investigadores-api/`, {
+            withCredentials: true,
+          }),
+        ]);
+        setProyectos(proyectosRes.data);
+        setInvestigadores(investigadoresRes.data);
       } catch (error) {
         setError(
-          `Error al cargar proyectos: ${
+          `Error al cargar datos: ${
             error.response?.data?.detail || error.message
           }`
         );
@@ -41,7 +49,7 @@ const Proyectos = () => {
       }
     };
 
-    fetchProyectos();
+    fetchData();
   }, []);
 
   const handleAdd = async (e) => {
@@ -63,63 +71,53 @@ const Proyectos = () => {
     }
   };
 
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.put(
-        `${API_BASE_URL}api/proyectos-api/${editingProyecto.idproyecto}/`,
-        editingProyecto,
-        { withCredentials: true }
-      );
-      setProyectos(
-        proyectos.map((p) =>
-          p.idproyecto === editingProyecto.idproyecto ? response.data : p
-        )
-      );
-      setEditingProyecto(null);
-      setError(null);
-    } catch (error) {
-      setError(
-        `Error al actualizar: ${error.response?.data?.detail || error.message}`
-      );
-    }
-  };
-
-  const handleDelete = async (id) => {
-    if (!window.confirm("¿Estás seguro de eliminar este proyecto?")) return;
-
-    try {
-      await axios.delete(`${API_BASE_URL}api/proyectos-api/${id}/`, {
-        withCredentials: true,
-      });
-      setProyectos(proyectos.filter((p) => p.idproyecto !== id));
-      setError(null);
-    } catch (error) {
-      setError(
-        `Error al eliminar: ${error.response?.data?.detail || error.message}`
-      );
-    }
-  };
-
-  const handleInputChange = (e, isEditing = false) => {
-    const { name, value } = e.target;
-    if (isEditing) {
-      setEditingProyecto({
-        ...editingProyecto,
-        [name]: value,
-      });
-    } else {
+  const handleAddInvestigador = () => {
+    if (
+      selectedInvestigador &&
+      !newProyecto.idinvestigador.includes(selectedInvestigador)
+    ) {
       setNewProyecto({
         ...newProyecto,
-        [name]: value,
+        idinvestigador: [...newProyecto.idinvestigador, selectedInvestigador],
       });
+      setSelectedInvestigador("");
     }
   };
 
-  const formatDate = (dateString) => {
-    if (!dateString) return "-";
-    const date = new Date(dateString);
-    return date.toLocaleDateString("es-ES");
+  const handleRemoveInvestigador = (idToRemove) => {
+    setNewProyecto({
+      ...newProyecto,
+      idinvestigador: newProyecto.idinvestigador.filter(
+        (id) => id !== idToRemove
+      ),
+    });
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewProyecto({
+      ...newProyecto,
+      [name]: value,
+    });
+  };
+
+  const handleShowAddForm = () => {
+    setShowAddForm(true);
+    setSelectedProyecto(null);
+  };
+
+  const handleSelectProyecto = (proyecto) => {
+    setSelectedProyecto(proyecto);
+    setShowAddForm(false);
+  };
+
+  const handleCloseCard = () => {
+    setSelectedProyecto(null);
+  };
+
+  const handleCloseForm = () => {
+    setShowAddForm(false);
+    setNewProyecto(initialProyectoState);
   };
 
   if (loading) return <div className="loading">Cargando proyectos...</div>;
@@ -130,18 +128,38 @@ const Proyectos = () => {
       <Sidebar />
       <div className="proyectos-main-content">
         <h2 className="proyectos-title">Proyectos</h2>
-
-        <button
-          className="proyectos-btn-add"
-          onClick={() => setShowAddForm(true)}
-        >
+        <button className="proyectos-btn-add" onClick={handleShowAddForm}>
           + Nuevo Proyecto
         </button>
 
-        <ProyectoCard
-          proyecto={selectedProyecto}
-          onClose={() => setSelectedProyecto(null)}
-        />
+        <div className="proyectos-table-container">
+          <table className="proyectos-data-table">
+            <thead className="proyectos-table-header">
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+              </tr>
+            </thead>
+            <tbody className="proyectos-table-body">
+              {proyectos.map((proyecto) => (
+                <tr
+                  key={proyecto.idproyecto}
+                  className="proyectos-table-row"
+                  onClick={() => handleSelectProyecto(proyecto)}
+                >
+                  <td>{proyecto.idproyecto}</td>
+                  <td>{proyecto.nombreproyecto}</td>
+                  <td>{proyecto.descripcionproyecto || "-"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {selectedProyecto && (
+          <ProyectoCard proyecto={selectedProyecto} onClose={handleCloseCard} />
+        )}
 
         {showAddForm && (
           <div className="proyectos-form-container">
@@ -202,6 +220,56 @@ const Proyectos = () => {
                 </div>
               </div>
 
+              <div className="proyectos-form-group">
+                <label className="proyectos-form-label">Investigadores:</label>
+                <div className="investigadores-select-container">
+                  <select
+                    className="proyectos-form-select"
+                    value={selectedInvestigador}
+                    onChange={(e) => setSelectedInvestigador(e.target.value)}
+                  >
+                    <option value="">Seleccionar investigador</option>
+                    {investigadores.map((investigador) => (
+                      <option
+                        key={investigador.idinvestigador}
+                        value={investigador.idinvestigador}
+                      >
+                        {investigador.nombre} {investigador.apellido}
+                      </option>
+                    ))}
+                  </select>
+                  {/*
+                  <button
+                    type="button"
+                    className="proyectos-btn-add-investigador"
+                    onClick={handleAddInvestigador}
+                    disabled={!selectedInvestigador}
+                  >
+                    Añadir
+                  </button> */}
+                </div>
+
+                <div className="investigadores-list">
+                  {newProyecto.idinvestigador.map((id) => {
+                    const investigador = investigadores.find(
+                      (i) => i.idinvestigador === id
+                    );
+                    return investigador ? (
+                      <div key={id} className="investigador-tag">
+                        {investigador.nombre} {investigador.apellido}
+                        <button
+                          type="button"
+                          className="investigador-remove-btn"
+                          onClick={() => handleRemoveInvestigador(id)}
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ) : null;
+                  })}
+                </div>
+              </div>
+
               <div className="proyectos-form-actions">
                 <button type="submit" className="proyectos-btn-save">
                   Guardar
@@ -209,7 +277,7 @@ const Proyectos = () => {
                 <button
                   type="button"
                   className="proyectos-btn-cancel"
-                  onClick={() => setShowAddForm(false)}
+                  onClick={handleCloseForm}
                 >
                   Cancelar
                 </button>
@@ -217,31 +285,6 @@ const Proyectos = () => {
             </form>
           </div>
         )}
-
-        <div className="proyectos-table-container">
-          <table className="proyectos-data-table">
-            <thead className="proyectos-table-header">
-              <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Descripción</th>
-              </tr>
-            </thead>
-            <tbody className="proyectos-table-body">
-              {proyectos.map((proyecto) => (
-                <tr
-                  key={proyecto.idproyecto}
-                  className="proyectos-table-row"
-                  onClick={() => setSelectedProyecto(proyecto)}
-                >
-                  <td>{proyecto.idproyecto}</td>
-                  <td>{proyecto.nombreproyecto}</td>
-                  <td>{proyecto.descripcionproyecto || "-"}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
       </div>
     </div>
   );

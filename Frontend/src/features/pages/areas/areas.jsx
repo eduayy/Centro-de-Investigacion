@@ -33,8 +33,7 @@ const Areas = () => {
         ]);
 
         setAreas(areasRes.data);
-        const idsUnidades = areasRes.data.map((area) => area.idunidades);
-        setUnidades(idsUnidades);
+        setUnidades(unidadesRes.data);
       } catch (error) {
         setError(
           `Error al cargar datos: ${
@@ -130,153 +129,190 @@ const Areas = () => {
     <div className="areas-page-container">
       <Sidebar />
       <div className="areas-main-content">
-        <h2 className="areas-title">Gestión de Áreas</h2>
+        <div className="areas-header">
+          <h2 className="areas-title">Gestión de Áreas</h2>
+          <p className="areas-subtitle">Gestiona todas las áreas del sistema</p>
+        </div>
 
         <button className="areas-btn-add" onClick={() => setShowAddForm(true)}>
           + Nueva Área
         </button>
 
+        {/* Modal para agregar nueva área */}
         {showAddForm && (
-          <div className="areas-form-container">
-            <h3 className="areas-form-title">Registrar Nueva Área</h3>
-            <form onSubmit={handleAdd} className="areas-form">
-              <div className="areas-form-group">
-                <label className="areas-form-label">Nombre:</label>
-                <input
-                  type="text"
-                  name="nombrearea"
-                  className="areas-form-input"
-                  value={newArea.nombrearea}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-
-              <div className="areas-form-group">
-                <label className="areas-form-label">Descripción:</label>
-                <input
-                  type="text"
-                  name="descripcionarea"
-                  className="areas-form-input"
-                  value={newArea.descripcionarea}
-                  onChange={handleInputChange}
-                />
-              </div>
-
-              <div className="areas-form-group">
-                <label className="areas-form-label">Unidad:</label>
-                <select
-                  name="idunidades"
-                  className="areas-form-select"
-                  value={newArea.idunidades}
-                  onChange={handleInputChange}
-                  required
-                >
-                  <option value="">Seleccione una unidad</option>
-                  {unidades.map((unidad) => (
-                    <option key={unidad.idunidades} value={unidad.idunidades}>
-                      {unidad.nombreunidad}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="areas-form-group areas-checkbox-group">
-                <label className="areas-form-label">Estatus:</label>
-                <input
-                  type="checkbox"
-                  name="estatus"
-                  className="areas-form-checkbox"
-                  checked={newArea.estatus}
-                  onChange={handleInputChange}
-                />
-              </div>
-
-              <div className="areas-form-actions">
-                <button type="submit" className="areas-btn-save">
-                  Guardar
-                </button>
+          <div className="modal-overlay">
+            <div className="modal-container">
+              <div className="modal-header">
+                <h3 className="modal-title">Registrar Nueva Área</h3>
                 <button
-                  type="button"
-                  className="areas-btn-cancel"
+                  className="modal-close-btn"
                   onClick={() => setShowAddForm(false)}
                 >
-                  Cancelar
+                  &times;
                 </button>
               </div>
-            </form>
+              <form onSubmit={handleAdd} className="areas-form">
+                <div className="areas-form-group">
+                  <label className="areas-form-label">Nombre:</label>
+                  <input
+                    type="text"
+                    name="nombrearea"
+                    className="areas-form-input"
+                    value={newArea.nombrearea}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+
+                <div className="areas-form-group">
+                  <label className="areas-form-label">Descripción:</label>
+                  <textarea
+                    name="descripcionarea"
+                    className="areas-form-textarea"
+                    value={newArea.descripcionarea}
+                    onChange={handleInputChange}
+                    rows="3"
+                  />
+                </div>
+
+                <div className="areas-form-group">
+                  <label className="areas-form-label">Unidad:</label>
+                  <select
+                    name="idunidades"
+                    className="areas-form-select"
+                    value={newArea.idunidades}
+                    onChange={handleInputChange}
+                    required
+                  >
+                    <option value="">Seleccione una unidad</option>
+                    {unidades.map((unidad) => (
+                      <option key={unidad.idunidades} value={unidad.idunidades}>
+                        {unidad.nombreunidad}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="areas-form-group areas-checkbox-group">
+                  <input
+                    type="checkbox"
+                    name="estatus"
+                    className="areas-form-checkbox"
+                    checked={newArea.estatus}
+                    onChange={handleInputChange}
+                    id="estatus-checkbox"
+                  />
+                  <label
+                    htmlFor="estatus-checkbox"
+                    className="areas-form-label"
+                  >
+                    Estatus Activo
+                  </label>
+                </div>
+
+                <div className="modal-footer">
+                  <button type="submit" className="areas-btn-save">
+                    Guardar
+                  </button>
+                  <button
+                    type="button"
+                    className="areas-btn-cancel"
+                    onClick={() => setShowAddForm(false)}
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         )}
 
+        {/* Modal para editar área */}
         {editingArea && (
-          <div className="areas-form-container">
-            <h3 className="areas-form-title">Editar Área</h3>
-            <form onSubmit={handleUpdate} className="areas-form">
-              <div className="areas-form-group">
-                <label className="areas-form-label">Nombre:</label>
-                <input
-                  type="text"
-                  name="nombrearea"
-                  className="areas-form-input"
-                  value={editingArea.nombrearea}
-                  onChange={(e) => handleInputChange(e, true)}
-                  required
-                />
-              </div>
-
-              <div className="areas-form-group">
-                <label className="areas-form-label">Descripción:</label>
-                <input
-                  type="text"
-                  name="descripcionarea"
-                  className="areas-form-input"
-                  value={editingArea.descripcionarea}
-                  onChange={(e) => handleInputChange(e, true)}
-                />
-              </div>
-
-              <div className="areas-form-group">
-                <label className="areas-form-label">Unidad:</label>
-                <select
-                  name="idunidades"
-                  className="areas-form-select"
-                  value={editingArea.idunidades}
-                  onChange={(e) => handleInputChange(e, true)}
-                  required
-                >
-                  <option value="">Seleccione una unidad</option>
-                  {unidades.map((unidad) => (
-                    <option key={unidad.idunidades} value={unidad.idunidades}>
-                      {unidad.nombreunidad}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="areas-form-group areas-checkbox-group">
-                <label className="areas-form-label">Estatus:</label>
-                <input
-                  type="checkbox"
-                  name="estatus"
-                  className="areas-form-checkbox"
-                  checked={editingArea.estatus}
-                  onChange={(e) => handleInputChange(e, true)}
-                />
-              </div>
-
-              <div className="areas-form-actions">
-                <button type="submit" className="areas-btn-save">
-                  Actualizar
-                </button>
+          <div className="modal-overlay">
+            <div className="modal-container">
+              <div className="modal-header">
+                <h3 className="modal-title">Editar Área</h3>
                 <button
-                  type="button"
-                  className="areas-btn-cancel"
+                  className="modal-close-btn"
                   onClick={() => setEditingArea(null)}
                 >
-                  Cancelar
+                  &times;
                 </button>
               </div>
-            </form>
+              <form onSubmit={handleUpdate} className="areas-form">
+                <div className="areas-form-group">
+                  <label className="areas-form-label">Nombre:</label>
+                  <input
+                    type="text"
+                    name="nombrearea"
+                    className="areas-form-input"
+                    value={editingArea.nombrearea}
+                    onChange={(e) => handleInputChange(e, true)}
+                    required
+                  />
+                </div>
+
+                <div className="areas-form-group">
+                  <label className="areas-form-label">Descripción:</label>
+                  <textarea
+                    name="descripcionarea"
+                    className="areas-form-textarea"
+                    value={editingArea.descripcionarea}
+                    onChange={(e) => handleInputChange(e, true)}
+                    rows="3"
+                  />
+                </div>
+
+                <div className="areas-form-group">
+                  <label className="areas-form-label">Unidad:</label>
+                  <select
+                    name="idunidades"
+                    className="areas-form-select"
+                    value={editingArea.idunidades}
+                    onChange={(e) => handleInputChange(e, true)}
+                    required
+                  >
+                    <option value="">Seleccione una unidad</option>
+                    {unidades.map((unidad) => (
+                      <option key={unidad.idunidades} value={unidad.idunidades}>
+                        {unidad.nombreunidad}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="areas-form-group areas-checkbox-group">
+                  <input
+                    type="checkbox"
+                    name="estatus"
+                    className="areas-form-checkbox"
+                    checked={editingArea.estatus}
+                    onChange={(e) => handleInputChange(e, true)}
+                    id="edit-estatus-checkbox"
+                  />
+                  <label
+                    htmlFor="edit-estatus-checkbox"
+                    className="areas-form-label"
+                  >
+                    Estatus Activo
+                  </label>
+                </div>
+
+                <div className="modal-footer">
+                  <button type="submit" className="areas-btn-save">
+                    Actualizar
+                  </button>
+                  <button
+                    type="button"
+                    className="areas-btn-cancel"
+                    onClick={() => setEditingArea(null)}
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         )}
 
@@ -298,7 +334,15 @@ const Areas = () => {
                   <td>{area.nombrearea}</td>
                   <td>{area.descripcionarea || "-"}</td>
                   <td>{getUnidadName(area.idunidades)}</td>
-                  <td>{area.estatus ? "Activo" : "Inactivo"}</td>
+                  <td>
+                    <span
+                      className={`area-status ${
+                        area.estatus ? "active" : "inactive"
+                      }`}
+                    >
+                      {area.estatus ? "Activo" : "Inactivo"}
+                    </span>
+                  </td>
                 </tr>
               ))}
             </tbody>

@@ -1,40 +1,219 @@
-.popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+.student-card-modal {
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow: hidden;
+  font-family: "Inter", -apple-system, sans-serif;
+  animation: fadeInUp 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  position: relative;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
+  flex-direction: column;
+  margin-left: 150px;
 }
 
-.popup-content {
-  background-color: white;
-  padding: 20px;
+.student-card-header {
+  background: linear-gradient(#4f46e5 35%, #6366f1);
+  color: white;
+  padding: 2rem 2rem 1.5rem;
+  position: relative;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.student-card-header h3 {
+  margin: 1rem 0 0.25rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.student-id {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.student-avatar {
+  display: flex;
+  justify-content: center;
+  margin-top: -3rem;
+}
+
+.avatar-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: white;
+  color: #4f46e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  font-weight: 700;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  border: 4px solid white;
+  margin-top: 30px;
+}
+
+.student-card-content {
+  padding: 1.5rem 2rem;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.info-section {
+  margin-bottom: 1.5rem;
+}
+
+.info-section h4 {
+  color: #1e293b;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+}
+
+.info-section h4::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4f46e5;
+  margin-right: 0.75rem;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 12px;
+  transition: all 0.2s;
+}
+
+.info-item:hover {
+  background: rgba(99, 102, 241, 0.05);
+}
+
+.info-icon {
+  font-size: 1.25rem;
+  margin-top: 2px;
+  color: #4f46e5;
+}
+
+.info-label {
+  color: #64748b;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.info-value {
+  color: #1e293b;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.student-card-footer {
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+  border-top: 1px solid #e2e8f0;
+}
+
+.close-icon-button {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: white;
+  padding: 0;
+  z-index: 10;
+}
+
+.close-icon-button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg);
+}
+
+.close-icon-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.close-action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
   border-radius: 8px;
-  max-width: 500px;
-  width: 100%;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 120px;
+}
+
+.close-action-button:hover {
+  background-color: #2563eb;
+  transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.popup-actions {
-  text-align: right;
-  margin-top: 20px;
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.popup-actions button {
-  width: 100px;
-  padding: 8px 16px;
-  background-color: #00162e;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
+@media (max-width: 600px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
 
-.popup-actions button:hover {
-  background-color: rgb(0, 39, 80);
+  .student-card-modal {
+    max-width: 95%;
+    margin: 0 auto;
+  }
+
+  .student-card-header {
+    padding: 1.5rem 1.5rem 1rem;
+  }
+
+  .student-card-content {
+    padding: 1.25rem;
+  }
 }

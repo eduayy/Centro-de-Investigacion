@@ -1,13 +1,13 @@
 import React from "react";
 
-const CareersTable = ({ carreras }) => {
+const CareersTable = ({ carreras, onEdit, onDelete }) => {
   return (
-    <div className="table-container">
-      <table className="carreras-table">
+    <div className="careers-data">
+      <table className="careers-table">
         <thead>
           <tr>
             <th>ID</th>
-            <th>Nombre Carrera</th>
+            <th>Nombre</th>
             <th>Universidad</th>
           </tr>
         </thead>

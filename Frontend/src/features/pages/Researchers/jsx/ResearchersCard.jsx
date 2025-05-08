@@ -1,107 +1,83 @@
-import React, { useState } from "react";
-import ResearchersStat from "./ResearchersStat.jsx";
-import "../style/researchers.css";
+import React from "react";
+import "../style/ResearchersCard.css";
 
-const ResearchersCard = ({ investigador, selectedResearcher, onClose }) => {
-  const [showStats, setShowStats] = useState(false);
-  if (!investigador) return null;
-  console.log("Hello World");
+const ResearchersCard = ({ investigador, onClose }) => {
+  console.log("Datos recibidos en Card:", {
+    investigador,
+    tieneNombre: !!investigador?.nombre,
+    tieneTelefono: !!investigador?.telefono,
+    tieneEmail: !!investigador?.email,
+  });
 
-  console.log(onClose);
+  if (!investigador) {
+    return (
+      <div className="background-container">
+        <div className="researcher-card error-card">
+          <h3>Error: No hay datos del investigador</h3>
+          <button onClick={onClose}>Cerrar</button>
+        </div>
+      </div>
+    );
+  }
+
+  const {
+    nombre = "No especificado",
+    telefono = "No proporcionado",
+    email = "Sin correo",
+    puesto = "Investigador",
+    linea = "Sin linea asignada",
+    cantidadProy = 0,
+    area = "Sin área asignada",
+    nivelEdu = "No especificado",
+  } = investigador;
 
   return (
     <main className="background-container">
-      <div className={`researcher-card ${showStats ? "stats-open" : ""}`}>
+      <div className="researcher-card">
         <div className="researcher-data-header">
-          <h3 style={{ fontStyle: "italic" }}>Detalles del Investigador</h3>
-          <div>
-            <button
-              className="open-researcher-stats"
-              onClick={() => setShowStats(true)}
-            >
-              Info
-            </button>
-            <button className="close-researcherCard-btn" onClick={onClose}>
-              Close
-            </button>
-          </div>
+          <h3>Detalles del Investigador</h3>
+          <button className="close-researcherCard-btn" onClick={onClose}>
+            ×
+          </button>
         </div>
-        <section className="about-researcher">
-          <img src="src\assets\images\PERFIL-VACIO.png" alt="empty-photo"></img>
-          <p>
-            <strong
-              style={{
-                color: "black",
-                fontStyle: "normal",
-              }}
-            >
-              About me
-            </strong>
-            <hr></hr>
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Necessitatibus delectus laboriosam eum doloribus quos. Et ducimus
-            recusandae aperiam illum tempore.
-          </p>
-        </section>
+
         <section className="researcher-info">
-          {selectedResearcher && (
-            <div className="researcher-details">
-              <div className="detail-row">
-                <span className="detail-label">Nombre:</span>
-                <span className="detail-value">
-                  {selectedResearcher.nombre || (
-                    <span className="empty-field">No especificado</span>
-                  )}
-                </span>
-              </div>
-              <div className="detail-row">
-                <span className="detail-label">Teléfono:</span>
-                <span className="detail-value">
-                  {selectedResearcher.telefono || (
-                    <span className="empty-field">No especificado</span>
-                  )}
-                </span>
-              </div>
-              <div className="detail-row">
-                <span className="detail-label">Correo:</span>
-                <span className="detail-value email">
-                  {selectedResearcher.email || (
-                    <span className="empty-field">No especificado</span>
-                  )}
-                </span>
-              </div>
-              <div className="detail-row">
-                <span className="detail-label">Puesto:</span>
-                <span className="detail-value">Investigador</span>
-              </div>
-              <div className="detail-row">
-                <span className="detail-label">Área:</span>
-                <span className="detail-value">
-                  {selectedResearcher.area || (
-                    <span className="empty-field">Sin área asignada</span>
-                  )}
-                </span>
-              </div>
-              <div className="detail-row">
-                <span className="detail-label">Nivel Edu:</span>
-                <span className="detail-value">
-                  {selectedResearcher.nivelEdu || (
-                    <span className="empty-field">No especificado</span>
-                  )}
-                </span>
-              </div>
+          <div className="researcher-details">
+            <div className="detail-row">
+              <span className="detail-label">Nombre:</span>
+              <span className="detail-value">{nombre}</span>
             </div>
-          )}
+            <div className="detail-row">
+              <span className="detail-label">Teléfono:</span>
+              <span className="detail-value">{telefono}</span>
+            </div>
+            <div className="detail-row">
+              <span className="detail-label">Correo:</span>
+              <span className="detail-value email">{email}</span>
+            </div>
+            <div className="detail-row">
+              <span className="detail-label">Puesto:</span>
+              <span className="detail-value">{puesto}</span>
+            </div>
+            <div className="detail-row">
+              <span className="detail-label">Proyectos:</span>
+              <span className="detail-value">{cantidadProy}</span>
+            </div>
+            <div className="detail-row">
+              <span className="detail-label">Área:</span>
+              <span className="detail-value">{area}</span>
+            </div>
+            <div className="detail-row">
+              <span className="detail-label">Nivel Edu:</span>
+              <span className="detail-value">{nivelEdu}</span>
+            </div>
+            <div className="detail-row">
+              <span className="detail-label">Línea de investigación:</span>
+              <span className="detail-value">{linea}</span>
+            </div>
+          </div>
         </section>
       </div>
-      {showStats && (
-        <ResearchersStat
-          investigador={selectedResearcher}
-          onClose={() => setShowStats(false)}
-        />
-      )}
     </main>
   );
 };

@@ -6,11 +6,11 @@ export const getResearcherInfo = async () => {
   try {
     const [LineRes, ProyectRes, StudentRes, EventRes, ArticleRes] =
       await Promise.all([
-        axios.get(`${BASE_URL}detlineas-api/`, { withCredentials: true }),
-        axios.get(`${BASE_URL}detproy-api/`, { withCredentials: true }),
+        axios.get(`${BASE_URL}lineas-api/`, { withCredentials: true }),
+        axios.get(`${BASE_URL}proyectos-api/`, { withCredentials: true }),
         axios.get(`${BASE_URL}estudiantes-api/`, { withCredentials: true }),
-        axios.get(`${BASE_URL}deteventos-api/`, { withCredentials: true }),
-        axios.get(`${BASE_URL}detart-api/`, { withCredentials: true }),
+        axios.get(`${BASE_URL}eventos-api/`, { withCredentials: true }),
+        axios.get(`${BASE_URL}articulos-api/`, { withCredentials: true }),
       ]);
     return {
       proyects: ProyectRes.data.count || ProyectRes.data.length,
