@@ -71,7 +71,7 @@ Centro-de-Investigacion\frontend> cd nginx
 Centro-de-Investigacion\frontend\nginx> start nginx
 ```
 The app will be avaible at http://localhost:8080
-)
+
 
 ## 🎯 Setting the backend
 Enter to backend file
@@ -80,22 +80,21 @@ Centro-de-Investigacion> cd backend
 Centro-de-Investigacion\backend> pip install -r requirements.txt
 ```
 
-## 🤖 Run the Django server 
-Enter to mysite file.
-```
-Centro-de-Investigacion\backend> cd mysite
-# Run the following command
-Centro-de-Investigacion\backend\mysite> python manage.py runserver
-```
 ## 🎰 Configure database 
-
+Enter to backend file Centro-de-Investigacion\backend\mysite\api\views\api_views.py
+On line 298 configure with your credentials
+```
+db_name = "investigadores_db_reloaded" #Don't change this name
+db_user = "postgres"  # User
+db_password = "12345"  # Password
+```
 ### Configure database connection
 In `settings.py` file, you shold look this:
 ```
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'YOUR DB NAME',
+        'NAME': 'investigadores_db_reloaded', #Don't change this name
         'USER': 'YOUR USER NAME',
         'PASSWORD': 'DATABASE PASSWORD',
         'HOST': 'localhost', -> You can change it if not local
@@ -103,12 +102,16 @@ DATABASES = {
     }
 }
 ```
+Finally create the "investigadores_db_reloaded" database in your PostgreSQL without adding tables.
 
-### If necessary make migrations
-- After restoring the database backup, look if there are pending migrations
-- Run the following command
+## 🤖 Run the Django server 
+Enter to mysite file.
 ```
+Centro-de-Investigacion\backend> cd mysite
+# Run the following command
+Centro-de-Investigacion\backend\mysite> python manage.py makemigrations
 Centro-de-Investigacion\backend\mysite> python manage.py migrate
+Centro-de-Investigacion\backend\mysite> python manage.py runserver
 ```
 
 ## Entity-Relation diagram  
