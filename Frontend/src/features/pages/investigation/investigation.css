@@ -1,12 +1,30 @@
+/* Layout principal con sidebar */
 .lineas-page-container {
   display: flex;
   min-height: 100vh;
   background-color: #f5f7fa;
 }
 
+/* Sidebar fijo */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px;
+  background-color: #001932;
+  color: white;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+/* Contenido principal con margen izquierdo para no quedar debajo del sidebar */
 .lineas-main-content {
+  margin-left: 250px;
   flex: 1;
   padding: 2rem;
+  box-sizing: border-box;
 }
 
 .lineas-title {
@@ -108,4 +126,27 @@
 .lineas-error-message {
   text-align: center;
   padding: 1rem;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .lineas-main-content {
+    margin-left: 0;
+    padding: 1rem;
+  }
+
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+
+  .lineas-form-actions {
+    flex-direction: column;
+  }
+
+  .lineas-btn-save,
+  .lineas-btn-cancel {
+    width: 100%;
+  }
 }

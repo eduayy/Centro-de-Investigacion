@@ -12,8 +12,8 @@ const StudentCard = ({
       <div className="student-card-header">
         <div className="student-avatar">
           <div className="avatar-circle">
-            {student.nombreestudiante.charAt(0).toUpperCase()}
-            {student.apellidoestudiante.charAt(0).toUpperCase()}
+            {student.nombreestudiante?.charAt(0).toUpperCase() || ""}
+            {student.apellidoestudiante?.charAt(0).toUpperCase() || ""}
           </div>
         </div>
         <h3>
@@ -40,7 +40,11 @@ const StudentCard = ({
               <span className="info-icon">🎓</span>
               <div>
                 <p className="info-label">Carrera</p>
-                <p className="info-value">{carreraNombre}</p>
+                <p className="info-value">
+                  {carreraNombre && carreraNombre.trim() !== ""
+                    ? carreraNombre
+                    : "No especificada"}
+                </p>
               </div>
             </div>
             <div className="info-item">

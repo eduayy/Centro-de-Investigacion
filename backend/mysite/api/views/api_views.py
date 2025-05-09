@@ -1,5 +1,6 @@
 import subprocess
 import os
+import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
@@ -9,7 +10,7 @@ from rest_framework.permissions import AllowAny
 from ..models import (Estudiantes, Proyectos, Area, Especialidades, Lineas, Eventos,
                       Articulos, Unidades, Herramientas, Carreras, Investigadores, NivelEdu,
                       TipoEstudiante, DetArt, DetEventos, DetHerramienta, DetLineas, DetProy,
-                      NivelSni, TipoEvento, Sni)
+                      NivelSni, TipoEvento, Sni, Usuarios)
 from ..serializers import (EstudiantesSerializer, ProyectosSerializer, AreaSerializer, EspecialidadesSerializer,
                            LineasSerializer, EventosSerializer, ArticulosSerializer, UnidadesSerializer, HerramientasSerializer,
                            CarrerasSerializer, InvestigadoresSerializer, NivelEduSerializer, TipoEstudianteSerializer, DetArtSerializer,
@@ -297,7 +298,7 @@ def restaurar_bd(request):
             #
             db_name = "investigadores_db_reloaded"
             db_user = "postgres"  # Tu usuario
-            db_password = "Juanpis09@"  # Tu contraseña
+            db_password = "12345"  # Tu contraseña
 
             ruta_sql = os.path.join(
                 settings.BASE_DIR,
@@ -350,3 +351,36 @@ def restaurar_bd(request):
             }, status=500)
 
     return JsonResponse({"error": "Método no permitido. Usa POST."}, status=405)
+
+@csrf_exempt
+def register_user(request):
+    if request.method == 'POST':
+        try:
+            # Cargar los datos JSON de la solicitud
+            data = json.loads(request.body)
+            nombre = data.get('nombre')
+            correo = data.get('correo')
+            contrasena = data.get('contrasena')
+
+            # Validación de campos básicos
+            if not nombre or not correo or not contrasena:
+                return JsonResponse({'error': 'Faltan campos obligatorios'}, status=400)
+
+            # Verificar si el correo ya está registrado
+            if Usuarios.objects.filter(correo=correo).exists():
+                return JsonResponse({'error': 'Este correo ya está registrado'}, status=400)
+
+            # Crear el usuario sin especificar idusuario, ya que Django lo asigna automáticamente
+            usuario = Usuarios(
+                nombre=nombre,
+                correo=correo,
+                contrasena=contrasena
+            )
+            usuario.save()  # Esto generará automáticamente el idusuario
+
+            return JsonResponse({'message': 'Usuario registrado correctamente'}, status=201)
+
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Formato de JSON inválido'}, status=400)
+
+    return JsonResponse({'error': 'Método no permitido'}, status=405)

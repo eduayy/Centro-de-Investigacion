@@ -1,12 +1,30 @@
+/* Layout principal con sidebar */
 .especialidades-page-container {
   display: flex;
   min-height: 100vh;
   background-color: #f5f7fa;
 }
 
+/* Sidebar fijo a la izquierda */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px;
+  background-color: #001932;
+  color: white;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+/* Contenido principal con margen para no quedar debajo del sidebar */
 .especialidades-main-content {
+  margin-left: 250px;
   flex: 1;
   padding: 2rem;
+  box-sizing: border-box;
 }
 
 .especialidades-title {
@@ -202,10 +220,17 @@
   border-left: 4px solid #e74c3c;
 }
 
+/* Responsivo */
 @media (max-width: 768px) {
   .especialidades-main-content {
     margin-left: 0;
     padding: 1rem;
+  }
+
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
   }
 
   .especialidades-form-actions {

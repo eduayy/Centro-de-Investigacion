@@ -89,9 +89,9 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'investigadores_database',         
-        'USER': 'eduayy',             
-        'PASSWORD': 'Kamysql23!',      
+        'NAME': 'investigadores_db_reloaded',         
+        'USER': 'postgres',             
+        'PASSWORD': '12345',      
         'HOST': 'localhost',
         'PORT': '5432',
     }
